@@ -35,7 +35,7 @@ export function Footer({ lang }: { lang: string }) {
             <h3 className="text-lg font-semibold text-emerald-700">Contact</h3>
             <ul className="mt-4 space-y-2 text-sm text-gray-600">
               <li>Phone: [Insert phone number]</li>
-              <li>Email: [Insert email]</li>
+              <li>Email: <a href="mailto:ayurshuddhiwellness@gmail.com" className="text-emerald-600 hover:text-emerald-500">ayurshuddhiwellness@gmail.com</a></li>
               <li>Address: [Insert address]</li>
             </ul>
           </div>

@@ -29,7 +29,11 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <dt className="font-semibold text-gray-900">Email</dt>
-                  <dd>ayurshuddhiwellness@gmail.com</dd>
+                  <dd>
+                    <a href="mailto:ayurshuddhiwellness@gmail.com" className="text-emerald-600 hover:text-emerald-500">
+                      ayurshuddhiwellness@gmail.com
+                    </a>
+                  </dd>
                 </div>
                 <div>
                   <dt className="font-semibold text-gray-900">Hours</dt>
