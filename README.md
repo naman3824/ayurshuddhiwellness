@@ -9,13 +9,13 @@ A modern, statically-generated website for Ayur Shuddhi Wellness, built with Nex
 - ⚡ Static site generation for optimal performance
 - 🎨 Modern, wellness-inspired UI
 - 🔍 SEO optimized
-- 🛠️ Built with TypeScript for type safety
+- 🧩 Built with JavaScript for ease of development
 
 ## Tech Stack
 
 - Next.js 14
 - React 18
-- TypeScript
+- JavaScript
 - Tailwind CSS
 - ESLint
 
@@ -71,8 +71,8 @@ ayurshuddhiwellness/
 │   │   ├── about/         # About page
 │   │   ├── contact/       # Contact page
 │   │   ├── services/      # Services pages
-│   │   └── layout.tsx     # Language-specific layout
-│   ├── layout.tsx         # Root layout
+│   │   └── layout.jsx     # Language-specific layout
+│   ├── layout.jsx         # Root layout
 │   └── globals.css        # Global styles
 ├── components/            # Reusable components
 ├── public/               # Static assets
@@ -86,7 +86,7 @@ The website currently supports:
 
 Additional languages can be added by:
 1. Adding new language routes in `app/[lang]`
-2. Updating the `middleware.ts` file
+2. Updating the `next.config.mjs` file
 3. Adding translations for each page
 
 ## Development
@@ -94,14 +94,14 @@ Additional languages can be added by:
 ### Code Style
 
 - Follow the ESLint configuration
-- Use TypeScript for type safety
+- Use JSDoc comments for documenting functions and components
 - Follow the component structure in the `components` directory
 - Keep pages in the appropriate language directory
 
 ### Adding New Pages
 
 1. Create a new directory in `app/[lang]`
-2. Add the page component with proper TypeScript types
+2. Add the page component
 3. Update the navigation if needed
 4. Add necessary metadata for SEO
 
