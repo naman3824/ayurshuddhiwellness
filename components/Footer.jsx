@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export function Footer({ lang }: { lang: string }) {
+export function Footer({ lang }) {
   return (
     <footer className="bg-emerald-50">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">

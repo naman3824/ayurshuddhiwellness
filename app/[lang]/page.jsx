@@ -1,13 +1,12 @@
-import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'Ayur Shuddhi Wellness - Holistic Health Solutions',
   description: 'Experience the power of Ayurveda and holistic wellness with Ayur Shuddhi Wellness. We offer innovative health practices to connect your mind, body, and soul.',
 }
 
-export default function HomePage({ params }: { params: { lang: string } }) {
+export default function HomePage({ params }) {
   return (
     <div className="bg-white">
       {/* Hero section */}

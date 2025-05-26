@@ -7,7 +7,7 @@ const navigation = [
   { name: 'Contact', href: 'contact' },
 ]
 
-export function Navbar({ lang }: { lang: string }) {
+export function Navbar({ lang }) {
   return (
     <header className="bg-white shadow-sm">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">

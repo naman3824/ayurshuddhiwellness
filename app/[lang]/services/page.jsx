@@ -1,7 +1,6 @@
-import type { Metadata } from 'next'
 import Link from 'next/link'
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'Our Services - Ayur Shuddhi Wellness',
   description: 'Explore our range of Ayurvedic treatments and holistic wellness services at Ayur Shuddhi Wellness.',
 }
@@ -39,7 +38,7 @@ const services = [
   },
 ]
 
-export default function ServicesPage({ params }: { params: { lang: string } }) {
+export default function ServicesPage({ params }) {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">

@@ -1,6 +1,4 @@
-import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
+export const metadata = {
   title: 'Contact Us - Ayur Shuddhi Wellness',
   description: 'Get in touch with Ayur Shuddhi Wellness for holistic health solutions and Ayurvedic treatments.',
 }
