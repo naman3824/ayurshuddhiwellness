@@ -5,9 +5,100 @@
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-rgb: 255, 255, 255;
+  --primary-color: 20, 184, 166;
+  --accent-color: 245, 158, 11;
+  --secondary-color: 168, 85, 247;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
+/* Dark mode variables */
+.dark {
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 17, 24, 39;
+  --primary-color: 94, 234, 212;
+  --accent-color: 252, 211, 77;
+  --secondary-color: 216, 180, 254;
+}
+
+/* Base styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  
+  body {
+    color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-rgb));
+    @apply antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+  
+  ::selection {
+    @apply bg-primary-200 text-primary-900 dark:bg-primary-800 dark:text-primary-100;
+  }
+}
+
+/* Component styles */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-center text-sm font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-wellness text-white shadow-soft hover:shadow-glow focus:ring-primary-500;
+  }
+  
+  .btn-secondary {
+    @apply bg-white text-gray-900 border border-gray-300 hover:bg-gray-50 focus:ring-gray-500 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700;
+  }
+  
+  .btn-accent {
+    @apply bg-gradient-accent text-white shadow-soft hover:shadow-glow-accent focus:ring-accent-500;
+  }
+  
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-soft hover:shadow-md transition-all duration-300;
+  }
+  
+  .section-title {
+    @apply text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center;
+  }
+  
+  .section-subtitle {
+    @apply text-xl font-semibold text-primary-600 dark:text-primary-400 mb-3;
+  }
+  
+  .pattern-bg {
+    @apply bg-[size:20px_20px] bg-pattern-dots dark:bg-pattern-dots-dark opacity-30;
+  }
+}
+
+/* Utility classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-wellness;
+  }
+  
+  .text-gradient-accent {
+    @apply bg-clip-text text-transparent bg-gradient-accent;
+  }
+  
+  .text-gradient-secondary {
+    @apply bg-clip-text text-transparent bg-gradient-secondary;
+  }
+  
+  .animate-on-scroll {
+    @apply opacity-0 translate-y-4 transition-all duration-700;
+  }
+  
+  .animate-on-scroll.is-visible {
+    @apply opacity-100 translate-y-0;
+  }
 } 
