@@ -57,10 +57,12 @@ export default function AboutPage() {
               About Us
             </h1>
             <div className="mt-8 text-center">
-              <div className="inline-block rounded-full p-1 bg-gradient-wellness mb-4 shadow-glow">
-                <div className="h-32 w-32 rounded-full flex items-center justify-center text-white text-4xl font-bold">
-                  AS
-                </div>
+              <div className="mb-4">
+                <img 
+                  src="/images/about/abbhiraath.JPG" 
+                  alt="Acharya Abbhiraath Singh" 
+                  className="h-48 w-48 rounded-full object-cover mx-auto border-4 border-primary-100 dark:border-primary-800 shadow-glow"
+                />
               </div>
               <h2 className="text-2xl font-semibold text-primary-700 dark:text-primary-400">Acharya Abbhiraath Singh</h2>
               <p className="text-lg text-primary-600 dark:text-primary-500">(Nadi Vaidya)</p>
