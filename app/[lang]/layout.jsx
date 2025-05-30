@@ -15,7 +15,7 @@ export async function generateMetadata({ params }) {
   }
 }
 
-export default function LangLayout({ children, params }) {
+export default function LangLayout({ children, params, searchParams }) {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar lang={params.lang} />
