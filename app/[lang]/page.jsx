@@ -1,4 +1,31 @@
 import Link from 'next/link'
+import ServiceCard from '../../components/ServiceCard'
+
+// Featured services for the homepage - moved to the component for dynamic language routing
+const getServices = (lang) => [
+  {
+    name: 'Ayurveda',
+    description: 'Our Ayurveda services are designed to restore balance and promote natural healing through time-tested therapies and personalized care. We offer Ayurvedic consultations to understand your unique body constitution (Prakriti), followed by customized treatments and herbal remedies.',
+    detailedDescription: 'Ayurveda, the "science of life," is one of the world\'s oldest holistic healing systems. At Ayur Shuddhi Wellness, we practice authentic Ayurvedic principles that have been refined over thousands of years. Our comprehensive Ayurveda services include:\n\n1. **Personalized Consultation**: Our experienced practitioners assess your unique constitution (Prakriti) and current imbalances (Vikriti) through traditional diagnostic methods including pulse, tongue, and facial diagnosis.\n\n2. **Customized Treatment Plans**: Based on your consultation, we create individualized wellness programs that may include dietary recommendations, lifestyle modifications, herbal formulations, and therapeutic treatments.\n\n3. **Specialized Therapies**: Experience our range of traditional Ayurvedic therapies including Abhyanga (oil massage), Shirodhara (forehead oil flow), Swedana (herbal steam), and more.',
+    href: `services/ayurveda`,
+    image: '/images/services/ayurveda.JPG',
+    iconName: 'leaf',
+  },
+  {
+    name: 'Panchakarma',
+    description: 'Our Panchakarma services offer a profound detoxification and rejuvenation experience based on the ancient science of Ayurveda. Designed to eliminate deep-rooted toxins and restore balance to the body\'s doshas, our treatments include Abhyanga (therapeutic oil massage), Shirodhara, and more.',
+    href: `services/panchakarma`,
+    image: '/images/services/panchakarma.JPG',
+    iconName: 'flask',
+  },
+  {
+    name: 'Yoga, Pranayama, and Meditation',
+    description: 'Our services in Yoga, Pranayama, and Meditation are designed to bring balance, strength, and inner peace to your daily life. We offer guided yoga sessions that improve flexibility, posture, and physical health, while Pranayama helps enhance mental clarity.',
+    href: `services/yoga-meditation`,
+    image: '/images/services/Yoga_Pranayama_Meditation.JPG',
+    iconName: 'globe',
+  },
+];
 
 export const metadata = {
   title: 'Ayur Shuddhi Wellness - Holistic Health Solutions',
@@ -6,15 +33,13 @@ export const metadata = {
 }
 
 export default function HomePage({ params }) {
+  const featuredServices = getServices(params.lang);
+  
   return (
     <div className="bg-white dark:bg-gray-900">
-      {/* Hero section */}
-      <div className="relative isolate overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(45%_40%_at_50%_60%,rgba(20,184,166,0.15),rgba(255,255,255,0))] dark:bg-[radial-gradient(45%_40%_at_50%_60%,rgba(94,234,212,0.15),rgba(17,24,39,0))]"></div>
-        <div className="absolute inset-x-0 top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:top-80" aria-hidden="true">
-          <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary-200 to-primary-400 opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style={{ clipPath: 'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)' }}></div>
-        </div>
-        
+      {/* Hero section with background image */}
+      <div className="relative isolate overflow-hidden bg-gradient-to-b from-primary-50 to-white dark:from-gray-900 dark:to-gray-800">
+        <div className="absolute inset-0 pattern-bg"></div>
         <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <span className="inline-flex items-center rounded-full bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700 ring-1 ring-inset ring-primary-700/10 mb-6 animate-fade-in">
@@ -45,45 +70,51 @@ export default function HomePage({ params }) {
         </div>
       </div>
 
-      {/* Features section */}
-      <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
-        <div className="mx-auto max-w-2xl lg:text-center">
-          <span className="inline-flex items-center rounded-full bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700 ring-1 ring-inset ring-primary-700/10 mb-4">
-            Why Choose Us
-          </span>
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
-            Comprehensive Wellness Solutions
-          </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
-            Our holistic approach combines traditional Ayurvedic wisdom with modern wellness practices 
-            to provide you with personalized health solutions.
-          </p>
-        </div>
-        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-3 sm:gap-y-16">
-            {features.map((feature, index) => (
-              <div 
-                key={feature.name} 
-                className="card p-6 hover:scale-105 transition-transform duration-300"
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                <dt className="flex items-center gap-x-3 text-xl font-semibold leading-7 text-gray-900 dark:text-white">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-wellness text-white shadow-glow">
-                    <feature.icon className="h-6 w-6" aria-hidden="true" />
-                  </div>
-                  {feature.name}
-                </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600 dark:text-gray-300">
-                  <p className="flex-auto">{feature.description}</p>
-                </dd>
-              </div>
+      {/* Our Services section - Moved up to replace "Why Choose Us" */}
+      <div className="relative bg-white dark:bg-gray-900 py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:text-center mb-16">
+            <span className="inline-flex items-center rounded-full bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700 ring-1 ring-inset ring-primary-700/10 mb-4 dark:bg-primary-900/30 dark:text-primary-300">
+              Our Services
+            </span>
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+              Discover Our Wellness Offerings
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+              Experience our most popular holistic health services designed to restore balance and promote well-being.
+            </p>
+          </div>
+
+          {/* Featured services grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featuredServices.map((service, index) => (
+              <ServiceCard
+                key={service.name}
+                id={`featured-service-${index}`}
+                title={service.name}
+                description={service.description}
+                detailedDescription={service.detailedDescription}
+                image={service.image}
+                iconName={service.iconName}
+                href={`/${params.lang}/${service.href}`}
+              />
             ))}
-          </dl>
+          </div>
+
+          {/* View All Services button */}
+          <div className="mt-12 text-center">
+            <Link
+              href={`/${params.lang}/services`}
+              className="btn btn-primary"
+            >
+              View All Services
+            </Link>
+          </div>
         </div>
       </div>
 
       {/* Testimonial section */}
-      <div className="relative bg-gradient-to-b from-white to-primary-50 dark:from-gray-900 dark:to-gray-800 py-24 sm:py-32">
+      <div className="relative bg-gradient-to-b from-primary-50 to-white dark:from-gray-800 dark:to-gray-900 py-24 sm:py-32">
         <div className="absolute inset-0 pattern-bg"></div>
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">

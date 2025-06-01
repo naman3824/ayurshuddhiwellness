@@ -78,22 +78,68 @@ const config = {
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'bounce-slow': 'bounce 2s infinite',
-        'fade-in': 'fadeIn 0.5s ease-out',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'slide-in-right': 'slideInRight 0.5s ease-out',
+        'fade-in': 'fadeIn 0.5s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
+        'fade-in-up': 'fadeInUp 0.7s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
+        'fade-in-down': 'fadeInDown 0.7s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
+        'fade-in-left': 'fadeInLeft 0.7s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
+        'fade-in-right': 'fadeInRight 0.7s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
+        'slide-up': 'slideUp 0.5s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
+        'slide-down': 'slideDown 0.5s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
+        'slide-in-right': 'slideInRight 0.5s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
+        'slide-in-left': 'slideInLeft 0.5s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
+        'scale-in': 'scaleIn 0.5s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
+        'float': 'float 6s ease-in-out infinite',
+        'spin-slow': 'spin 8s linear infinite',
+        'wiggle': 'wiggle 1s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
+        fadeInUp: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        fadeInDown: {
+          '0%': { transform: 'translateY(-20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        fadeInLeft: {
+          '0%': { transform: 'translateX(-20px)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        fadeInRight: {
+          '0%': { transform: 'translateX(20px)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
         slideUp: {
           '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        slideDown: {
+          '0%': { transform: 'translateY(-20px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
         slideInRight: {
           '0%': { transform: 'translateX(20px)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        slideInLeft: {
+          '0%': { transform: 'translateX(-20px)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
+        },
+        scaleIn: {
+          '0%': { transform: 'scale(0.95)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
         },
       },
       // Add border radius utilities
@@ -101,6 +147,10 @@ const config = {
         'xl': '1rem',
         '2xl': '1.5rem',
         '3xl': '2rem',
+      },
+      transitionTimingFunction: {
+        'bounce': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+        'smooth': 'cubic-bezier(0.27, 0.01, 0.38, 1.06)',
       },
     },
   },
