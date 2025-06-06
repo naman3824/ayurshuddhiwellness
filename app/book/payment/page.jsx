@@ -1,41 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 import Link from 'next/link';
 
 export default function PaymentPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [bookingDetails, setBookingDetails] = useState(null);
-  
-  useEffect(() => {
-    // In a real implementation, you would validate the payment and retrieve booking details
-    // For now, we'll just use the URL parameters
-    const date = searchParams.get('date');
-    const time = searchParams.get('time');
-    const service = searchParams.get('service');
-    
-    if (date && time && service) {
-      setBookingDetails({
-        date,
-        time,
-        service,
-        confirmationNumber: 'AYR' + Math.floor(100000 + Math.random() * 900000)
-      });
-    } else {
-      // If booking details are missing, redirect back to booking page
-      router.push('/book');
-    }
-  }, [searchParams, router]);
-
-  if (!bookingDetails) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
-      </div>
-    );
-  }
+  // For static export, we'll use a mock confirmation instead of URL parameters
+  const [bookingDetails] = useState({
+    date: 'Please check your email for details',
+    time: 'Please check your email for details',
+    service: 'Your selected service',
+    confirmationNumber: 'AYR' + Math.floor(100000 + Math.random() * 900000)
+  });
 
   return (
     <div className="bg-white dark:bg-gray-900 min-h-screen">

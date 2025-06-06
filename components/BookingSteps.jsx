@@ -1,17 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { CalendarSelector } from './CalendarSelector';
 import { TimeSlotSelector } from './TimeSlotSelector';
 import { ServiceSelector } from './ServiceSelector';
 
 export function BookingSteps() {
-  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
+  const [showPaymentButton, setShowPaymentButton] = useState(false);
 
   // Function to handle moving to the next step
   const handleNextStep = () => {
@@ -19,9 +19,6 @@ export function BookingSteps() {
       setCurrentStep(currentStep + 1);
       // Scroll to top of the booking section
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      // If we're at the last step, proceed to payment
-      handleProceedToPayment();
     }
   };
 
@@ -32,17 +29,6 @@ export function BookingSteps() {
       // Scroll to top of the booking section
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  };
-
-  // Function to handle proceeding to payment
-  const handleProceedToPayment = () => {
-    // In a real implementation, you would validate the booking and process payment
-    // For now, we'll just redirect to the payment confirmation page with the booking details
-    router.push(
-      `/book/payment?date=${encodeURIComponent(selectedDate)}&time=${encodeURIComponent(
-        selectedTime
-      )}&service=${encodeURIComponent(selectedService)}`
-    );
   };
 
   // Check if the current step is complete and the next button should be enabled
@@ -58,6 +44,11 @@ export function BookingSteps() {
         return false;
     }
   };
+
+  // When we reach the final step and it's complete, show the payment button
+  if (currentStep === 4 && !showPaymentButton && isStepComplete()) {
+    setShowPaymentButton(true);
+  }
 
   return (
     <div className="bg-white dark:bg-gray-900 rounded-xl shadow-soft p-6 md:p-8">
@@ -188,13 +179,22 @@ export function BookingSteps() {
           <div></div>
         )}
 
-        <button
-          onClick={handleNextStep}
-          disabled={!isStepComplete()}
-          className={`btn-primary py-2 px-6 ${!isStepComplete() ? 'opacity-50 cursor-not-allowed' : ''}`}
-        >
-          {currentStep < 4 ? 'Next' : 'Proceed to Payment'}
-        </button>
+        {currentStep < 4 ? (
+          <button
+            onClick={handleNextStep}
+            disabled={!isStepComplete()}
+            className={`btn-primary py-2 px-6 ${!isStepComplete() ? 'opacity-50 cursor-not-allowed' : ''}`}
+          >
+            Next
+          </button>
+        ) : (
+          <Link
+            href="/book/payment"
+            className={`btn-primary py-2 px-6 ${!isStepComplete() ? 'opacity-50 pointer-events-none' : ''}`}
+          >
+            Proceed to Payment
+          </Link>
+        )}
       </div>
     </div>
   );
