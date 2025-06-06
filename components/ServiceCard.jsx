@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { toUrlSlug } from '../utils/urlUtils'
 
 // Icon components map
 const icons = {
@@ -93,6 +94,9 @@ export default function ServiceCard({ title, description, detailedDescription, i
     ));
   };
 
+  // Generate the service detail URL
+  const serviceDetailUrl = `/${params?.lang || 'en-IN'}/services/${toUrlSlug(title)}`;
+
   return (
     <div 
       ref={cardRef}
@@ -130,55 +134,23 @@ export default function ServiceCard({ title, description, detailedDescription, i
           
           {/* Description - always visible */}
           <div className="text-base leading-7 text-gray-600 dark:text-gray-300 flex-grow">
-            <p className={expanded ? '' : 'md:line-clamp-2'}>{description}</p>
+            <p className="md:line-clamp-2">{description}</p>
           </div>
           
-          {/* Expanded content - only visible when expanded */}
-          {expanded && (
-            <div 
-              ref={contentRef}
-              className="mt-6 text-base leading-7 text-gray-600 dark:text-gray-300 animate-fade-in"
+          {/* Details button as a link to service detail page */}
+          <div className="mt-4 flex justify-end items-center">
+            <Link 
+              href={serviceDetailUrl}
+              className="btn-primary py-2 px-4 rounded-md flex items-center gap-1 hover:scale-105 transform transition-transform duration-300"
             >
-              <hr className="my-4 border-gray-200 dark:border-gray-700" />
-              <div className="pt-2">
-                {renderFormattedText(detailedDescription || description)}
-              </div>
-            </div>
-          )}
-          
-          {/* Learn More button and service link */}
-          <div className="mt-4 flex justify-between items-center">
-            <button
-              onClick={toggleExpanded}
-              className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium transition-colors hover:scale-105 transform transition-transform duration-300 flex items-center gap-1"
-            >
-              {expanded ? 'Show Less' : 'Learn More'}
-              <svg 
-                className={`h-4 w-4 transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`} 
-                xmlns="http://www.w3.org/2000/svg" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                strokeWidth={1.5} 
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              Details
+              <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
-            </button>
-            
-            {href && (
-              <Link 
-                href={href}
-                className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium transition-colors flex items-center gap-1 hover:scale-105 transform transition-transform duration-300"
-              >
-                Details
-                <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </Link>
-            )}
+            </Link>
           </div>
         </div>
       </div>
     </div>
   )
-} 
+}

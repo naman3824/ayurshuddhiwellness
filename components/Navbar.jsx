@@ -94,7 +94,7 @@ export function Navbar({ lang }) {
               </div>
               <div className="ml-4">
                 <Link
-                  href={`/${lang}/contact`}
+                  href="/book"
                   className="btn btn-primary"
                 >
                   Book Consultation
@@ -151,7 +151,7 @@ export function Navbar({ lang }) {
             ))}
             <div className="mt-4 px-3">
               <Link
-                href={`/${lang}/contact`}
+                href="/book"
                 className="mobile-nav-item block w-full btn btn-primary text-center"
                 onClick={() => setIsOpen(false)}
                 style={{ animationDelay: `${navigation.length * 50}ms`, opacity: isOpen ? 1 : 0 }}
@@ -164,4 +164,4 @@ export function Navbar({ lang }) {
       </nav>
     </header>
   )
-} 
+}
