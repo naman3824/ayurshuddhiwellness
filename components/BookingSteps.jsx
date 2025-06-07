@@ -1,17 +1,30 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { CalendarSelector } from './CalendarSelector';
 import { TimeSlotSelector } from './TimeSlotSelector';
 import { ServiceSelector } from './ServiceSelector';
 
-export function BookingSteps() {
+// Client component that uses useSearchParams
+function BookingStepsClient() {
+  const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
   const [showPaymentButton, setShowPaymentButton] = useState(false);
+
+  // Check for service parameter in URL and pre-select it
+  useEffect(() => {
+    const serviceParam = searchParams.get('service');
+    if (serviceParam) {
+      setSelectedService(serviceParam);
+      // Optionally, you can automatically advance to the service step
+      // setCurrentStep(3);
+    }
+  }, [searchParams]);
 
   // Function to handle moving to the next step
   const handleNextStep = () => {
@@ -197,5 +210,14 @@ export function BookingSteps() {
         )}
       </div>
     </div>
+  );
+}
+
+// Wrapper component with Suspense boundary
+export function BookingSteps() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center">Loading booking form...</div>}>
+      <BookingStepsClient />
+    </Suspense>
   );
 }

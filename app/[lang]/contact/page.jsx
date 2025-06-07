@@ -39,7 +39,7 @@ export default function ContactPage() {
                   </div>
                   <div className="ml-3">
                     <dt className="font-semibold text-gray-900 dark:text-white">Address</dt>
-                    <dd className="mt-1">[Insert address]</dd>
+                    <dd className="mt-1">D-1 Engineer's Park, Sector Omega 1, Greater Noida, Gautam Buddha Nagar, Uttar Pradesh-201310</dd>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -51,8 +51,8 @@ export default function ContactPage() {
                   <div className="ml-3">
                     <dt className="font-semibold text-gray-900 dark:text-white">Phone</dt>
                     <dd className="mt-1">
-                      <a href="tel:8510049114" className="text-primary-600 dark:text-primary-400 hover:underline">
-                        8510049114
+                      <a href="tel:+918510049114" className="text-primary-600 dark:text-primary-400 hover:underline">
+                        +91 8510049114
                       </a>
                     </dd>
                   </div>

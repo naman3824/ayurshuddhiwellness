@@ -52,20 +52,6 @@ export default function HomePage({ params }) {
               Discover the ancient wisdom of Ayurveda combined with modern wellness practices. 
               At Ayur Shuddhi Wellness, we help you achieve balance in mind, body, and soul.
             </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Link
-                href={`/${params.lang}/services`}
-                className="btn btn-primary"
-              >
-                Explore Our Services
-              </Link>
-              <Link
-                href={`/${params.lang}/contact`}
-                className="group text-sm font-semibold leading-6 text-gray-900 dark:text-gray-200"
-              >
-                Contact Us <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1">→</span>
-              </Link>
-            </div>
           </div>
         </div>
       </div>
