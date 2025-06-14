@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export const metadata = {
   title: 'About Us - Ayur Shuddhi Wellness',
   description: 'Learn about Acharya Abbhiraath Singh, Nadi Vaidya and founder of Ayur Shuddhi Wellness, offering holistic health solutions through Ayurveda and modern wellness practices.',
@@ -42,7 +44,7 @@ const values = [
   },
 ]
 
-export default function AboutPage() {
+export default function AboutPage({ params: { lang } }) {
   return (
     <div className="bg-white dark:bg-gray-900">
       {/* Hero Section with Background */}
@@ -200,12 +202,12 @@ export default function AboutPage() {
                 uncover the path to a more harmonious, purposeful, and vibrant life.
               </p>
               <div className="mt-8">
-                <a 
-                  href="#contact" 
+                <Link 
+                  href={`/${lang}/contact`}
                   className="inline-block rounded-lg bg-white px-4 py-2.5 text-base font-semibold text-primary-600 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-colors"
                 >
                   Contact Me Today
-                </a>
+                </Link>
               </div>
             </div>
           </div>

@@ -82,36 +82,6 @@ export default function GalleryPage({ params }) {
           </div>
         </div>
       </div>
-
-      {/* CTA Section */}
-      <div className="bg-white dark:bg-gray-900">
-        <div className="mx-auto max-w-7xl py-16 sm:px-6 sm:py-24 lg:px-8">
-          <div className="relative isolate overflow-hidden bg-gradient-wellness px-6 py-16 shadow-2xl sm:rounded-3xl sm:px-16 md:py-24 lg:flex lg:gap-x-20 lg:px-24">
-            <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:text-left">
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Ready to be part of our gallery?
-              </h2>
-              <p className="mt-6 text-lg leading-8 text-gray-100">
-                Schedule a consultation with our experts and begin your wellness journey today.
-              </p>
-              <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
-                <Link
-                  href={`/${params.lang}/contact`}
-                  className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-primary-600 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  Contact Us Today
-                </Link>
-                <Link
-                  href={`/${params.lang}/services`}
-                  className="text-sm font-semibold leading-6 text-white group"
-                >
-                  Learn more <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1">→</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   )
 } 

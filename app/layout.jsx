@@ -27,6 +27,7 @@ export const metadata = {
   ],
 }
 
+// This is a root layout that wraps all pages
 export default function RootLayout({ children }) {
   return (
     <html lang="en-IN" suppressHydrationWarning className="scroll-smooth">
@@ -41,4 +42,4 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   )
-} 
+}

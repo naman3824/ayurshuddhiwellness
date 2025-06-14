@@ -131,6 +131,7 @@ const services = [
 
 export function ServiceSelector({ selectedService, onSelectService }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const isServicePreSelected = !!selectedService;
   
   // Filter services based on search term
   const filteredServices = services.filter(service =>
@@ -138,44 +139,55 @@ export function ServiceSelector({ selectedService, onSelectService }) {
     service.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // If a service is pre-selected, filter to show only that service
+  const displayServices = isServicePreSelected 
+    ? filteredServices.filter(service => service.name === selectedService)
+    : filteredServices;
+
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Select a Service</h2>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+          {isServicePreSelected ? 'Selected Service' : 'Select a Service'}
+        </h2>
         <p className="mt-2 text-gray-600 dark:text-gray-300">
-          Choose the service you would like to book
+          {isServicePreSelected 
+            ? 'You are booking the following service' 
+            : 'Choose the service you would like to book'}
         </p>
       </div>
 
-      {/* Search input */}
-      <div className="relative">
-        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-          </svg>
+      {!isServicePreSelected && (
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+            </svg>
+          </div>
+          <input
+            type="search"
+            className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            placeholder="Search for services..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
-        <input
-          type="search"
-          className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          placeholder="Search for services..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
+      )}
 
       {/* Services grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredServices.map((service) => {
+        {displayServices.map((service) => {
           const IconComponent = icons[service.iconName];
           const isSelected = selectedService === service.name;
           
           return (
             <div
               key={service.name}
-              onClick={() => onSelectService(service.name)}
+              onClick={isServicePreSelected ? undefined : () => onSelectService(service.name)}
               className={`
-                relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300
+                relative rounded-xl overflow-hidden transition-all duration-300
                 ${isSelected ? 'ring-4 ring-primary-500 dark:ring-primary-400 shadow-glow' : 'hover:shadow-md'}
+                ${!isServicePreSelected ? 'cursor-pointer' : 'cursor-default'}
               `}
             >
               <div className="relative h-48 w-full">

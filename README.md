@@ -1,36 +1,43 @@
 # Ayur Shuddhi Wellness
 
-A modern, statically-generated website for Ayur Shuddhi Wellness, built with Next.js 14 and Tailwind CSS.
+A modern, responsive website for Ayur Shuddhi Wellness, built with Next.js 14, React 18, and Tailwind CSS. This platform showcases holistic wellness services, including Ayurveda, Panchakarma, Yoga, and Meditation, with an integrated booking system.
 
-## Features
+## ✨ Features
 
 - 🌐 Multilingual support (currently English - India)
-- 📱 Fully responsive design
-- ⚡ Static site generation for optimal performance
-- 🎨 Modern, wellness-inspired UI
-- 🔍 SEO optimized
-- 🧩 Built with JavaScript for ease of development
+- 📱 Fully responsive design for all devices
+- ⚡ Fast, optimized performance with Next.js 14
+- 🎨 Modern, wellness-inspired UI with dark mode support
+- 📅 Interactive booking system with calendar and time slot selection
+- 📸 Beautiful gallery showcasing our wellness center and services
+- 📝 Service details with comprehensive descriptions and images
+- 📱 Mobile-first, accessible user interface
+- 🔍 SEO optimized for better discoverability
+- 🌓 Dark/light theme toggle
 
-## Tech Stack
+## 🛠 Tech Stack
 
-- Next.js 14
-- React 18
-- JavaScript
-- Tailwind CSS
-- ESLint
+- **Frontend Framework**: Next.js 14 with App Router
+- **UI Library**: React 18
+- **Styling**: Tailwind CSS with custom theming
+- **Icons**: Custom SVG and Heroicons
+- **Form Handling**: React Hook Form
+- **State Management**: React Context API
+- **Linting**: ESLint with Next.js defaults
+- **Build Tool**: Vite (via Next.js)
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js 18.17 or later
-- npm or yarn
+- npm (v9+) or yarn (v1.22+)
 
 ### Installation
 
 1. Clone the repository:
    ```bash
-   git clone [repository-url]
+   git clone https://github.com/yourusername/ayurshuddhiwellness.git
    cd ayurshuddhiwellness
    ```
 
@@ -38,17 +45,88 @@ A modern, statically-generated website for Ayur Shuddhi Wellness, built with Nex
    ```bash
    npm install
    # or
-   yarn install
+   yarn
    ```
 
-3. Run the development server:
+3. Start the development server:
    ```bash
    npm run dev
    # or
    yarn dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
+
+## 📂 Project Structure
+
+```
+ayurshuddhiwellness/
+├── app/                    # App Router pages and layouts
+│   ├── [lang]/             # Language-specific routes
+│   │   ├── about/          # About page
+│   │   ├── contact/        # Contact page
+│   │   ├── gallery/        # Photo gallery
+│   │   └── services/       # Services pages
+│   ├── book/               # Booking system
+│   └── globals.css         # Global styles
+├── components/             # Reusable components
+├── public/                 # Static files
+│   └── images/             # Image assets
+└── styles/                 # Global styles and Tailwind config
+```
+
+## 🌟 Key Features in Detail
+
+### Services
+- Detailed service pages for Ayurveda, Panchakarma, and Yoga/Meditation
+- Service-specific information and benefits
+- High-quality images and descriptions
+
+### Booking System
+- Step-by-step booking process
+- Calendar and time slot selection
+- Service and practitioner selection
+- Secure payment integration
+
+### Gallery
+- Beautiful image grid layout
+- Lightbox for full-screen viewing
+- Organized by categories
+
+### Responsive Design
+- Mobile-first approach
+- Optimized for all screen sizes
+- Touch-friendly interfaces
+
+## 🛠 Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Create production build
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run convert-heic` - Convert HEIC images to JPG (requires Node.js)
+
+## 🎨 Theming
+
+The application supports both light and dark modes, with smooth transitions between themes. The color scheme is based on a soothing, wellness-inspired palette.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with [Next.js](https://nextjs.org/)
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- Icons from [Heroicons](https://heroicons.com/)
 
 ### Building for Production
 

@@ -21,8 +21,8 @@ function BookingStepsClient() {
     const serviceParam = searchParams.get('service');
     if (serviceParam) {
       setSelectedService(serviceParam);
-      // Optionally, you can automatically advance to the service step
-      // setCurrentStep(3);
+      // Automatically advance to the next step if a service is pre-selected
+      setCurrentStep(2);
     }
   }, [searchParams]);
 
@@ -48,11 +48,11 @@ function BookingStepsClient() {
   const isStepComplete = () => {
     switch (currentStep) {
       case 1:
-        return selectedDate !== null;
-      case 2:
-        return selectedTime !== null;
-      case 3:
         return selectedService !== null;
+      case 2:
+        return selectedDate !== null;
+      case 3:
+        return selectedTime !== null;
       default:
         return false;
     }
@@ -104,12 +104,12 @@ function BookingStepsClient() {
                 }`}
               >
                 {step === 1
-                  ? 'Date'
-                  : step === 2
-                  ? 'Time'
-                  : step === 3
                   ? 'Service'
-                  : 'Payment'}
+                  : step === 2
+                  ? 'Date'
+                  : step === 3
+                  ? 'Time'
+                  : 'Review'}
               </span>
             </div>
           ))}
@@ -126,24 +126,24 @@ function BookingStepsClient() {
       {/* Step content */}
       <div className="mb-8">
         {currentStep === 1 && (
+          <ServiceSelector
+            selectedService={selectedService}
+            onSelectService={setSelectedService}
+          />
+        )}
+
+        {currentStep === 2 && (
           <CalendarSelector
             selectedDate={selectedDate}
             onSelectDate={setSelectedDate}
           />
         )}
 
-        {currentStep === 2 && (
+        {currentStep === 3 && (
           <TimeSlotSelector
             selectedDate={selectedDate}
             selectedTime={selectedTime}
             onSelectTime={setSelectedTime}
-          />
-        )}
-
-        {currentStep === 3 && (
-          <ServiceSelector
-            selectedService={selectedService}
-            onSelectService={setSelectedService}
           />
         )}
 

@@ -70,7 +70,13 @@ export function Navbar({ lang }) {
               href={`/${lang}`} 
               className="text-2xl font-bold text-gradient hover:scale-105 transition-transform duration-300 flex items-center"
             >
-              <span className="inline-block mr-2 h-8 w-8 rounded-full bg-gradient-wellness"></span>
+              <div className="mr-2 h-8 w-8 rounded-full overflow-hidden flex items-center justify-center bg-white p-0.5">
+                <img 
+                  src="/images/hero/logo.png" 
+                  alt="Ayur Shuddhi Wellness Logo" 
+                  className="h-full w-full object-cover" 
+                />
+              </div>
               Ayur Shuddhi Wellness
             </Link>
           </div>

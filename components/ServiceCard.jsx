@@ -137,11 +137,17 @@ export default function ServiceCard({ title, description, detailedDescription, i
             <p className="md:line-clamp-2">{description}</p>
           </div>
           
-          {/* Details button as a link to service detail page */}
-          <div className="mt-4 flex justify-end items-center">
+          {/* Action buttons */}
+          <div className="mt-4 flex justify-between items-center gap-3">
+            <Link 
+              href={`/book?service=${encodeURIComponent(title)}`}
+              className="btn-primary py-2 px-4 rounded-md flex-1 text-center justify-center hover:scale-105 transform transition-transform duration-300"
+            >
+              Book Now
+            </Link>
             <Link 
               href={serviceDetailUrl}
-              className="btn-primary py-2 px-4 rounded-md flex items-center gap-1 hover:scale-105 transform transition-transform duration-300"
+              className="btn-outline py-2 px-4 rounded-md flex-1 text-center justify-center hover:scale-105 transform transition-transform duration-300 flex items-center gap-1"
             >
               Details
               <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">

@@ -9,8 +9,14 @@ export function Footer({ lang }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:pr-8">
               <h3 className="text-xl font-bold text-gradient flex items-center">
-                <span className="inline-block mr-2 h-6 w-6 rounded-full bg-gradient-wellness"></span>
-                Ayur Shuddhi Wellness
+                <div className="mr-2 h-8 w-8 rounded-full overflow-hidden flex items-center justify-center bg-white p-0.5">
+                  <img 
+                    src="/images/hero/logo.png" 
+                    alt="Ayur Shuddhi Wellness Logo" 
+                    className="h-full w-full object-cover" 
+                  />
+                </div>
+                <span className="font-bold">Ayur Shuddhi Wellness</span>
               </h3>
               <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
                 Empowering Indian communities to connect their mind, body, and soul through innovative health practices.
