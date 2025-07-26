@@ -1,30 +1,29 @@
 import Link from 'next/link'
-import ServiceCard from '../../components/ServiceCard'
+import FeaturedServiceCard from '../../components/FeaturedServiceCard'
 import { MandalaPattern } from '../../components/MandalaDecoration'
 
-// Featured services for the homepage - moved to the component for dynamic language routing
-const getServices = (lang) => [
+// Featured services for the homepage - optimized for card display
+const getFeaturedServices = (lang) => [
   {
     name: 'Ayurveda',
-    description: 'Our Ayurveda services are designed to restore balance and promote natural healing through time-tested therapies and personalized care. We offer Ayurvedic consultations to understand your unique body constitution (Prakriti), followed by customized treatments and herbal remedies.',
-    detailedDescription: 'Ayurveda, the "science of life," is one of the world\'s oldest holistic healing systems. At Ayur Shuddhi Wellness, we practice authentic Ayurvedic principles that have been refined over thousands of years. Our comprehensive Ayurveda services include:\n\n1. **Personalized Consultation**: Our experienced practitioners assess your unique constitution (Prakriti) and current imbalances (Vikriti) through traditional diagnostic methods including pulse, tongue, and facial diagnosis.\n\n2. **Customized Treatment Plans**: Based on your consultation, we create individualized wellness programs that may include dietary recommendations, lifestyle modifications, herbal formulations, and therapeutic treatments.\n\n3. **Specialized Therapies**: Experience our range of traditional Ayurvedic therapies including Abhyanga (oil massage), Shirodhara (forehead oil flow), Swedana (herbal steam), and more.',
-    href: `services/ayurveda`,
+    description: 'Restore balance and promote natural healing through time-tested Ayurvedic therapies. Personalized consultations assess your unique constitution for customized treatments.',
+    href: 'services/ayurveda',
     image: '/images/services/ayurveda.JPG',
     iconName: 'leaf',
   },
   {
     name: 'Panchakarma',
-    description: 'Our Panchakarma services offer a profound detoxification and rejuvenation experience based on the ancient science of Ayurveda. Designed to eliminate deep-rooted toxins and restore balance to the body\'s doshas, our treatments include Abhyanga (therapeutic oil massage), Shirodhara, and more.',
-    href: `services/panchakarma`,
+    description: 'Experience profound detoxification and rejuvenation through ancient Ayurvedic science. Eliminate deep-rooted toxins and restore dosha balance with therapeutic treatments.',
+    href: 'services/panchakarma',
     image: '/images/services/panchakarma.JPG',
     iconName: 'flask',
   },
   {
-    name: 'Yoga, Pranayama, and Meditation',
-    description: 'Our services in Yoga, Pranayama, and Meditation are designed to bring balance, strength, and inner peace to your daily life. We offer guided yoga sessions that improve flexibility, posture, and physical health, while Pranayama helps enhance mental clarity.',
-    href: `services/yoga-meditation`,
+    name: 'Yoga & Meditation',
+    description: 'Achieve balance, strength, and inner peace through guided yoga, pranayama, and meditation sessions. Improve flexibility, posture, and mental clarity naturally.',
+    href: 'services/yoga-pranayama-and-meditation',
     image: '/images/services/Yoga_Pranayama_Meditation.JPG',
-    iconName: 'globe',
+    iconName: 'heart',
   },
 ];
 
@@ -34,7 +33,7 @@ export const metadata = {
 }
 
 export default function HomePage({ params }) {
-  const featuredServices = getServices(params.lang);
+  const featuredServices = getFeaturedServices(params.lang);
   
   return (
     <div className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -62,45 +61,54 @@ export default function HomePage({ params }) {
       {/* Our Services section with Indian-inspired design */}
       <div className="relative bg-gradient-to-b from-ivory-50 to-sage-50 dark:from-gray-900 dark:to-gray-800 section-padding">
         <div className="mx-auto max-w-7xl container-padding">
-          <div className="mx-auto max-w-3xl lg:text-center mb-20">
-            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-accent-100 to-primary-100 px-4 py-2 text-sm font-semibold text-accent-700 ring-1 ring-inset ring-accent-200/50 mb-6 shadow-soft fade-scale" style={{ animationDelay: '100ms' }}>
-              ⚡ Our Healing Services
+          <div className="mx-auto max-w-4xl lg:text-center mb-16">
+            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-accent-100 to-primary-100 px-4 py-2 text-sm font-semibold text-accent-700 ring-1 ring-inset ring-accent-200/50 mb-8 shadow-soft fade-scale" style={{ animationDelay: '100ms' }}>
+              ✨ Featured Services
             </span>
-            <h2 className="section-title staggered-fade" style={{ animationDelay: '200ms' }}>
-              Discover Our Wellness Offerings
+            <h2 className="text-4xl font-display font-bold tracking-tight text-gradient-indian sm:text-5xl mb-6 staggered-fade" style={{ animationDelay: '200ms' }}>
+              Our Most Popular Wellness Services
             </h2>
-            <p className="mt-8 text-xl leading-relaxed text-gray-600 dark:text-gray-300 staggered-fade" style={{ animationDelay: '300ms' }}>
-              Experience our most popular holistic health services designed to restore balance and promote well-being 
-              through ancient Indian healing traditions.
+            <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 staggered-fade max-w-3xl mx-auto" style={{ animationDelay: '300ms' }}>
+              Transform your health with our signature treatments that blend ancient Indian wisdom with modern wellness practices. 
+              Each service is designed to restore balance and promote holistic healing.
             </p>
           </div>
 
           {/* Featured services grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
             {featuredServices.map((service, index) => (
-              <div key={service.name} className="fade-in-up" style={{ animationDelay: `${index * 200}ms` }}>
-                <ServiceCard
-                  id={`featured-service-${index}`}
+              <div 
+                key={service.name} 
+                className="staggered-fade hover:scale-[1.02] transition-transform duration-300" 
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+                <FeaturedServiceCard
                   title={service.name}
                   description={service.description}
-                  detailedDescription={service.detailedDescription}
                   image={service.image}
                   iconName={service.iconName}
-                  href={`/${params.lang}/${service.href}`}
+                  href={service.href}
+                  lang={params.lang}
                 />
               </div>
             ))}
           </div>
 
           {/* View All Services button */}
-          <div className="mt-16 text-center">
+          <div className="mt-12 text-center">
             <Link
               href={`/${params.lang}/services`}
-              className="btn btn-primary text-lg px-8 py-4 hover-scale staggered-fade"
-              style={{ animationDelay: '800ms' }}
+              className="inline-flex items-center gap-2 btn btn-accent text-lg px-8 py-4 hover-scale staggered-fade group shadow-glow-teal"
+              style={{ animationDelay: '500ms' }}
             >
-              🌿 View All Services
+              <span>🌿 View All Services</span>
+              <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
             </Link>
+            <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 staggered-fade" style={{ animationDelay: '600ms' }}>
+              Explore our complete range of holistic wellness treatments
+            </p>
           </div>
         </div>
       </div>

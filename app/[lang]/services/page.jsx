@@ -117,15 +117,15 @@ export default function ServicesPage({ params }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div key={service.name} className="staggered-fade" style={{ animationDelay: `${index * 150}ms` }}>
-              <ServiceCard
-                id={`service-${index}`}
-                title={service.name}
-                description={service.description}
-                detailedDescription={service.detailedDescription}
-                image={service.image}
-                iconName={service.iconName}
-                href={`/${params.lang}/${service.href}`}
-              />
+            <ServiceCard
+              id={`service-${index}`}
+              title={service.name}
+              description={service.description}
+              detailedDescription={service.detailedDescription}
+              image={service.image}
+              iconName={service.iconName}
+              href={`/${params.lang}/${service.href}`}
+            />
             </div>
           ))}
         </div>

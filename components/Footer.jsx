@@ -114,15 +114,15 @@ export function Footer({ lang }) {
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <div className="flex items-center space-x-3">
                 <MandalaDecoration size="sm" opacity="medium" className="text-primary-400" />
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  © {new Date().getFullYear()} Ayur Shuddhi Wellness. All rights reserved.
-                </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              © {new Date().getFullYear()} Ayur Shuddhi Wellness. All rights reserved.
+            </p>
                 <MandalaDecoration size="sm" opacity="medium" className="text-accent-400" />
               </div>
               <div className="flex items-center">
                 <Link href={`/${lang === 'en-IN' ? 'hi-IN' : 'en-IN'}`} className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors duration-300 font-medium animated-underline">
                   {lang === 'en-IN' ? '🇮🇳 हिंदी में देखें' : '🇬🇧 View in English'}
-                </Link>
+              </Link>
               </div>
             </div>
           </div>
