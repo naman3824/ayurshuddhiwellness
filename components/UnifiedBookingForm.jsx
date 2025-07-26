@@ -169,7 +169,10 @@ export function UnifiedBookingForm({ preSelectedService }) {
       
       router.push('/book/review');
     } catch (error) {
-      console.error('Booking submission error:', error);
+      // Handle booking submission error silently in production
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Booking submission error:', error);
+      }
     } finally {
       setIsSubmitting(false);
     }

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 
 const ThemeContext = createContext({
   isDarkMode: false,
@@ -17,77 +17,100 @@ export function ThemeProvider({ children }) {
     const storedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    // Add transition class before any theme changes
-    document.documentElement.classList.add('transition-colors', 'duration-500');
+    // Add transition class before any theme changes - optimized for performance
+    const documentElement = document.documentElement;
+    documentElement.classList.add('transition-colors', 'duration-300');
+    
+    let shouldBeDark = false;
     
     if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+      shouldBeDark = true;
       setIsDarkMode(true);
-      document.documentElement.classList.add('dark');
+      documentElement.classList.add('dark');
     } else {
       setIsDarkMode(false);
-      document.documentElement.classList.remove('dark');
+      documentElement.classList.remove('dark');
     }
     
     // Mark theme as loaded after initial setup
     setIsThemeLoaded(true);
     
-    // Listen for system preference changes
+    // Listen for system preference changes with optimized handler
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e) => {
+    const handleSystemThemeChange = (e) => {
       // Only apply system preference if no manual preference is stored
       if (!localStorage.getItem('theme')) {
-        if (e.matches) {
-          setIsDarkMode(true);
-          document.documentElement.classList.add('dark');
-        } else {
-          setIsDarkMode(false);
-          document.documentElement.classList.remove('dark');
-        }
+        const newDarkMode = e.matches;
+        setIsDarkMode(newDarkMode);
+        
+        // Use requestAnimationFrame for smoother DOM updates
+        requestAnimationFrame(() => {
+          if (newDarkMode) {
+            documentElement.classList.add('dark');
+          } else {
+            documentElement.classList.remove('dark');
+          }
+        });
       }
     };
     
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    // Use modern event listener approach
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleSystemThemeChange);
+    } else {
+      // Fallback for older browsers
+      mediaQuery.addListener(handleSystemThemeChange);
+    }
+    
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', handleSystemThemeChange);
+      } else {
+        mediaQuery.removeListener(handleSystemThemeChange);
+      }
+    };
   }, []);
 
-  const toggleDarkMode = () => {
+  const toggleDarkMode = useCallback(() => {
     setIsDarkMode(prevMode => {
       const newMode = !prevMode;
+      
       // Update localStorage
       localStorage.setItem('theme', newMode ? 'dark' : 'light');
       
-      // Add a brief flash effect for theme change
-      const flashElement = document.createElement('div');
-      flashElement.className = 'fixed inset-0 bg-white dark:bg-gray-900 z-[9999] pointer-events-none';
-      flashElement.style.opacity = '0';
-      document.body.appendChild(flashElement);
+      // Optimized theme transition without excessive DOM manipulation
+      const documentElement = document.documentElement;
       
-      // Animate the flash
+      // Use CSS transitions instead of manual animation for better performance
       requestAnimationFrame(() => {
-        flashElement.style.transition = 'opacity 150ms ease';
-        flashElement.style.opacity = '0.1';
+        if (newMode) {
+          documentElement.classList.add('dark');
+        } else {
+          documentElement.classList.remove('dark');
+        }
         
-        setTimeout(() => {
-          // Update document class
-          if (newMode) {
-            document.documentElement.classList.add('dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-          }
-          
-          // Fade out the flash
-          flashElement.style.opacity = '0';
-          
-          // Remove the flash element after animation
-          setTimeout(() => {
-            document.body.removeChild(flashElement);
-          }, 150);
-        }, 100);
+        // Add a subtle visual feedback without creating DOM elements
+        documentElement.style.transform = 'scale(0.999)';
+        
+        requestAnimationFrame(() => {
+          documentElement.style.transform = '';
+        });
       });
       
       return newMode;
     });
-  };
+  }, []);
+
+  // Prevent hydration mismatch by not rendering theme-dependent content until loaded
+  if (!isThemeLoaded) {
+    return (
+      <ThemeContext.Provider value={{ isDarkMode: false, toggleDarkMode, isThemeLoaded: false }}>
+        <div className="invisible-initial">
+          {children}
+        </div>
+      </ThemeContext.Provider>
+    );
+  }
 
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode, isThemeLoaded }}>
@@ -97,5 +120,9 @@ export function ThemeProvider({ children }) {
 }
 
 export function useTheme() {
-  return useContext(ThemeContext);
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
 } 

@@ -1,185 +1,247 @@
 'use client';
 
 import Link from 'next/link'
+import { useRouter, usePathname } from 'next/navigation'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { DarkModeToggle } from './DarkModeToggle'
-import { MandalaDecoration } from './MandalaDecoration'
-import { useState, useEffect, useRef } from 'react'
 import { staggeredAnimation } from '../utils/animations'
 
-const navigation = [
-  { name: 'Home', href: '' },
-  { name: 'About', href: 'about' },
-  { name: 'Services', href: 'services' },
-  { name: 'Gallery', href: 'gallery' },
-  { name: 'Contact', href: 'contact' },
-]
-
-export function Navbar({ lang }) {
+export default function Navbar({ dict, lang = 'en-IN' }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef(null);
   const mobileMenuRef = useRef(null);
-  
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Memoize navigation items to prevent unnecessary re-renders
+  const navigation = useMemo(() => [
+    { name: dict?.nav?.home || 'Home', href: `/${lang}` },
+    { name: dict?.nav?.services || 'Services', href: `/${lang}/services` },
+    { name: dict?.nav?.gallery || 'Gallery', href: `/${lang}/gallery` },
+    { name: dict?.nav?.about || 'About', href: `/${lang}/about` },
+    { name: dict?.nav?.contact || 'Contact', href: `/${lang}/contact` },
+  ], [dict, lang]);
+
+  // Optimized scroll handler with throttling
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    let ticking = false;
     
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const isScrolled = window.scrollY > 10;
+          setScrolled(isScrolled);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    // Use passive listener for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
-  // Apply staggered animation to nav items
+
+  // Optimized navigation animation with proper cleanup
   useEffect(() => {
     if (navRef.current) {
       const navItems = navRef.current.querySelectorAll('.nav-item');
-      staggeredAnimation(navItems, 50);
       
-      // Make sure nav items are visible after animation is applied
-      setTimeout(() => {
-        navItems.forEach(item => {
-          item.style.opacity = 1;
+      if (navItems.length > 0) {
+        // Use requestAnimationFrame for smooth animations
+        requestAnimationFrame(() => {
+          staggeredAnimation(navItems, 50);
+          
+          // Make nav items visible with optimized timing
+          navItems.forEach((item, index) => {
+            setTimeout(() => {
+              item.style.opacity = '1';
+            }, index * 50 + 100);
+          });
         });
-      }, navigation.length * 50 + 100);
+      }
     }
-  }, []);
-  
-  // Handle mobile menu animation
+  }, [navigation]);
+
+  // Optimized mobile menu animation
   useEffect(() => {
     if (mobileMenuRef.current && isOpen) {
       const mobileNavItems = mobileMenuRef.current.querySelectorAll('.mobile-nav-item');
-      staggeredAnimation(mobileNavItems, 50);
       
-      // Make mobile nav items visible
-      setTimeout(() => {
-        mobileNavItems.forEach(item => {
-          item.style.opacity = 1;
-          item.style.transform = 'translateX(0)';
+      if (mobileNavItems.length > 0) {
+        requestAnimationFrame(() => {
+          staggeredAnimation(mobileNavItems, 50);
+          
+          // Animate mobile nav items
+          mobileNavItems.forEach((item, index) => {
+            setTimeout(() => {
+              item.style.opacity = '1';
+              item.style.transform = 'translateX(0)';
+            }, index * 50 + 50);
+          });
         });
-      }, mobileNavItems.length * 50 + 50);
+      }
     }
   }, [isOpen]);
 
+  // Optimized close menu handler
+  const closeMenu = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  // Toggle menu with proper state management
+  const toggleMenu = useCallback(() => {
+    setIsOpen(prev => !prev);
+  }, []);
+
+  // Handle link click with menu close
+  const handleLinkClick = useCallback((href) => {
+    closeMenu();
+    if (href !== pathname) {
+      router.push(href);
+    }
+  }, [closeMenu, pathname, router]);
+
+  // Close menu on escape key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        closeMenu();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      // Prevent body scroll when menu is open
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = '';
+    };
+  }, [isOpen, closeMenu]);
+
   return (
-    <header className={`relative bg-gradient-to-r from-ivory-100 via-ivory-50 to-sage-50 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 backdrop-blur-md sticky top-0 z-50 transition-all duration-300 border-b border-primary-100/20 dark:border-gray-700/50 ${
-      scrolled ? 'shadow-warm py-1' : 'shadow-soft py-2'
-    }`}>
-      {/* Subtle mandala decorations */}
-      <MandalaDecoration 
-        className="absolute top-2 right-4 text-primary-200 dark:text-primary-800" 
-        size="sm" 
-        opacity="low" 
-      />
-      <MandalaDecoration 
-        className="absolute bottom-2 left-4 text-accent-200 dark:text-accent-800" 
-        size="sm" 
-        opacity="low" 
-      />
-      
-      <nav className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center">
-            <Link 
-              href={`/${lang}`} 
-              className="text-2xl font-display font-bold text-gradient-indian hover:scale-105 transition-transform duration-300 flex items-center group"
+    <nav 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg' 
+          : 'bg-transparent'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 md:h-20">
+          {/* Logo */}
+          <Link 
+            href={`/${lang}`}
+            className="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-200"
+          >
+            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center">
+              <span className="text-white font-bold text-lg">A</span>
+            </div>
+            <span className="text-xl font-bold text-gray-900 dark:text-white">
+              Ayur Shuddhi
+            </span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div ref={navRef} className="hidden md:flex items-center space-x-8">
+            {navigation.map((link, index) => (
+              <button
+                key={link.href}
+                onClick={() => handleLinkClick(link.href)}
+                className={`nav-item opacity-0 px-3 py-2 text-sm font-medium transition-colors duration-200 hover:text-primary-600 dark:hover:text-primary-400 ${
+                  pathname === link.href
+                    ? 'text-primary-600 dark:text-primary-400'
+                    : 'text-gray-700 dark:text-gray-300'
+                }`}
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                {link.name}
+              </button>
+            ))}
+            
+            {/* Book Now Button */}
+            <Link
+              href="/book"
+              className="nav-item opacity-0 bg-gradient-to-r from-primary-500 to-accent-500 text-white px-6 py-2 rounded-full text-sm font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+              style={{ transitionDelay: `${navigation.length * 100}ms` }}
             >
-              <div className="mr-3 h-10 w-10 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-primary-100 to-accent-100 p-1 shadow-soft group-hover:shadow-glow transition-all duration-300">
-                <img 
-                  src="/images/hero/logo.png" 
-                  alt="Ayur Shuddhi Wellness Logo" 
-                  className="h-full w-full object-cover rounded-full" 
-                />
-              </div>
-              <span className="hidden sm:inline">Ayur Shuddhi Wellness</span>
-              <span className="sm:hidden">ASW</span>
+              {dict?.nav?.book || 'Book Now'}
             </Link>
-          </div>
-          
-          {/* Desktop navigation */}
-          <div className="hidden md:flex items-center space-x-1" ref={navRef}>
-            <div className="flex items-center">
-              {navigation.map((link, index) => (
-                <Link
-                  key={link.name}
-                  href={`/${lang}/${link.href}`}
-                  className="nav-item relative px-4 py-2 text-base font-semibold text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300 group animate-fade-in rounded-xl hover:bg-primary-25 dark:hover:bg-gray-700/50"
-                  style={{ animationDelay: `${index * 100}ms`, opacity: 1 }}
-                >
-                  {link.name}
-                  <span className="absolute bottom-1 left-0 w-0 h-0.5 bg-gradient-saffron group-hover:w-full transition-all duration-500 rounded-full"></span>
-                </Link>
-              ))}
-              <div className="ml-6 border-l border-secondary-200 dark:border-gray-600 pl-6">
-                <DarkModeToggle />
-              </div>
-              <div className="ml-6">
-                <Link
-                  href="/book"
-                  className="btn btn-primary hover-scale"
-                >
-                  📅 Book Consultation
-                </Link>
-              </div>
+
+            {/* Dark Mode Toggle */}
+            <div className="nav-item opacity-0" style={{ transitionDelay: `${(navigation.length + 1) * 100}ms` }}>
+              <DarkModeToggle />
             </div>
           </div>
-          
+
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-3">
+          <div className="md:hidden flex items-center space-x-4">
             <DarkModeToggle />
             <button
-              type="button"
-              className="p-2 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-primary-50 dark:hover:bg-gray-700 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300 hover-scale"
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={toggleMenu}
+              className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+              aria-label="Toggle menu"
               aria-expanded={isOpen}
-              aria-controls="mobile-menu"
             >
-              <span className="sr-only">Open main menu</span>
-              {isOpen ? (
-                <svg className="h-6 w-6 transition-transform duration-300 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="h-6 w-6 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                ) : (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
+                )}
+              </svg>
             </button>
           </div>
         </div>
-        
-        {/* Mobile menu with animation */}
-        <div 
-          className={`md:hidden overflow-hidden transition-all duration-500 ease-smooth ${
-            isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-          }`}
-          id="mobile-menu"
-          ref={mobileMenuRef}
-        >
-          <div className="px-4 pt-4 pb-6 space-y-2 sm:px-6 border-t border-primary-200/30 dark:border-gray-600 bg-gradient-to-b from-primary-25 to-white dark:from-gray-700 dark:to-gray-800">
-            {navigation.map((link, index) => (
-              <Link
-                key={link.name}
-                href={`/${lang}/${link.href}`}
-                className="mobile-nav-item block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 dark:text-gray-200 hover:bg-primary-50 dark:hover:bg-gray-700 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300 hover-lift"
-                onClick={() => setIsOpen(false)}
-                style={{ animationDelay: `${index * 50}ms`, opacity: isOpen ? 1 : 0 }}
-              >
-                {link.name}
-              </Link>
-            ))}
-            <div className="mt-6 px-2">
+
+        {/* Mobile Navigation */}
+        {isOpen && (
+          <div
+            ref={mobileMenuRef}
+            className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-900 shadow-xl border-t border-gray-200 dark:border-gray-700"
+          >
+            <div className="px-6 py-4 space-y-2">
+              {navigation.map((link, index) => (
+                <button
+                  key={link.href}
+                  onClick={() => handleLinkClick(link.href)}
+                  className={`mobile-nav-item opacity-0 translate-x-4 block w-full text-left px-4 py-3 text-base font-medium rounded-lg transition-all duration-200 ${
+                    pathname === link.href
+                      ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
+                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+                  }`}
+                >
+                  {link.name}
+                </button>
+              ))}
+              
+              {/* Mobile Book Button */}
               <Link
                 href="/book"
-                className="mobile-nav-item block w-full btn btn-primary text-center hover-scale"
-                onClick={() => setIsOpen(false)}
-                style={{ animationDelay: `${navigation.length * 50}ms`, opacity: isOpen ? 1 : 0 }}
+                onClick={closeMenu}
+                className="mobile-nav-item opacity-0 translate-x-4 block w-full text-center bg-gradient-to-r from-primary-500 to-accent-500 text-white px-6 py-3 rounded-lg text-base font-semibold hover:shadow-lg transition-all duration-200 mt-4"
               >
-                📅 Book Consultation
+                {dict?.nav?.book || 'Book Now'}
               </Link>
             </div>
           </div>
-        </div>
-      </nav>
-    </header>
-  )
+        )}
+      </div>
+
+      {/* Mobile menu overlay */}
+      {isOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/20 backdrop-blur-sm -z-10"
+          onClick={closeMenu}
+          aria-hidden="true"
+        />
+      )}
+    </nav>
+  );
 }

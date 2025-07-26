@@ -42,7 +42,10 @@ export default function ReviewPaymentPage() {
       sessionStorage.removeItem('bookingData');
       router.push('/book/payment'); // Reuse existing payment confirmation page
     } catch (error) {
-      console.error('Payment processing error:', error);
+      // Handle payment processing error silently in production
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Payment processing error:', error);
+      }
     } finally {
       setIsProcessing(false);
     }
