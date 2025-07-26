@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import GallerySlideshow from '../../../components/GallerySlideshow'
-import ImageGrid from '../../../components/ImageGrid'
+import EnhancedImageGrid from '../../../components/EnhancedImageGrid'
 import { getGalleryImages } from '../../../utils/galleryUtils'
+import { MandalaPattern } from '../../../components/MandalaDecoration'
 
 export const metadata = {
   title: 'Gallery - Ayur Shuddhi Wellness',
@@ -15,16 +15,16 @@ export default function GalleryPage({ params }) {
   const galleryImages = getGalleryImages();
   
   return (
-    <div className="bg-white dark:bg-gray-900">
+    <div className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-b from-primary-50 to-white dark:from-gray-800 dark:to-gray-900">
-        <div className="absolute inset-0 pattern-bg"></div>
+      <div className="relative bg-gradient-to-b from-primary-50 to-ivory-100 dark:from-gray-800 dark:to-gray-900">
+        <MandalaPattern />
         <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <span className="inline-flex items-center rounded-full bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700 ring-1 ring-inset ring-primary-700/10 mb-6 animate-fade-in dark:bg-primary-900/30 dark:text-primary-300">
+          <div className="mx-auto max-w-2xl text-center page-hero">
+            <span className="inline-flex items-center rounded-full bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700 ring-1 ring-inset ring-primary-700/10 mb-6 dark:bg-primary-900/30 dark:text-primary-300">
               Our Memories
             </span>
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl text-gradient">
+            <h1 className="text-4xl font-display font-bold tracking-tight text-gradient-indian sm:text-5xl">
               Our Wellness Journey in Pictures
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
@@ -34,24 +34,22 @@ export default function GalleryPage({ params }) {
         </div>
       </div>
 
-      {/* Slideshow Section */}
-      <div className="w-full">
-        <GallerySlideshow images={galleryImages} />
-      </div>
-
-      {/* Gallery Grid */}
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white mb-8 text-center">
-          Browse Our Gallery
+      {/* Enhanced Gallery Grid */}
+      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 page-section">
+        <h2 className="text-3xl font-display font-bold tracking-tight text-gradient-indian mb-12 text-center">
+          Wellness Gallery
         </h2>
-        <ImageGrid images={galleryImages} />
+        <p className="text-lg text-center text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
+          Click on any image to view it in full size and browse through our wellness journey.
+        </p>
+        <EnhancedImageGrid images={galleryImages} />
       </div>
 
       {/* Testimonial Section */}
-      <div className="bg-gradient-to-b from-white to-primary-50 dark:from-gray-900 dark:to-gray-800 py-16">
+      <div className="bg-gradient-to-b from-ivory-50 to-sage-100 dark:from-gray-900 dark:to-gray-800 py-16 page-section">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h2 className="text-3xl font-display font-bold tracking-tight text-gradient-indian">
               Experiences That Transform
             </h2>
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
@@ -59,7 +57,7 @@ export default function GalleryPage({ params }) {
             </p>
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-            <div className="card p-8 text-center">
+            <div className="card p-8 text-center hover-lift">
               <div className="flex justify-center mb-4">
                 <svg className="h-8 w-8 text-primary-500" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" />
@@ -70,7 +68,7 @@ export default function GalleryPage({ params }) {
                 Acharya Abbhiraath's approach to healing has completely transformed my understanding of health."
               </p>
               <div className="mt-8 flex items-center justify-center">
-                <div className="h-10 w-10 rounded-full bg-gradient-to-r from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold">
+                <div className="h-10 w-10 rounded-full bg-gradient-saffron flex items-center justify-center text-white font-bold shadow-glow">
                   M
                 </div>
                 <div className="ml-4 text-left">

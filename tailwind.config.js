@@ -8,71 +8,120 @@ const config = {
   theme: {
     extend: {
       colors: {
-        // Balanced primary color palette (teal/green) - works well in both light/dark
+        // Warm saffron/orange primary palette - Indian-inspired
         primary: {
+          50: '#fffbf0',
+          100: '#fef4d8',
+          200: '#fde8b1',
+          300: '#fbd97a',
+          400: '#f8c441',
+          500: '#f6b420', // Main saffron
+          600: '#ea9a0a',
+          700: '#c27d0b',
+          800: '#9c6210',
+          900: '#7e5011',
+          950: '#472a05',
+        },
+        // Calming teal - for accent and balance
+        accent: {
           50: '#f0fdfa',
           100: '#ccfbf1',
           200: '#99f6e4',
           300: '#5eead4',
           400: '#2dd4bf',
-          500: '#14b8a6',
+          500: '#14b8a6', // Main teal
           600: '#0d9488',
           700: '#0f766e',
           800: '#115e59',
           900: '#134e4a',
           950: '#042f2e',
         },
-        // Warm accent color (amber) - provides nice contrast in both themes
-        accent: {
-          50: '#fffbeb',
-          100: '#fef3c7',
-          200: '#fde68a',
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
-          700: '#b45309',
-          800: '#92400e',
-          900: '#78350f',
-          950: '#451a03',
-        },
-        // Secondary accent (purple) for additional highlights
+        // Muted clay/terracotta - for secondary accents
         secondary: {
-          50: '#faf5ff',
-          100: '#f3e8ff',
-          200: '#e9d5ff',
-          300: '#d8b4fe',
-          400: '#c084fc',
-          500: '#a855f7',
-          600: '#9333ea',
-          700: '#7e22ce',
-          800: '#6b21a8',
-          900: '#581c87',
-          950: '#3b0764',
+          50: '#fdf8f6',
+          100: '#f2e8e5',
+          200: '#eaddd7',
+          300: '#e0cec7',
+          400: '#d2bab0',
+          500: '#bfa094',
+          600: '#a18072',
+          700: '#977669',
+          800: '#846358',
+          900: '#43302b',
+          950: '#362318',
+        },
+        // Soft ivory variations - updated for reduced brightness
+        ivory: {
+          50: '#faf8f4',
+          100: '#f5f3ef', // Soft ivory #F5F3EF
+          200: '#f0edea',
+          300: '#ebe8e4',
+          400: '#e6e3df',
+          500: '#f5f3ef', // Main soft ivory
+          600: '#e0ddd9',
+          700: '#d0cdc9',
+          800: '#c0bdb9',
+          900: '#b0ada9',
+        },
+        // Light sage variations - new addition
+        sage: {
+          50: '#f0f9f0',
+          100: '#e1f2e1',
+          200: '#c3e6c3',
+          300: '#a4d9a4',
+                     400: '#8ede84', // Light sage #8EDE84
+          500: '#8ede84', // Corrected light sage
+          600: '#7bc97b',
+          700: '#68b468',
+          800: '#559f55',
+          900: '#428a42',
         },
       },
       fontFamily: {
-        sans: ['Inter var', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: [
+          'Noto Sans', 
+          'Poppins',
+          'system-ui', 
+          '-apple-system', 
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica Neue',
+          'Arial',
+          'sans-serif'
+        ],
+        display: [
+          'Poppins',
+          'Noto Sans',
+          'system-ui', 
+          '-apple-system', 
+          'sans-serif'
+        ],
       },
       spacing: {
         '128': '32rem',
       },
-      // Enhanced gradient utilities with new colors
+      // Enhanced gradient utilities with new Indian colors
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'gradient-wellness': 'linear-gradient(to right, #14b8a6, #0d9488)',
-        'gradient-accent': 'linear-gradient(to right, #f59e0b, #d97706)',
-        'gradient-secondary': 'linear-gradient(to right, #a855f7, #7e22ce)',
-        'pattern-dots': 'radial-gradient(#14b8a6 1px, transparent 1px)',
-        'pattern-dots-dark': 'radial-gradient(rgba(94, 234, 212, 0.3) 1px, transparent 1px)',
+        'gradient-saffron': 'linear-gradient(to right, #f6b420, #ea9a0a)',
+        'gradient-wellness': 'linear-gradient(to right, #f6b420, #14b8a6)', // Saffron to teal
+        'gradient-teal': 'linear-gradient(to right, #14b8a6, #0d9488)',
+        'gradient-clay': 'linear-gradient(to right, #bfa094, #846358)',
+        'gradient-warm': 'linear-gradient(135deg, #f6b420, #14b8a6, #bfa094)', // Multi-color Indian gradient
+        'pattern-dots': 'radial-gradient(#f6b420 1px, transparent 1px)',
+        'pattern-dots-dark': 'radial-gradient(rgba(246, 180, 32, 0.3) 1px, transparent 1px)',
+        'pattern-mandala': 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23f6b420" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
       },
-      // Enhanced box shadow utilities
+      // Enhanced box shadow utilities with warm tones
       boxShadow: {
         'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        'glow': '0 0 15px rgba(20, 184, 166, 0.5)',
-        'glow-accent': '0 0 15px rgba(245, 158, 11, 0.5)',
-        'inner-glow': 'inset 0 2px 4px 0 rgba(20, 184, 166, 0.06)',
+        'glow': '0 0 15px rgba(246, 180, 32, 0.5)', // Saffron glow
+        'glow-teal': '0 0 15px rgba(20, 184, 166, 0.5)',
+        'glow-clay': '0 0 15px rgba(191, 160, 148, 0.5)',
+        'inner-glow': 'inset 0 2px 4px 0 rgba(246, 180, 32, 0.06)',
+        'warm': '0 10px 25px -5px rgba(246, 180, 32, 0.1), 0 10px 10px -5px rgba(246, 180, 32, 0.04)',
       },
       // Enhanced animation utilities
       animation: {
@@ -91,6 +140,7 @@ const config = {
         'float': 'float 6s ease-in-out infinite',
         'spin-slow': 'spin 8s linear infinite',
         'wiggle': 'wiggle 1s ease-in-out infinite',
+        'mandala-rotate': 'mandalaRotate 20s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -140,6 +190,10 @@ const config = {
         wiggle: {
           '0%, 100%': { transform: 'rotate(-3deg)' },
           '50%': { transform: 'rotate(3deg)' },
+        },
+        mandalaRotate: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
         },
       },
       // Add border radius utilities

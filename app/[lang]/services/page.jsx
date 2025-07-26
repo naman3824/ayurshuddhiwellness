@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import ServiceCard from '../../../components/ServiceCard'
+import { MandalaPattern } from '../../../components/MandalaDecoration'
 
 const services = [
   {
@@ -91,16 +92,16 @@ export default function ServicesPage({ params }) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900">
+    <div className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Hero section with gradient background */}
-      <div className="relative bg-gradient-to-b from-primary-50 to-white dark:from-gray-800 dark:to-gray-900">
-        <div className="absolute inset-0 pattern-bg"></div>
+      <div className="relative bg-gradient-to-b from-primary-50 to-ivory-100 dark:from-gray-800 dark:to-gray-900">
+        <MandalaPattern />
         <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <span className="inline-flex items-center rounded-full bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700 ring-1 ring-inset ring-primary-700/10 mb-6 animate-fade-in dark:bg-primary-900/30 dark:text-primary-300">
+          <div className="mx-auto max-w-2xl lg:text-center page-hero">
+            <span className="inline-flex items-center rounded-full bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700 ring-1 ring-inset ring-primary-700/10 mb-6 dark:bg-primary-900/30 dark:text-primary-300">
               Our Offerings
             </span>
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl text-gradient">
+            <h1 className="text-4xl font-display font-bold tracking-tight text-gradient-indian sm:text-5xl">
               Holistic Wellness Solutions
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
@@ -112,19 +113,20 @@ export default function ServicesPage({ params }) {
       </div>
 
       {/* Services grid */}
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 page-section">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <ServiceCard
-              key={service.name}
-              id={`service-${index}`}
-              title={service.name}
-              description={service.description}
-              detailedDescription={service.detailedDescription}
-              image={service.image}
-              iconName={service.iconName}
-              href={`/${params.lang}/${service.href}`}
-            />
+            <div key={service.name} className="staggered-fade" style={{ animationDelay: `${index * 150}ms` }}>
+              <ServiceCard
+                id={`service-${index}`}
+                title={service.name}
+                description={service.description}
+                detailedDescription={service.detailedDescription}
+                image={service.image}
+                iconName={service.iconName}
+                href={`/${params.lang}/${service.href}`}
+              />
+            </div>
           ))}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { MandalaPattern } from '../../../components/MandalaDecoration';
 
 export const metadata = {
   title: 'About Us - Ayur Shuddhi Wellness',
@@ -46,16 +47,16 @@ const values = [
 
 export default function AboutPage({ params: { lang } }) {
   return (
-    <div className="bg-white dark:bg-gray-900">
+    <div className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Hero Section with Background */}
-      <div className="relative bg-gradient-to-b from-primary-50 to-white dark:from-gray-800 dark:to-gray-900">
-        <div className="absolute inset-0 pattern-bg"></div>
+      <div className="relative bg-gradient-to-b from-primary-50 to-ivory-100 dark:from-gray-800 dark:to-gray-900">
+        <MandalaPattern />
         <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <span className="inline-flex items-center rounded-full bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700 ring-1 ring-inset ring-primary-700/10 mb-6 animate-fade-in dark:bg-primary-900/30 dark:text-primary-300">
+          <div className="mx-auto max-w-2xl lg:text-center page-hero">
+            <span className="inline-flex items-center rounded-full bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700 ring-1 ring-inset ring-primary-700/10 mb-6 dark:bg-primary-900/30 dark:text-primary-300">
               Our Story
             </span>
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl text-gradient">
+            <h1 className="text-4xl font-display font-bold tracking-tight text-gradient-indian sm:text-5xl">
               About Us
             </h1>
             <div className="mt-8 text-center">
@@ -69,12 +70,6 @@ export default function AboutPage({ params: { lang } }) {
               <h2 className="text-2xl font-semibold text-primary-700 dark:text-primary-400">Acharya Abbhiraath Singh</h2>
               <p className="text-lg text-primary-600 dark:text-primary-500">(Nadi Vaidya)</p>
               <p className="mt-2 text-gray-700 dark:text-gray-300">Health & Wellness Coach | Spiritual Coach</p>
-              <div className="mt-3 inline-flex items-center text-gray-700 dark:text-gray-300 bg-white/80 dark:bg-gray-800/80 px-4 py-2 rounded-full shadow-soft">
-                <svg className="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-                8510049114
-              </div>
             </div>
           </div>
         </div>
@@ -82,7 +77,7 @@ export default function AboutPage({ params: { lang } }) {
 
       <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
         {/* Welcome Section */}
-        <div className="mx-auto max-w-3xl card p-8 hover:shadow-glow transition-all duration-300">
+        <div className="mx-auto max-w-3xl card p-8 hover:shadow-glow transition-all duration-300 page-section">
           <h2 className="text-2xl font-bold tracking-tight text-primary-700 dark:text-primary-400">Namaste and Welcome</h2>
           <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
             I am Acharya Abbhiraath Singh, a dedicated Holistic Wellness Practitioner with over a decade of experience 
@@ -93,7 +88,7 @@ export default function AboutPage({ params: { lang } }) {
         </div>
 
         {/* Background Section */}
-        <div className="mx-auto mt-16 max-w-3xl">
+        <div className="mx-auto mt-16 max-w-3xl page-section">
           <div className="flex items-center mb-6">
             <div className="h-1 flex-1 bg-gradient-to-r from-transparent to-primary-500/50 dark:to-primary-500/30"></div>
             <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white px-4">My Background</h2>
@@ -119,7 +114,7 @@ export default function AboutPage({ params: { lang } }) {
         </div>
 
         {/* Services Section */}
-        <div className="mx-auto mt-16 max-w-3xl">
+        <div className="mx-auto mt-16 max-w-3xl page-section">
           <div className="flex items-center mb-6">
             <div className="h-1 flex-1 bg-gradient-to-r from-transparent to-primary-500/50 dark:to-primary-500/30"></div>
             <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white px-4">What I Offer</h2>
@@ -169,7 +164,7 @@ export default function AboutPage({ params: { lang } }) {
         </div>
 
         {/* Philosophy Section */}
-        <div className="mx-auto mt-16 max-w-3xl">
+        <div className="mx-auto mt-16 max-w-3xl page-section">
           <div className="flex items-center mb-6">
             <div className="h-1 flex-1 bg-gradient-to-r from-transparent to-primary-500/50 dark:to-primary-500/30"></div>
             <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white px-4">My Philosophy</h2>
@@ -190,31 +185,10 @@ export default function AboutPage({ params: { lang } }) {
           </div>
         </div>
 
-        {/* Call to Action */}
-        <div className="mx-auto mt-16 max-w-3xl">
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-wellness p-8 shadow-2xl">
-            <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
-            <div className="relative">
-              <h2 className="text-2xl font-bold tracking-tight text-white">Let's Begin Your Journey</h2>
-              <p className="mt-6 text-lg leading-8 text-white/90">
-                Whether you're seeking relief from health challenges, looking to deepen your spiritual practice, or 
-                striving for holistic well-being, I invite you to embark on this journey with me. Together, we will 
-                uncover the path to a more harmonious, purposeful, and vibrant life.
-              </p>
-              <div className="mt-8">
-                <Link 
-                  href={`/${lang}/contact`}
-                  className="inline-block rounded-lg bg-white px-4 py-2.5 text-base font-semibold text-primary-600 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-colors"
-                >
-                  Contact Me Today
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+
 
         {/* Values Section with Images */}
-        <div className="mx-auto mt-16 max-w-3xl">
+        <div className="mx-auto mt-16 max-w-3xl page-section">
           <div className="flex items-center mb-6">
             <div className="h-1 flex-1 bg-gradient-to-r from-transparent to-primary-500/50 dark:to-primary-500/30"></div>
             <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white px-4">Our Values</h2>

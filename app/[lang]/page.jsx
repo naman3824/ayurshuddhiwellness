@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import ServiceCard from '../../components/ServiceCard'
+import { MandalaPattern } from '../../components/MandalaDecoration'
 
 // Featured services for the homepage - moved to the component for dynamic language routing
 const getServices = (lang) => [
@@ -36,64 +37,69 @@ export default function HomePage({ params }) {
   const featuredServices = getServices(params.lang);
   
   return (
-    <div className="bg-white dark:bg-gray-900">
-      {/* Hero section with background image */}
-      <div className="relative isolate overflow-hidden bg-gradient-to-b from-primary-50 to-white dark:from-gray-900 dark:to-gray-800">
-        <div className="absolute inset-0 pattern-bg"></div>
+    <div className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      {/* Hero section with Indian-inspired design */}
+      <div className="relative isolate overflow-hidden bg-gradient-to-b from-primary-50 to-ivory-100 dark:from-gray-900 dark:to-gray-800">
+        <MandalaPattern />
         <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <span className="inline-flex items-center rounded-full bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700 ring-1 ring-inset ring-primary-700/10 mb-6 animate-fade-in">
-              Holistic Wellness
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-primary-100 to-accent-100 px-4 py-2 text-sm font-semibold text-primary-700 ring-1 ring-inset ring-primary-200/50 mb-8 fade-scale shadow-soft">
+              🕉️ Holistic Wellness & Ancient Wisdom
             </span>
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl text-gradient">
-              Transform Your Life Through Holistic Wellness
+            <h1 className="text-5xl font-display font-bold tracking-tight text-gradient-indian sm:text-7xl slide-in-left">
+              Transform Your Life Through <span className="text-gradient-saffron">Holistic Wellness</span>
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+            <p className="mt-8 text-xl leading-relaxed text-gray-600 dark:text-gray-300 slide-in-right" style={{ animationDelay: '300ms' }}>
               Discover the ancient wisdom of Ayurveda combined with modern wellness practices. 
-              At Ayur Shuddhi Wellness, we help you achieve balance in mind, body, and soul.
+              At Ayur Shuddhi Wellness, we help you achieve perfect balance in mind, body, and soul through 
+              time-tested Indian healing traditions.
             </p>
+
           </div>
         </div>
       </div>
 
-      {/* Our Services section - Moved up to replace "Why Choose Us" */}
-      <div className="relative bg-white dark:bg-gray-900 py-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center mb-16">
-            <span className="inline-flex items-center rounded-full bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700 ring-1 ring-inset ring-primary-700/10 mb-4 dark:bg-primary-900/30 dark:text-primary-300">
-              Our Services
+      {/* Our Services section with Indian-inspired design */}
+      <div className="relative bg-gradient-to-b from-ivory-50 to-sage-50 dark:from-gray-900 dark:to-gray-800 section-padding">
+        <div className="mx-auto max-w-7xl container-padding">
+          <div className="mx-auto max-w-3xl lg:text-center mb-20">
+            <span className="inline-flex items-center rounded-full bg-gradient-to-r from-accent-100 to-primary-100 px-4 py-2 text-sm font-semibold text-accent-700 ring-1 ring-inset ring-accent-200/50 mb-6 shadow-soft fade-scale" style={{ animationDelay: '100ms' }}>
+              ⚡ Our Healing Services
             </span>
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+            <h2 className="section-title staggered-fade" style={{ animationDelay: '200ms' }}>
               Discover Our Wellness Offerings
             </h2>
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
-              Experience our most popular holistic health services designed to restore balance and promote well-being.
+            <p className="mt-8 text-xl leading-relaxed text-gray-600 dark:text-gray-300 staggered-fade" style={{ animationDelay: '300ms' }}>
+              Experience our most popular holistic health services designed to restore balance and promote well-being 
+              through ancient Indian healing traditions.
             </p>
           </div>
 
           {/* Featured services grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {featuredServices.map((service, index) => (
-              <ServiceCard
-                key={service.name}
-                id={`featured-service-${index}`}
-                title={service.name}
-                description={service.description}
-                detailedDescription={service.detailedDescription}
-                image={service.image}
-                iconName={service.iconName}
-                href={`/${params.lang}/${service.href}`}
-              />
+              <div key={service.name} className="fade-in-up" style={{ animationDelay: `${index * 200}ms` }}>
+                <ServiceCard
+                  id={`featured-service-${index}`}
+                  title={service.name}
+                  description={service.description}
+                  detailedDescription={service.detailedDescription}
+                  image={service.image}
+                  iconName={service.iconName}
+                  href={`/${params.lang}/${service.href}`}
+                />
+              </div>
             ))}
           </div>
 
           {/* View All Services button */}
-          <div className="mt-12 text-center">
+          <div className="mt-16 text-center">
             <Link
               href={`/${params.lang}/services`}
-              className="btn btn-primary"
+              className="btn btn-primary text-lg px-8 py-4 hover-scale staggered-fade"
+              style={{ animationDelay: '800ms' }}
             >
-              View All Services
+              🌿 View All Services
             </Link>
           </div>
         </div>
