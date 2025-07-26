@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { UnifiedBookingForm } from '../../components/UnifiedBookingForm';
 import { MandalaPattern } from '../../components/MandalaDecoration';
 
-export default function BookingPage() {
+function BookingContent() {
   const searchParams = useSearchParams();
   const [preSelectedService, setPreSelectedService] = useState('');
 
@@ -52,5 +52,20 @@ export default function BookingPage() {
         <UnifiedBookingForm preSelectedService={preSelectedService} />
       </div>
     </div>
+  );
+}
+
+export default function BookingPage() {
+  return (
+    <Suspense fallback={
+      <div className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-300">Loading booking form...</p>
+        </div>
+      </div>
+    }>
+      <BookingContent />
+    </Suspense>
   );
 }

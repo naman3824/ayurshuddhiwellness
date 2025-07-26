@@ -1,70 +1,35 @@
-import fs from 'fs';
-import path from 'path';
-import { ensureDirectoryExists, getFileExtension, fileExists } from './fileUtils';
-
 /**
  * Gets all image files from the gallery directory
+ * For static builds, we'll use a predefined list of images
  * @returns {Array} Array of image objects with src and alt properties
  */
 export function getGalleryImages() {
-  try {
-    const galleryDir = path.join(process.cwd(), 'public/images/gallery');
-    
-    // Ensure gallery directory exists
-    if (!ensureDirectoryExists(galleryDir)) {
-      return [];
-    }
-    
-    // Get all files in the directory
-    const files = fs.readdirSync(galleryDir);
-    
-    // Filter for supported image extensions
-    const supportedExtensions = ['.jpg', '.jpeg', '.png', '.heic'];
-    const imageFiles = files.filter(file => {
-      const ext = getFileExtension(file);
-      return supportedExtensions.includes(ext);
-    });
-    
-    // Create image objects
-    let images = imageFiles.map((file, index) => {
-      const ext = getFileExtension(file);
-      
-      // For HEIC files, check if a converted JPG version exists
-      // If not, we'll use the HEIC file and handle conversion/fallback in the component
-      let src = `/images/gallery/${file}`;
-      
-      if (ext === '.heic') {
-        const jpgVersion = file.replace('.heic', '.jpg').replace('.HEIC', '.jpg');
-        const jpgPath = path.join(galleryDir, jpgVersion);
-        
-        if (fileExists(jpgPath)) {
-          src = `/images/gallery/${jpgVersion}`;
-        }
-      }
-      
-      return {
-        src,
-        alt: `Ayur Shuddhi Wellness Session ${index + 1}`,
-        // Remove title to eliminate captions
-      };
-    });
-    
-    // Filter out Wellness Session 14 and 16 based on file names
-    // Since we don't know the exact file names, we'll filter by index
-    // assuming the files are sorted and indexed correctly
-    const excludedSessionNumbers = [14, 16];
-    
-    // Filter out images that correspond to the excluded session numbers
-    images = images.filter((_, index) => {
-      const sessionNumber = index + 1; // Session numbers are 1-indexed
-      return !excludedSessionNumbers.includes(sessionNumber);
-    });
-    
-    return images;
-  } catch (error) {
-    console.error('Error loading gallery images:', error);
-    return [];
-  }
+  // Static list of gallery images for build compatibility
+  const galleryImages = [
+    { src: '/images/gallery/IMG_7102.JPG', alt: 'Ayur Shuddhi Wellness Session 1' },
+    { src: '/images/gallery/IMG_7104.JPG', alt: 'Ayur Shuddhi Wellness Session 2' },
+    { src: '/images/gallery/IMG_7106.JPG', alt: 'Ayur Shuddhi Wellness Session 3' },
+    { src: '/images/gallery/IMG_7108.JPG', alt: 'Ayur Shuddhi Wellness Session 4' },
+    { src: '/images/gallery/IMG_7116.JPG', alt: 'Ayur Shuddhi Wellness Session 5' },
+    { src: '/images/gallery/IMG_7118.JPG', alt: 'Ayur Shuddhi Wellness Session 6' },
+    { src: '/images/gallery/IMG_7119.JPG', alt: 'Ayur Shuddhi Wellness Session 7' },
+    { src: '/images/gallery/IMG_7120.JPG', alt: 'Ayur Shuddhi Wellness Session 8' },
+    { src: '/images/gallery/IMG_7121.JPG', alt: 'Ayur Shuddhi Wellness Session 9' },
+    { src: '/images/gallery/IMG_7122.JPG', alt: 'Ayur Shuddhi Wellness Session 10' },
+    { src: '/images/gallery/IMG_7127.JPG', alt: 'Ayur Shuddhi Wellness Session 11' },
+    { src: '/images/gallery/IMG_7135.JPG', alt: 'Ayur Shuddhi Wellness Session 12' },
+    { src: '/images/gallery/IMG_7140.JPG', alt: 'Ayur Shuddhi Wellness Session 13' },
+    { src: '/images/gallery/IMG_7156.JPG', alt: 'Ayur Shuddhi Wellness Session 15' },
+    { src: '/images/gallery/IMG_7159.PNG', alt: 'Ayur Shuddhi Wellness Session 17' },
+    { src: '/images/gallery/IMG_7160.PNG', alt: 'Ayur Shuddhi Wellness Session 18' },
+    { src: '/images/gallery/IMG_7161.PNG', alt: 'Ayur Shuddhi Wellness Session 19' },
+    { src: '/images/gallery/IMG_7171.JPG', alt: 'Ayur Shuddhi Wellness Session 20' },
+    { src: '/images/gallery/IMG_7174.JPG', alt: 'Ayur Shuddhi Wellness Session 21' },
+    { src: '/images/gallery/IMG_7177.JPG', alt: 'Ayur Shuddhi Wellness Session 22' },
+    { src: '/images/gallery/IMG_7179.JPG', alt: 'Ayur Shuddhi Wellness Session 23' },
+  ];
+  
+  return galleryImages;
 }
 
 /**
