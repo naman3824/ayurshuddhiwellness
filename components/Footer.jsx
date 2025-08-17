@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { MandalaDecoration, MandalaPattern } from './MandalaDecoration'
 
 export function Footer({ lang }) {
@@ -11,10 +12,11 @@ export function Footer({ lang }) {
             <div className="md:pr-8">
               <h3 className="text-2xl font-display font-bold text-gradient-indian flex items-center group">
                 <div className="mr-3 h-12 w-12 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-primary-100 to-accent-100 p-1 shadow-soft group-hover:shadow-glow transition-all duration-300">
-                  <img 
+                  <Image 
                     src="/images/hero/logo.png" 
                     alt="Ayur Shuddhi Wellness Logo" 
-                    className="h-full w-full object-cover rounded-full" 
+                    width={48}
+                    height={48}
                   />
                 </div>
                 <span className="font-bold">Ayur Shuddhi Wellness</span>
@@ -105,7 +107,7 @@ export function Footer({ lang }) {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </span>
-                  <span className="leading-relaxed">Address: D-1 Engineer's Park, Sector Omega 1, Greater Noida, Gautam Buddha Nagar, Uttar Pradesh-201310</span>
+                  <span className="leading-relaxed">Address: D-1 Engineer&apos;s Park, Sector Omega 1, Greater Noida, Gautam Buddha Nagar, Uttar Pradesh-201310</span>
                 </li>
               </ul>
             </div>

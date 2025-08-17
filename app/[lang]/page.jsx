@@ -117,7 +117,7 @@ export default function HomePage({ params }) {
                       <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" />
                     </svg>
                   </div>
-                  <p className="text-lg font-medium text-gray-900 dark:text-white">"{testimonial.text}"</p>
+                  <p className="text-lg font-medium text-gray-900 dark:text-white">&ldquo;{testimonial.text}&rdquo;</p>
                   <div className="mt-6 flex items-center gap-x-4">
                     <div className="h-10 w-10 rounded-full bg-gradient-to-r from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold">
                       {testimonial.name.charAt(0)}

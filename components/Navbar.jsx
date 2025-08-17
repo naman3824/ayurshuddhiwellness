@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { DarkModeToggle } from './DarkModeToggle'
 import { MandalaDecoration } from './MandalaDecoration'
 import { useState, useEffect, useRef } from 'react'
@@ -84,10 +85,11 @@ export function Navbar({ lang }) {
               className="text-2xl font-display font-bold text-gradient-indian hover:scale-105 transition-transform duration-300 flex items-center group"
             >
               <div className="mr-3 h-10 w-10 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-primary-100 to-accent-100 p-1 shadow-soft group-hover:shadow-glow transition-all duration-300">
-                <img 
+                <Image 
                   src="/images/hero/logo.png" 
                   alt="Ayur Shuddhi Wellness Logo" 
-                  className="h-full w-full object-cover rounded-full" 
+                  width={40} 
+                  height={40} 
                 />
               </div>
               <span className="hidden sm:inline">Ayur Shuddhi Wellness</span>

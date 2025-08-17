@@ -27,7 +27,7 @@ export function ServiceDetailClient({ service, params }) {
       <div className="container mx-auto px-4 py-16">
         <div className="text-center">
           <h1 className="text-3xl font-bold mb-6">Service Not Found</h1>
-          <p className="mb-8">The service you're looking for doesn't exist or has been moved.</p>
+          <p className="mb-8">The service you&apos;re looking for doesn&apos;t exist or has been moved.</p>
           <Link href={`/${params.lang}/services`} className="btn-primary py-2 px-4 rounded-md">
             Back to Services
           </Link>

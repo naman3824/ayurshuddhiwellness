@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { MandalaPattern } from '../../../components/MandalaDecoration';
 
 export const metadata = {
@@ -61,9 +62,11 @@ export default function AboutPage({ params: { lang } }) {
             </h1>
             <div className="mt-8 text-center">
               <div className="mb-4">
-                <img 
+                <Image 
                   src="/images/about/abbhiraath.JPG" 
                   alt="Acharya Abbhiraath Singh" 
+                  width={192}
+                  height={192}
                   className="h-48 w-48 rounded-full object-cover mx-auto border-4 border-primary-100 dark:border-primary-800 shadow-glow"
                 />
               </div>
@@ -178,9 +181,9 @@ export default function AboutPage({ params: { lang } }) {
               </svg>
             </div>
             <p className="text-lg leading-8 text-gray-600 dark:text-gray-300 italic text-center">
-              "I believe in empowering individuals to take charge of their well-being by tapping into their inner wisdom 
+              &ldquo;I believe in empowering individuals to take charge of their well-being by tapping into their inner wisdom 
               and the time-tested traditions of Ayurveda and yogic science. Each session is tailored to the unique 
-              needs of the individual, fostering balance, vitality, and personal transformation."
+              needs of the individual, fostering balance, vitality, and personal transformation.&rdquo;
             </p>
           </div>
         </div>

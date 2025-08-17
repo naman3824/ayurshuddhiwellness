@@ -55,7 +55,7 @@ export default async function ContactPage({ params: { lang } }) {
                   </div>
                   <div className="ml-3">
                     <dt className="font-semibold text-gray-900 dark:text-white">Address</dt>
-                    <dd className="mt-1">D-1 Engineer's Park, Sector Omega 1, Greater Noida, Gautam Buddha Nagar, Uttar Pradesh-201310</dd>
+                    <dd className="mt-1">D-1 Engineer&apos;s Park, Sector Omega 1, Greater Noida, Gautam Buddha Nagar, Uttar Pradesh-201310</dd>
                   </div>
                 </div>
                 <div className="flex items-start">

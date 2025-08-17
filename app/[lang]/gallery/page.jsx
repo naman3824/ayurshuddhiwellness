@@ -64,8 +64,8 @@ export default function GalleryPage({ params }) {
                 </svg>
               </div>
               <p className="text-xl italic text-gray-600 dark:text-gray-300">
-                "The photographs cannot capture the profound sense of peace and wellness I experienced during my Ayurvedic consultation. 
-                Acharya Abbhiraath's approach to healing has completely transformed my understanding of health."
+                &ldquo;The photographs cannot capture the profound sense of peace and wellness I experienced during my Ayurvedic consultation. 
+                Acharya Abbhiraath&apos;s approach to healing has completely transformed my understanding of health.&rdquo;
               </p>
               <div className="mt-8 flex items-center justify-center">
                 <div className="h-10 w-10 rounded-full bg-gradient-saffron flex items-center justify-center text-white font-bold shadow-glow">
