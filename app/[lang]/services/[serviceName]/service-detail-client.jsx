@@ -54,12 +54,12 @@ export function ServiceDetailClient({ service, params }) {
       <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Service image */}
-          <div className="relative rounded-xl overflow-hidden shadow-lg h-[400px] md:h-auto">
+          <div className="relative rounded-xl overflow-hidden shadow-lg aspect-[4/3]">
             <Image
               src={service.image}
               alt={service.name}
               fill
-              className="object-cover"
+              className="object-cover object-center"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>

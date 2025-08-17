@@ -6,7 +6,7 @@ import { MandalaPattern } from '../../components/MandalaDecoration'
 const getFeaturedServices = (lang) => [
   {
     name: 'Ayurveda',
-    description: 'Restore balance and promote natural healing through time-tested Ayurvedic therapies. Personalized consultations assess your unique constitution for customized treatments.',
+    description: 'Restore balance and promote natural healing through time-tested Ayurvedic therapies....',
     href: 'services/ayurveda',
     image: '/images/services/ayurveda.JPG',
     iconName: 'leaf',
@@ -48,11 +48,6 @@ export default function HomePage({ params }) {
             <h1 className="text-5xl font-display font-bold tracking-tight text-gradient-indian sm:text-7xl slide-in-left">
               Transform Your Life Through <span className="text-gradient-saffron">Holistic Wellness</span>
             </h1>
-            <p className="mt-8 text-xl leading-relaxed text-gray-600 dark:text-gray-300 slide-in-right" style={{ animationDelay: '300ms' }}>
-              Discover the ancient wisdom of Ayurveda combined with modern wellness practices. 
-              At Ayur Shuddhi Wellness, we help you achieve perfect balance in mind, body, and soul through 
-              time-tested Indian healing traditions.
-            </p>
 
           </div>
         </div>
@@ -94,22 +89,6 @@ export default function HomePage({ params }) {
             ))}
           </div>
 
-          {/* View All Services button */}
-          <div className="mt-12 text-center">
-            <Link
-              href={`/${params.lang}/services`}
-              className="inline-flex items-center gap-2 btn btn-accent text-lg px-8 py-4 hover-scale staggered-fade group shadow-glow-teal"
-              style={{ animationDelay: '500ms' }}
-            >
-              <span>🌿 View All Services</span>
-              <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </Link>
-            <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 staggered-fade" style={{ animationDelay: '600ms' }}>
-              Explore our complete range of holistic wellness treatments
-            </p>
-          </div>
         </div>
       </div>
 

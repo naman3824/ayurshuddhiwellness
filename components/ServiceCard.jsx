@@ -100,7 +100,8 @@ export default function ServiceCard({ title, description, detailedDescription, i
   return (
     <div 
       ref={cardRef}
-      className={`card p-6 hover:shadow-glow transition-all duration-500 overflow-hidden flex flex-col relative hover-lift ${expanded ? 'shadow-lg z-10' : ''}`}
+      onClick={toggleExpanded}
+      className={`card p-6 hover:shadow-glow transition-all duration-500 overflow-hidden flex flex-col relative hover-lift cursor-pointer ${expanded ? 'shadow-lg z-10' : ''}`}
       style={{ 
         height: expanded ? 'auto' : '', 
         maxHeight: expanded ? '2000px' : '',
@@ -116,7 +117,14 @@ export default function ServiceCard({ title, description, detailedDescription, i
               alt={title}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover transition-transform duration-500 hover:scale-110"
+              className={`transition-transform duration-500 hover:scale-110 ${
+                expanded 
+                  ? 'object-contain object-center w-full h-full' 
+                  : 'object-cover object-center'
+              }`}
+              style={expanded ? { 
+                backgroundColor: 'rgb(var(--background-rgb, 245, 243, 239))'
+              } : {}}
             />
           </div>
         </div>
@@ -137,17 +145,26 @@ export default function ServiceCard({ title, description, detailedDescription, i
             <p className="md:line-clamp-2">{description}</p>
           </div>
           
+          {/* Expanded content */}
+          {expanded && detailedDescription && (
+            <div className="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+              {renderFormattedText(detailedDescription)}
+            </div>
+          )}
+          
           {/* Action buttons */}
           <div className="mt-4 flex justify-between items-center gap-3">
             <Link 
               href={`/book?service=${encodeURIComponent(title)}`}
               className="btn-primary py-2 px-4 rounded-md flex-1 text-center justify-center hover:scale-105 transform transition-transform duration-300"
+              onClick={(e) => e.stopPropagation()}
             >
               Book Now
             </Link>
             <Link 
               href={serviceDetailUrl}
               className="btn-outline py-2 px-4 rounded-md flex-1 text-center justify-center hover:scale-105 transform transition-transform duration-300 flex items-center gap-1"
+              onClick={(e) => e.stopPropagation()}
             >
               Details
               <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">

@@ -45,15 +45,15 @@ export default function FeaturedServiceCard({
     : description;
 
   return (
-    <div className="group relative bg-ivory-100/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-soft hover:shadow-warm transition-all duration-500 transform hover:translate-y-[-8px] border border-primary-100/20 dark:border-gray-700/50 overflow-hidden">
+    <div className="group relative bg-ivory-100/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-soft hover:shadow-warm transition-all duration-500 transform hover:translate-y-[-8px] border border-primary-100/20 dark:border-gray-700/50 overflow-hidden h-[520px] flex flex-col">
       {/* Service Image */}
-      <div className="relative w-full h-48 sm:h-52 overflow-hidden">
+      <div className="relative w-full aspect-[4/3] overflow-hidden flex-shrink-0">
         <Image 
           src={image}
           alt={title}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          className="object-cover object-center transition-transform duration-500 group-hover:scale-110"
           priority={false}
         />
         {/* Gradient overlay */}
@@ -61,7 +61,7 @@ export default function FeaturedServiceCard({
       </div>
 
       {/* Card Content */}
-      <div className="p-6 flex flex-col h-full">
+      <div className="p-6 flex flex-col flex-grow">
         {/* Icon and Title */}
         <div className="flex items-center gap-3 mb-4">
           {IconComponent && (
