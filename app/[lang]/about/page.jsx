@@ -2,9 +2,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { MandalaPattern } from '../../../components/MandalaDecoration';
 
-export const metadata = {
-  title: 'About Us - Ayur Shuddhi Wellness',
-  description: 'Learn about Acharya Abbhiraath Singh, Nadi Vaidya and founder of Ayur Shuddhi Wellness, offering holistic health solutions through Ayurveda and modern wellness practices.',
+export async function generateMetadata({ params }) {
+  return {
+    title: 'About Us - Ayur Shuddhi Wellness',
+    description: 'Learn about Acharya Abbhiraath Singh, Nadi Vaidya and founder of Ayur Shuddhi Wellness, offering holistic health solutions through Ayurveda and modern wellness practices.',
+  };
 }
 
 const values = [
@@ -219,4 +221,4 @@ export default function AboutPage({ params: { lang } }) {
       </div>
     </div>
   )
-} 
+}

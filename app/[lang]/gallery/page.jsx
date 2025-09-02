@@ -5,9 +5,11 @@ import EnhancedImageGrid from '../../../components/EnhancedImageGrid'
 import { getGalleryImages } from '../../../utils/galleryUtils'
 import { MandalaPattern } from '../../../components/MandalaDecoration'
 
-export const metadata = {
-  title: 'Gallery - Ayur Shuddhi Wellness',
-  description: 'Explore our gallery of past consultations and wellness sessions across India.',
+export async function generateMetadata({ params }) {
+  return {
+    title: 'Gallery - Ayur Shuddhi Wellness',
+    description: 'Explore our gallery of past consultations and wellness sessions across India.',
+  };
 }
 
 export default function GalleryPage({ params }) {
@@ -82,4 +84,4 @@ export default function GalleryPage({ params }) {
       </div>
     </div>
   )
-} 
+}

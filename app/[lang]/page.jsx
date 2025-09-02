@@ -27,9 +27,11 @@ const getFeaturedServices = (lang) => [
   },
 ];
 
-export const metadata = {
-  title: 'Ayur Shuddhi Wellness - Holistic Health Solutions',
-  description: 'Experience the power of Ayurveda and holistic wellness with Ayur Shuddhi Wellness. We offer innovative health practices to connect your mind, body, and soul.',
+export async function generateMetadata({ params }) {
+  return {
+    title: 'Ayur Shuddhi Wellness - Holistic Health Solutions',
+    description: 'Experience the power of Ayurveda and holistic wellness with Ayur Shuddhi Wellness. We offer innovative health practices to connect your mind, body, and soul.',
+  };
 }
 
 export default function HomePage({ params }) {
@@ -228,4 +230,4 @@ const testimonials = [
     name: "Ananya Patel",
     role: "Healthcare Worker"
   }
-] 
+]

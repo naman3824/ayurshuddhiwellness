@@ -2,6 +2,11 @@
 
 A modern, responsive website for Ayur Shuddhi Wellness, built with Next.js 14, React 18, and Tailwind CSS. This platform showcases holistic wellness services, including Ayurveda, Panchakarma, Yoga, and Meditation, with an integrated booking system.
 
+## 📋 Project Overview
+
+### Purpose
+Ayur Shuddhi Wellness website serves as a digital platform to connect clients with authentic Ayurvedic wellness services. The site aims to educate visitors about traditional healing practices while providing a seamless booking experience for various treatments and consultations.
+
 ## ✨ Features
 
 - 🌐 Multilingual support (currently English - India)
@@ -15,6 +20,8 @@ A modern, responsive website for Ayur Shuddhi Wellness, built with Next.js 14, R
 - 🔍 SEO optimized for better discoverability
 - 🌓 Dark/light theme toggle
 
+
+
 ## 🛠 Tech Stack
 
 - **Frontend Framework**: Next.js 14 with App Router
@@ -25,6 +32,26 @@ A modern, responsive website for Ayur Shuddhi Wellness, built with Next.js 14, R
 - **State Management**: React Context API
 - **Linting**: ESLint with Next.js defaults
 - **Build Tool**: Vite (via Next.js)
+
+## 📂 Project Structure
+
+```
+ayurshuddhiwellness/
+├── app/                    # Next.js app directory
+│   ├── [lang]/            # Language-specific routes
+│   │   ├── about/         # About page
+│   │   ├── contact/       # Contact page
+│   │   ├── gallery/       # Photo gallery
+│   │   ├── services/      # Services pages
+│   │   └── layout.jsx     # Language-specific layout
+│   ├── book/              # Booking system
+│   ├── layout.jsx         # Root layout
+│   └── globals.css        # Global styles
+├── components/            # Reusable components
+├── public/                # Static assets
+│   └── images/            # Image assets
+└── ...config files
+```
 
 ## 🚀 Getting Started
 
@@ -48,32 +75,73 @@ A modern, responsive website for Ayur Shuddhi Wellness, built with Next.js 14, R
    yarn
    ```
 
-3. Start the development server:
+3. Create environment variables file (optional):
+   Create a `.env.local` file in the root directory with the following variables:
+   ```
+   # Example environment variables
+   NEXT_PUBLIC_SITE_URL=http://localhost:3000
+   NEXT_PUBLIC_DEFAULT_LOCALE=en-IN
+   # Add any API keys or service credentials here
+   ```
+
+4. Start the development server:
    ```bash
    npm run dev
    # or
    yarn dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
 
-## 📂 Project Structure
+### Deployment
 
+#### Development Mode
+```bash
+npm run dev
+# or
+yarn dev
 ```
-ayurshuddhiwellness/
-├── app/                    # App Router pages and layouts
-│   ├── [lang]/             # Language-specific routes
-│   │   ├── about/          # About page
-│   │   ├── contact/        # Contact page
-│   │   ├── gallery/        # Photo gallery
-│   │   └── services/       # Services pages
-│   ├── book/               # Booking system
-│   └── globals.css         # Global styles
-├── components/             # Reusable components
-├── public/                 # Static files
-│   └── images/             # Image assets
-└── styles/                 # Global styles and Tailwind config
+
+#### Production Mode
+```bash
+# Build the application
+npm run build
+
+# Start the production server
+npm start
+# or
+yarn build && yarn start
 ```
+
+### Troubleshooting Common Issues
+
+#### Favicon.ico Error
+If you encounter a 404 error for favicon.ico, ensure it's placed in the `/public` directory:
+```bash
+# The favicon should be located at:
+/public/favicon.ico
+```
+
+#### Dependency Vulnerabilities
+Regularly check and fix security vulnerabilities:
+```bash
+# Check for vulnerabilities
+npm audit
+
+# Fix minor issues automatically
+npm audit fix
+
+# Fix major issues (may include breaking changes)
+npm audit fix --force
+```
+
+#### Next.js Build Errors
+If you encounter build errors related to static exports:
+1. Check that all dynamic routes have proper `generateStaticParams()` functions
+2. Ensure metadata is properly configured using `generateMetadata()` functions
+3. Verify that `viewport` and `themeColor` are exported separately from metadata
+
+
 
 ## 🌟 Key Features in Detail
 
@@ -81,22 +149,39 @@ ayurshuddhiwellness/
 - Detailed service pages for Ayurveda, Panchakarma, and Yoga/Meditation
 - Service-specific information and benefits
 - High-quality images and descriptions
+- Featured service cards on homepage
+- Service categorization and filtering
 
 ### Booking System
 - Step-by-step booking process
 - Calendar and time slot selection
 - Service and practitioner selection
 - Secure payment integration
+- Booking confirmation and receipt generation
 
 ### Gallery
 - Beautiful image grid layout
 - Lightbox for full-screen viewing
 - Organized by categories
+- Optimized image loading
 
 ### Responsive Design
 - Mobile-first approach
 - Optimized for all screen sizes
 - Touch-friendly interfaces
+- Adaptive layouts for different devices
+
+### Multilingual Support
+- Language selection interface
+- Localized content and formatting
+- Expandable to additional languages
+
+### Theme Support
+- Dark/light mode toggle
+- Persistent theme preference
+- Wellness-inspired color palette
+
+
 
 ## 🛠 Available Scripts
 
@@ -118,9 +203,7 @@ The application supports both light and dark modes, with smooth transitions betw
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
@@ -128,19 +211,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Styled with [Tailwind CSS](https://tailwindcss.com/)
 - Icons from [Heroicons](https://heroicons.com/)
 
-### Building for Production
 
-To create a production build:
 
-```bash
-npm run build
-# or
-yarn build
-```
-
-The static site will be generated in the `out` directory.
-
-## Project Structure
+## 📂 Project Structure
 
 ```
 ayurshuddhiwellness/
@@ -148,16 +221,19 @@ ayurshuddhiwellness/
 │   ├── [lang]/            # Language-specific routes
 │   │   ├── about/         # About page
 │   │   ├── contact/       # Contact page
+│   │   ├── gallery/       # Photo gallery
 │   │   ├── services/      # Services pages
 │   │   └── layout.jsx     # Language-specific layout
+│   ├── book/              # Booking system
 │   ├── layout.jsx         # Root layout
 │   └── globals.css        # Global styles
 ├── components/            # Reusable components
-├── public/               # Static assets
+├── public/                # Static assets
+│   └── images/            # Image assets
 └── ...config files
 ```
 
-## Multilingual Support
+### Multilingual Support
 
 The website currently supports:
 - English (India) - `/en-IN`
@@ -183,10 +259,20 @@ Additional languages can be added by:
 3. Update the navigation if needed
 4. Add necessary metadata for SEO
 
-## License
+### Security Best Practices
+
+- Run `npm audit` regularly to check for vulnerabilities
+- Apply security patches with `npm audit fix` as part of your development workflow
+- Review major updates carefully before applying with `npm audit fix --force`
+- Keep dependencies updated to their latest secure versions
+- No sensitive user data is stored in client-side storage
+- Form submissions use proper validation and sanitization
+- Static site generation minimizes attack vectors
+
+## 📄 License
 
 This project is private and confidential.
 
 ## Contact
 
-For any queries regarding the project, please contact [contact information].
+For any queries regarding the project, please contact naman3824@gmail.com

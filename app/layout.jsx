@@ -16,16 +16,18 @@ export const metadata = {
   description: 'Holistic health solutions through Ayurveda and innovative wellness practices',
   keywords: ['ayurveda', 'wellness', 'holistic health', 'natural healing', 'indian medicine'],
   authors: [{ name: 'Ayur Shuddhi Wellness' }],
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0f172a' },
-  ],
 }
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
+
+export const themeColor = [
+  { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+  { media: '(prefers-color-scheme: dark)', color: '#0f172a' },
+]
 
 // This is a root layout that wraps all pages
 export default function RootLayout({ children }) {
