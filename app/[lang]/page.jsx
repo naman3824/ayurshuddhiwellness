@@ -2,6 +2,14 @@ import Link from 'next/link'
 import FeaturedServiceCard from '../../components/FeaturedServiceCard'
 import { MandalaPattern } from '../../components/MandalaDecoration'
 
+export function generateStaticParams() {
+  return [
+    { lang: 'en' },
+    { lang: 'en-IN' },
+    { lang: 'hi' }
+  ]
+}
+
 // Featured services for the homepage - optimized for card display
 const getFeaturedServices = (lang) => [
   {
@@ -38,9 +46,18 @@ export default function HomePage({ params }) {
   const featuredServices = getFeaturedServices(params.lang);
   
   return (
-    <div className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div 
+      className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+      style={{
+        backgroundImage: 'url(/images/hero/tree.jpg)',
+        backgroundAttachment: 'fixed',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       {/* Hero section with Indian-inspired design */}
-      <div className="relative isolate overflow-hidden bg-gradient-to-b from-primary-50 to-ivory-100 dark:from-gray-900 dark:to-gray-800">
+      <div className="relative isolate overflow-hidden bg-gradient-to-b from-primary-50/70 to-ivory-100/70 dark:from-gray-900/70 dark:to-gray-800/70">
         <MandalaPattern />
         <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
@@ -48,7 +65,7 @@ export default function HomePage({ params }) {
               🕉️ Holistic Wellness & Ancient Wisdom
             </span>
             <h1 className="text-5xl font-display font-bold tracking-tight text-gradient-indian sm:text-7xl slide-in-left">
-              Transform Your Life Through <span className="text-gradient-saffron">Holistic Wellness</span>
+              Transform Your Life Through Holistic Wellness
             </h1>
 
           </div>
@@ -56,7 +73,7 @@ export default function HomePage({ params }) {
       </div>
 
       {/* Our Services section with Indian-inspired design */}
-      <div className="relative bg-gradient-to-b from-ivory-50 to-sage-50 dark:from-gray-900 dark:to-gray-800 section-padding">
+      <div className="relative bg-gradient-to-b from-ivory-50/60 to-sage-50/60 dark:from-gray-900/60 dark:to-gray-800/60 section-padding">
         <div className="mx-auto max-w-7xl container-padding">
           <div className="mx-auto max-w-4xl lg:text-center mb-16">
             <span className="inline-flex items-center rounded-full bg-gradient-to-r from-accent-100 to-primary-100 px-4 py-2 text-sm font-semibold text-accent-700 ring-1 ring-inset ring-accent-200/50 mb-8 shadow-soft fade-scale" style={{ animationDelay: '100ms' }}>
@@ -95,7 +112,7 @@ export default function HomePage({ params }) {
       </div>
 
       {/* Testimonial section */}
-      <div className="relative bg-gradient-to-b from-primary-50 to-white dark:from-gray-800 dark:to-gray-900 py-24 sm:py-32">
+      <div className="relative bg-gradient-to-b from-primary-50/60 to-white/60 dark:from-gray-800/60 dark:to-gray-900/60 py-24 sm:py-32">
         <div className="absolute inset-0 pattern-bg"></div>
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
@@ -137,7 +154,7 @@ export default function HomePage({ params }) {
       </div>
 
       {/* CTA section */}
-      <div className="bg-white dark:bg-gray-900">
+      <div className="bg-white/60 dark:bg-gray-900/60">
         <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
           <div className="relative isolate overflow-hidden bg-gradient-wellness px-6 py-16 shadow-2xl sm:rounded-3xl sm:px-16 md:py-24 lg:flex lg:gap-x-20 lg:px-24">
             <svg viewBox="0 0 1024 1024" className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:-ml-80 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0" aria-hidden="true">

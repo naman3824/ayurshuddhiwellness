@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 export async function generateStaticParams() {
   return [
+    { lang: 'en' },
     { lang: 'en-IN' },
     { lang: 'hi' }
   ]
@@ -21,9 +22,18 @@ export default async function ContactPage({ params: { lang } }) {
   const dict = await getDictionary(lang)
 
   return (
-    <div className="bg-white dark:bg-gray-900">
+    <div 
+      className="bg-white dark:bg-gray-900"
+      style={{
+        backgroundImage: 'url(/images/hero/tree.jpg)',
+        backgroundAttachment: 'fixed',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       {/* Hero section with gradient background */}
-      <div className="relative bg-gradient-to-b from-primary-50 to-white dark:from-gray-800 dark:to-gray-900">
+      <div className="relative bg-gradient-to-b from-primary-50/70 to-white/70 dark:from-gray-800/70 dark:to-gray-900/70">
         <div className="absolute inset-0 pattern-bg"></div>
         <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
@@ -40,7 +50,7 @@ export default async function ContactPage({ params: { lang } }) {
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 bg-white/60 dark:bg-gray-900/60">
         <div className="mx-auto max-w-4xl">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
             <div className="card p-8 hover:shadow-glow transition-all duration-300">
@@ -55,7 +65,7 @@ export default async function ContactPage({ params: { lang } }) {
                   </div>
                   <div className="ml-3">
                     <dt className="font-semibold text-gray-900 dark:text-white">Address</dt>
-                    <dd className="mt-1">D-1 Engineer&apos;s Park, Sector Omega 1, Greater Noida, Gautam Buddha Nagar, Uttar Pradesh-201310</dd>
+                    <dd className="mt-1">A-228, Sector 36, Greater Noida, Gautam Buddha Nagar, Uttar Pradesh-201310</dd>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -213,4 +223,4 @@ export default async function ContactPage({ params: { lang } }) {
       </div>
     </div>
   )
-} 
+}

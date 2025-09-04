@@ -107,7 +107,7 @@ export function Footer({ lang }) {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </span>
-                  <span className="leading-relaxed">Address: D-1 Engineer&apos;s Park, Sector Omega 1, Greater Noida, Gautam Buddha Nagar, Uttar Pradesh-201310</span>
+                  <span className="leading-relaxed">Address: A-228, Sector 36, Greater Noida, Gautam Buddha Nagar, Uttar Pradesh-201310</span>
                 </li>
               </ul>
             </div>
@@ -127,4 +127,4 @@ export function Footer({ lang }) {
       </div>
     </footer>
   )
-} 
+}

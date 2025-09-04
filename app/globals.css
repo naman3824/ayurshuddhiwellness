@@ -7,7 +7,7 @@
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-rgb: 245, 243, 239; /* Soft ivory #f5f3ef */
-  --primary-color: 246, 180, 32; /* Saffron */
+  --primary-color: 34, 102, 68; /* Dark Green */
   --accent-color: 20, 184, 166; /* Teal */
   --secondary-color: 191, 160, 148; /* Clay */
   --ivory-color: 245, 243, 239; /* Soft ivory */
@@ -20,7 +20,7 @@
 .dark {
   --foreground-rgb: 255, 255, 255;
   --background-rgb: 17, 24, 39;
-  --primary-color: 246, 180, 32; /* Keep saffron in dark mode */
+  --primary-color: 52, 120, 86; /* Dark Green for dark mode */
   --accent-color: 94, 234, 212; /* Lighter teal in dark mode */
   --secondary-color: 191, 160, 148; /* Keep clay in dark mode */
   --ivory-color: 31, 41, 55; /* Dark mode ivory equivalent */

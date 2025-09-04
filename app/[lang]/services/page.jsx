@@ -1,9 +1,14 @@
-'use client'
-
-import { useState } from 'react'
 import Image from 'next/image'
 import ServiceCard from '../../../components/ServiceCard'
 import { MandalaPattern } from '../../../components/MandalaDecoration'
+
+export function generateStaticParams() {
+  return [
+    { lang: 'en' },
+    { lang: 'en-IN' },
+    { lang: 'hi' }
+  ]
+}
 
 const services = [
   {
@@ -81,20 +86,20 @@ services.forEach(service => {
 })
 
 export default function ServicesPage({ params }) {
-  const [expandedService, setExpandedService] = useState(null);
-
-  const toggleService = (serviceName) => {
-    if (expandedService === serviceName) {
-      setExpandedService(null);
-    } else {
-      setExpandedService(serviceName);
-    }
-  };
 
   return (
-    <div className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div 
+      className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+      style={{
+        backgroundImage: 'url(/images/hero/tree.jpg)',
+        backgroundAttachment: 'fixed',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       {/* Hero section with gradient background */}
-      <div className="relative bg-gradient-to-b from-primary-50 to-ivory-100 dark:from-gray-800 dark:to-gray-900">
+      <div className="relative bg-gradient-to-b from-primary-50/70 to-ivory-100/70 dark:from-gray-800/70 dark:to-gray-900/70">
         <MandalaPattern />
         <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center page-hero">
@@ -113,7 +118,7 @@ export default function ServicesPage({ params }) {
       </div>
 
       {/* Services grid */}
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 page-section">
+      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 page-section bg-white/60 dark:bg-gray-900/60">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div key={service.name} className="staggered-fade" style={{ animationDelay: `${index * 150}ms` }}>
@@ -132,4 +137,4 @@ export default function ServicesPage({ params }) {
       </div>
     </div>
   )
-} 
+}

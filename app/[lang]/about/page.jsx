@@ -2,6 +2,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { MandalaPattern } from '../../../components/MandalaDecoration';
 
+export function generateStaticParams() {
+  return [
+    { lang: 'en' },
+    { lang: 'en-IN' },
+    { lang: 'hi' }
+  ]
+}
+
 export async function generateMetadata({ params }) {
   return {
     title: 'About Us - Ayur Shuddhi Wellness',
@@ -50,9 +58,18 @@ const values = [
 
 export default function AboutPage({ params: { lang } }) {
   return (
-    <div className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div 
+      className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+      style={{
+        backgroundImage: 'url(/images/hero/tree.jpg)',
+        backgroundAttachment: 'fixed',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       {/* Hero Section with Background */}
-      <div className="relative bg-gradient-to-b from-primary-50 to-ivory-100 dark:from-gray-800 dark:to-gray-900">
+      <div className="relative bg-gradient-to-b from-primary-50/70 to-ivory-100/70 dark:from-gray-800/70 dark:to-gray-900/70">
         <MandalaPattern />
         <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center page-hero">
@@ -65,7 +82,7 @@ export default function AboutPage({ params: { lang } }) {
             <div className="mt-8 text-center">
               <div className="mb-4">
                 <Image 
-                  src="/images/about/abbhiraath.JPG" 
+                  src="/images/about/abhirath.jpg" 
                   alt="Acharya Abbhiraath Singh" 
                   width={192}
                   height={192}
@@ -80,7 +97,8 @@ export default function AboutPage({ params: { lang } }) {
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
+      <div className="relative bg-gradient-to-b from-ivory-50/60 to-sage-50/60 dark:from-gray-900/60 dark:to-gray-800/60">
+        <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
         {/* Welcome Section */}
         <div className="mx-auto max-w-3xl card p-8 hover:shadow-glow transition-all duration-300 page-section">
           <h2 className="text-2xl font-bold tracking-tight text-primary-700 dark:text-primary-400">Namaste and Welcome</h2>
@@ -112,7 +130,7 @@ export default function AboutPage({ params: { lang } }) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                 </span>
-                <span className="text-lg leading-7 text-gray-600 dark:text-gray-300">{item}</span>
+                <span className="text-lg leading-7 text-black dark:text-white">{item}</span>
               </li>
             ))}
           </ul>
@@ -132,7 +150,7 @@ export default function AboutPage({ params: { lang } }) {
                 <span className="text-2xl">🌿</span>
               </div>
               <h3 className="text-xl font-semibold text-primary-700 dark:text-primary-400">Holistic Wellness Coaching</h3>
-              <p className="mt-3 text-base leading-7 text-gray-600 dark:text-gray-300">
+              <p className="mt-3 text-base leading-7 text-black dark:text-white">
                 My approach to wellness blends modern practices with ancient Ayurvedic wisdom. By combining traditional 
                 pulse diagnosis with personalized treatment plans, I support healing at the physical, emotional, and 
                 spiritual levels.
@@ -144,7 +162,7 @@ export default function AboutPage({ params: { lang } }) {
                 <span className="text-2xl">🕉️</span>
               </div>
               <h3 className="text-xl font-semibold text-primary-700 dark:text-primary-400">Spiritual Coaching & Counselling</h3>
-              <p className="mt-3 text-base leading-7 text-gray-600 dark:text-gray-300">
+              <p className="mt-3 text-base leading-7 text-black dark:text-white">
                 I offer a transformative coaching experience where spirituality, wellness, and ancient wisdom converge. 
                 Through spiritual coaching and counselling:
               </p>
@@ -160,7 +178,7 @@ export default function AboutPage({ params: { lang } }) {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                       </svg>
                     </span>
-                    <span className="text-sm text-gray-600 dark:text-gray-300">{item}</span>
+                    <span className="text-sm text-black dark:text-white">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -218,6 +236,7 @@ export default function AboutPage({ params: { lang } }) {
             ))}
           </dl>
         </div>
+      </div>
       </div>
     </div>
   )

@@ -79,7 +79,7 @@ const allServices = [
 // Generate static params for all possible service pages
 export async function generateStaticParams() {
   // Get all supported languages
-  const languages = ['en-IN'];
+  const languages = ['en', 'en-IN', 'hi'];
   
   // Generate params for all combinations of language and service
   const params = [];

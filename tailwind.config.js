@@ -10,17 +10,17 @@ const config = {
       colors: {
         // Warm saffron/orange primary palette - Indian-inspired
         primary: {
-          50: '#fffbf0',
-          100: '#fef4d8',
-          200: '#fde8b1',
-          300: '#fbd97a',
-          400: '#f8c441',
-          500: '#f6b420', // Main saffron
-          600: '#ea9a0a',
-          700: '#c27d0b',
-          800: '#9c6210',
-          900: '#7e5011',
-          950: '#472a05',
+          50: '#f0f9f4',
+          100: '#dcfce7',
+          200: '#bbf7d0',
+          300: '#86efac',
+          400: '#4ade80',
+          500: '#226644', // Main dark green
+          600: '#1e5a3a',
+          700: '#1a4e32',
+          800: '#16422a',
+          900: '#123622',
+          950: '#0e2a1a',
         },
         // Calming teal - for accent and balance
         accent: {
@@ -105,23 +105,23 @@ const config = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'gradient-saffron': 'linear-gradient(to right, #f6b420, #ea9a0a)',
-        'gradient-wellness': 'linear-gradient(to right, #f6b420, #14b8a6)', // Saffron to teal
+        'gradient-saffron': 'linear-gradient(to right, #226644, #1e5a3a)',
+        'gradient-wellness': 'linear-gradient(to right, #226644, #14b8a6)', // Dark green to teal
         'gradient-teal': 'linear-gradient(to right, #14b8a6, #0d9488)',
         'gradient-clay': 'linear-gradient(to right, #bfa094, #846358)',
-        'gradient-warm': 'linear-gradient(135deg, #f6b420, #14b8a6, #bfa094)', // Multi-color Indian gradient
-        'pattern-dots': 'radial-gradient(#f6b420 1px, transparent 1px)',
-        'pattern-dots-dark': 'radial-gradient(rgba(246, 180, 32, 0.3) 1px, transparent 1px)',
-        'pattern-mandala': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23f6b420\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'4\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+        'gradient-warm': 'linear-gradient(135deg, #226644, #14b8a6, #bfa094)', // Multi-color Indian gradient
+        'pattern-dots': 'radial-gradient(#226644 1px, transparent 1px)',
+        'pattern-dots-dark': 'radial-gradient(rgba(34, 102, 68, 0.3) 1px, transparent 1px)',
+        'pattern-mandala': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23226644\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'4\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
       },
       // Enhanced box shadow utilities with warm tones
       boxShadow: {
         'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        'glow': '0 0 15px rgba(246, 180, 32, 0.5)', // Saffron glow
+        'glow': '0 0 15px rgba(34, 102, 68, 0.5)', // Dark green glow
         'glow-teal': '0 0 15px rgba(20, 184, 166, 0.5)',
         'glow-clay': '0 0 15px rgba(191, 160, 148, 0.5)',
-        'inner-glow': 'inset 0 2px 4px 0 rgba(246, 180, 32, 0.06)',
-        'warm': '0 10px 25px -5px rgba(246, 180, 32, 0.1), 0 10px 10px -5px rgba(246, 180, 32, 0.04)',
+        'inner-glow': 'inset 0 2px 4px 0 rgba(34, 102, 68, 0.06)',
+        'warm': '0 10px 25px -5px rgba(34, 102, 68, 0.1), 0 10px 10px -5px rgba(34, 102, 68, 0.04)',
       },
       // Enhanced animation utilities
       animation: {
@@ -211,4 +211,4 @@ const config = {
   plugins: [],
 }
 
-module.exports = config 
+module.exports = config
