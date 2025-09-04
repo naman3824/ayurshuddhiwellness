@@ -89,13 +89,13 @@ export default function ServicesPage({ params }) {
 
   return (
     <div 
-      className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+      className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 mobile-bg-optimized"
       style={{
         backgroundImage: 'url(/images/hero/tree.jpg)',
-        backgroundAttachment: 'fixed',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        minHeight: '100vh'
       }}
     >
       {/* Hero section with gradient background */}

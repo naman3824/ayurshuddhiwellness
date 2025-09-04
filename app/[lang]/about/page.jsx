@@ -59,13 +59,13 @@ const values = [
 export default function AboutPage({ params: { lang } }) {
   return (
     <div 
-      className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+      className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 mobile-bg-optimized"
       style={{
         backgroundImage: 'url(/images/hero/tree.jpg)',
-        backgroundAttachment: 'fixed',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        minHeight: '100vh'
       }}
     >
       {/* Hero Section with Background */}
@@ -82,7 +82,7 @@ export default function AboutPage({ params: { lang } }) {
             <div className="mt-8 text-center">
               <div className="mb-4">
                 <Image 
-                  src="/images/about/abhirath.jpg" 
+                  src="/images/about/abhirath.JPG" 
                   alt="Acharya Abbhiraath Singh" 
                   width={192}
                   height={192}

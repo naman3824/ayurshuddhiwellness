@@ -47,24 +47,24 @@ export default function HomePage({ params }) {
   
   return (
     <div 
-      className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+      className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 mobile-bg-optimized"
       style={{
         backgroundImage: 'url(/images/hero/tree.jpg)',
-        backgroundAttachment: 'fixed',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        minHeight: '100vh'
       }}
     >
       {/* Hero section with Indian-inspired design */}
       <div className="relative isolate overflow-hidden bg-gradient-to-b from-primary-50/70 to-ivory-100/70 dark:from-gray-900/70 dark:to-gray-800/70">
         <MandalaPattern />
-        <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
+        <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 mobile-hero-padding">
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex items-center rounded-full bg-gradient-to-r from-primary-100 to-accent-100 px-4 py-2 text-sm font-semibold text-primary-700 ring-1 ring-inset ring-primary-200/50 mb-8 fade-scale shadow-soft">
               🕉️ Holistic Wellness & Ancient Wisdom
             </span>
-            <h1 className="text-5xl font-display font-bold tracking-tight text-gradient-indian sm:text-7xl slide-in-left">
+            <h1 className="text-5xl font-display font-bold tracking-tight text-gradient-indian sm:text-7xl slide-in-left mobile-text-shadow">
               Transform Your Life Through Holistic Wellness
             </h1>
 
@@ -73,13 +73,13 @@ export default function HomePage({ params }) {
       </div>
 
       {/* Our Services section with Indian-inspired design */}
-      <div className="relative bg-gradient-to-b from-ivory-50/60 to-sage-50/60 dark:from-gray-900/60 dark:to-gray-800/60 section-padding">
+      <div className="relative bg-gradient-to-b from-ivory-50/60 to-sage-50/60 dark:from-gray-900/60 dark:to-gray-800/60 section-padding mobile-section-spacing">
         <div className="mx-auto max-w-7xl container-padding">
           <div className="mx-auto max-w-4xl lg:text-center mb-16">
             <span className="inline-flex items-center rounded-full bg-gradient-to-r from-accent-100 to-primary-100 px-4 py-2 text-sm font-semibold text-accent-700 ring-1 ring-inset ring-accent-200/50 mb-8 shadow-soft fade-scale" style={{ animationDelay: '100ms' }}>
               ✨ Featured Services
             </span>
-            <h2 className="text-4xl font-display font-bold tracking-tight text-gradient-indian sm:text-5xl mb-6 staggered-fade" style={{ animationDelay: '200ms' }}>
+            <h2 className="text-4xl font-display font-bold tracking-tight text-gradient-indian sm:text-5xl mb-6 staggered-fade mobile-text-shadow" style={{ animationDelay: '200ms' }}>
               Our Most Popular Wellness Services
             </h2>
             <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 staggered-fade max-w-3xl mx-auto" style={{ animationDelay: '300ms' }}>
