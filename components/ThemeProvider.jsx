@@ -20,12 +20,15 @@ export function ThemeProvider({ children }) {
     // Add transition class before any theme changes
     document.documentElement.classList.add('transition-colors', 'duration-500');
     
-    if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
-      setIsDarkMode(true);
-      document.documentElement.classList.add('dark');
-    } else {
+    // Default to dark mode for new visitors
+    // Only use light mode if explicitly set to 'light' in localStorage
+    if (storedTheme === 'light') {
       setIsDarkMode(false);
       document.documentElement.classList.remove('dark');
+    } else {
+      // Default to dark mode for new visitors or if stored preference is dark
+      setIsDarkMode(true);
+      document.documentElement.classList.add('dark');
     }
     
     // Mark theme as loaded after initial setup
@@ -35,14 +38,11 @@ export function ThemeProvider({ children }) {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e) => {
       // Only apply system preference if no manual preference is stored
+      // Default to dark mode for new visitors
       if (!localStorage.getItem('theme')) {
-        if (e.matches) {
-          setIsDarkMode(true);
-          document.documentElement.classList.add('dark');
-        } else {
-          setIsDarkMode(false);
-          document.documentElement.classList.remove('dark');
-        }
+        // Always default to dark mode for new visitors, regardless of system preference
+        setIsDarkMode(true);
+        document.documentElement.classList.add('dark');
       }
     };
     
@@ -98,4 +98,4 @@ export function ThemeProvider({ children }) {
 
 export function useTheme() {
   return useContext(ThemeContext);
-} 
+}

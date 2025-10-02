@@ -59,14 +59,7 @@ const values = [
 export default function AboutPage({ params: { lang } }) {
   return (
     <div 
-      className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 mobile-bg-optimized"
-      style={{
-        backgroundImage: 'url(/images/hero/tree.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        minHeight: '100vh'
-      }}
+      className="tree-bg-optimized"
     >
       {/* Hero Section with Background */}
       <div className="relative bg-gradient-to-b from-primary-50/70 to-ivory-100/70 dark:from-gray-800/70 dark:to-gray-900/70">

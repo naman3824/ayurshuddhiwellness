@@ -89,17 +89,10 @@ export default function ServicesPage({ params }) {
 
   return (
     <div 
-      className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 mobile-bg-optimized"
-      style={{
-        backgroundImage: 'url(/images/hero/tree.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        minHeight: '100vh'
-      }}
+      className="tree-bg-optimized"
     >
-      {/* Hero section with gradient background */}
-      <div className="relative bg-gradient-to-b from-primary-50/70 to-ivory-100/70 dark:from-gray-800/70 dark:to-gray-900/70">
+      {/* Hero section */}
+      <div className="relative">
         <MandalaPattern />
         <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center page-hero">
@@ -118,7 +111,7 @@ export default function ServicesPage({ params }) {
       </div>
 
       {/* Services grid */}
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 page-section bg-white/60 dark:bg-gray-900/60">
+      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 page-section">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div key={service.name} className="staggered-fade" style={{ animationDelay: `${index * 150}ms` }}>

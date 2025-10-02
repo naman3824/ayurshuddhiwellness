@@ -23,17 +23,10 @@ export default async function ContactPage({ params: { lang } }) {
 
   return (
     <div 
-      className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 mobile-bg-optimized"
-      style={{
-        backgroundImage: 'url(/images/hero/tree.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        minHeight: '100vh'
-      }}
+      className="tree-bg-optimized"
     >
-      {/* Hero section with gradient background */}
-      <div className="relative bg-gradient-to-b from-primary-50/70 to-white/70 dark:from-gray-800/70 dark:to-gray-900/70">
+      {/* Hero section */}
+      <div className="relative">
         <div className="absolute inset-0 pattern-bg"></div>
         <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
@@ -50,7 +43,7 @@ export default async function ContactPage({ params: { lang } }) {
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 bg-white/60 dark:bg-gray-900/60">
+      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
         <div className="mx-auto max-w-4xl">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
             <div className="card p-8 hover:shadow-glow transition-all duration-300">

@@ -420,9 +420,11 @@
     /* Optimize background images for mobile */
     .mobile-bg-optimized {
       background-size: cover !important;
-      background-position: center center !important;
+      background-position: center 20% !important;
       background-attachment: scroll !important;
       min-height: 100vh;
+      /* Ensure better image quality on mobile */
+      background-repeat: no-repeat;
     }
 
     /* Improve text readability on mobile */
@@ -455,7 +457,9 @@
     /* Extra small mobile devices */
     .mobile-bg-optimized {
       background-size: cover;
-      background-position: center top;
+      background-position: center 15%;
+      /* Ensure the tree is visible on small screens */
+      background-attachment: scroll;
     }
 
     /* Reduce font sizes slightly for very small screens */
@@ -465,10 +469,114 @@
     }
   }
 
+  /* Tablet and medium screens optimization */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .mobile-bg-optimized {
+      background-size: cover;
+      background-position: center 25%;
+      background-attachment: scroll;
+    }
+  }
+
+  /* Large screens optimization */
+  @media (min-width: 1025px) {
+    .mobile-bg-optimized {
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+      /* Add subtle parallax effect on larger screens */
+    }
+  }
+
+  /* Ultra-wide screens */
+  @media (min-width: 1440px) {
+    .mobile-bg-optimized {
+      background-size: cover;
+      background-position: center center;
+      /* Ensure the image covers ultra-wide screens properly */
+    }
+  }
+
   /* High DPI displays optimization */
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .mobile-bg-optimized {
       background-size: cover;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      /* Better image quality on retina displays */
+    }
+  }
+
+  /* Landscape orientation on mobile */
+  @media (max-width: 768px) and (orientation: landscape) {
+    .mobile-bg-optimized {
+      background-position: center center;
+      background-size: cover;
+      min-height: 100vh;
+    }
+  }
+
+  /* Tree background specific optimizations */
+  .tree-bg-optimized {
+    background-image: 
+      linear-gradient(to bottom right, rgba(255, 253, 245, 0.3), rgba(255, 253, 245, 0.2), rgba(245, 245, 220, 0.25)),
+      url('/images/hero/Tree.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    min-height: 100vh;
+  }
+  
+  /* Dark mode tree background */
+  .dark .tree-bg-optimized {
+    background-image: 
+      linear-gradient(to bottom right, rgba(17, 24, 39, 0.4), rgba(31, 41, 55, 0.3), rgba(17, 24, 39, 0.35)),
+      url('/images/hero/Tree.jpg');
+  }
+  
+  /* Responsive adjustments for tree background */
+  @media (max-width: 480px) {
+    .tree-bg-optimized {
+      background-position: center 20%;
+      background-size: cover;
+    }
+  }
+  
+  @media (min-width: 481px) and (max-width: 768px) {
+    .tree-bg-optimized {
+      background-position: center 25%;
+      background-size: cover;
+    }
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .tree-bg-optimized {
+      background-position: center 30%;
+      background-size: cover;
+    }
+  }
+  
+  @media (min-width: 1025px) {
+    .tree-bg-optimized {
+      background-position: center center;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+  }
+  
+  /* Landscape orientation specific adjustments */
+  @media (max-width: 768px) and (orientation: landscape) {
+    .tree-bg-optimized {
+      background-position: center center;
+      background-size: cover;
+      min-height: 100vh;
+    }
+  }
+  
+  /* High DPI optimization for tree background */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .tree-bg-optimized {
       image-rendering: -webkit-optimize-contrast;
       image-rendering: crisp-edges;
     }

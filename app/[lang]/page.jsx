@@ -47,14 +47,7 @@ export default function HomePage({ params }) {
   
   return (
     <div 
-      className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 mobile-bg-optimized"
-      style={{
-        backgroundImage: 'url(/images/hero/tree.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        minHeight: '100vh'
-      }}
+      className="tree-bg-optimized"
     >
       {/* Hero section with Indian-inspired design */}
       <div className="relative isolate overflow-hidden bg-gradient-to-b from-primary-50/70 to-ivory-100/70 dark:from-gray-900/70 dark:to-gray-800/70">
@@ -156,16 +149,8 @@ export default function HomePage({ params }) {
       {/* CTA section */}
       <div className="bg-white/60 dark:bg-gray-900/60">
         <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
-          <div className="relative isolate overflow-hidden bg-gradient-wellness px-6 py-16 shadow-2xl sm:rounded-3xl sm:px-16 md:py-24 lg:flex lg:gap-x-20 lg:px-24">
-            <svg viewBox="0 0 1024 1024" className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:-ml-80 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0" aria-hidden="true">
-              <circle cx={512} cy={512} r={512} fill="url(#759c1415-0410-454c-8f7c-9a820de03641)" fillOpacity="0.7" />
-              <defs>
-                <radialGradient id="759c1415-0410-454c-8f7c-9a820de03641">
-                  <stop stopColor="#7775D6" />
-                  <stop offset={1} stopColor="#E935C1" />
-                </radialGradient>
-              </defs>
-            </svg>
+          <div className="relative isolate overflow-hidden bg-white/20 dark:bg-gray-900/30 backdrop-blur-md px-6 py-16 shadow-2xl sm:rounded-3xl sm:px-16 md:py-24 lg:flex lg:gap-x-20 lg:px-24 border-2 border-white/40 dark:border-gray-600/50">
+
             <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:text-left">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 Ready to begin your wellness journey?
