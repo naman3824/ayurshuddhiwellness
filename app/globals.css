@@ -520,7 +520,7 @@
   .tree-bg-optimized {
     background-image: 
       linear-gradient(to bottom right, rgba(255, 253, 245, 0.3), rgba(255, 253, 245, 0.2), rgba(245, 245, 220, 0.25)),
-      url('/images/hero/Tree.jpg');
+      url('/images/hero/tree.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -532,7 +532,7 @@
   .dark .tree-bg-optimized {
     background-image: 
       linear-gradient(to bottom right, rgba(17, 24, 39, 0.4), rgba(31, 41, 55, 0.3), rgba(17, 24, 39, 0.35)),
-      url('/images/hero/Tree.jpg');
+      url('/images/hero/tree.jpg');
   }
   
   /* Responsive adjustments for tree background */
