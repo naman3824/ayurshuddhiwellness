@@ -36,15 +36,17 @@ const getFeaturedServices = (lang) => [
 ];
 
 export async function generateMetadata({ params }) {
+  const { lang } = await params;
   return {
     title: 'Ayur Shuddhi Wellness - Holistic Health Solutions',
     description: 'Experience the power of Ayurveda and holistic wellness with Ayur Shuddhi Wellness. We offer innovative health practices to connect your mind, body, and soul.',
   };
 }
 
-export default function HomePage({ params }) {
-  const featuredServices = getFeaturedServices(params.lang);
-  
+export default async function HomePage({ params }) {
+  const { lang } = await params;
+  const featuredServices = getFeaturedServices(lang);
+
   return (
     <div 
       className="tree-bg-optimized"

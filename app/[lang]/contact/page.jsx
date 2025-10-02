@@ -10,7 +10,13 @@ export async function generateStaticParams() {
   ]
 }
 
-export async function generateMetadata({ params: { lang } }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
+
+  const {
+    lang
+  } = params;
+
   const dict = await getDictionary(lang)
   return {
     title: dict.contact.title,
@@ -18,7 +24,13 @@ export async function generateMetadata({ params: { lang } }) {
   }
 }
 
-export default async function ContactPage({ params: { lang } }) {
+export default async function ContactPage(props) {
+  const params = await props.params;
+
+  const {
+    lang
+  } = params;
+
   const dict = await getDictionary(lang)
 
   return (

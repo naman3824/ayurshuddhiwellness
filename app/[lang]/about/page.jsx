@@ -56,7 +56,13 @@ const values = [
   },
 ]
 
-export default function AboutPage({ params: { lang } }) {
+export default async function AboutPage(props) {
+  const params = await props.params;
+
+  const {
+    lang
+  } = params;
+
   return (
     <div 
       className="tree-bg-optimized"

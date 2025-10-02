@@ -96,10 +96,11 @@ export async function generateStaticParams() {
   return params;
 }
 
-export default function ServiceDetailPage({ params }) {
+export default async function ServiceDetailPage(props) {
+  const params = await props.params;
   // Find the service that matches the URL slug
   const service = allServices.find(s => toUrlSlug(s.name) === params.serviceName);
-  
+
   // Use the client component to render the service detail
   return <ServiceDetailClient service={service} params={params} />;
 }

@@ -85,7 +85,8 @@ services.forEach(service => {
   }
 })
 
-export default function ServicesPage({ params }) {
+export default async function ServicesPage(props) {
+  const params = await props.params;
 
   return (
     <div 

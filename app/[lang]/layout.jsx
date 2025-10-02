@@ -24,7 +24,8 @@ export async function generateStaticParams() {
   return paths;
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata(props) {
+  const params = await props.params;
   return {
     alternates: {
       languages: {
@@ -34,7 +35,13 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function LangLayout({ children, params }) {
+export default async function LangLayout(props) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar lang={params.lang} />
