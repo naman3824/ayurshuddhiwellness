@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import { Metadata } from 'next/types'
 import { getDictionary } from '@/utils/dictionaries'
 import Link from 'next/link';
 

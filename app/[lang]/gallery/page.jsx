@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Metadata } from 'next'
+import { Metadata } from 'next/types'
 import EnhancedImageGrid from '../../../components/EnhancedImageGrid'
 import { getGalleryImages } from '../../../utils/galleryUtils'
 import { MandalaPattern } from '../../../components/MandalaDecoration'
