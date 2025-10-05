@@ -52,7 +52,7 @@ export default async function HomePage({ params }) {
       className="tree-bg-optimized"
     >
       {/* Hero section with Indian-inspired design */}
-      <div className="relative isolate overflow-hidden bg-gradient-to-b from-primary-50/70 to-ivory-100/70 dark:from-gray-900/70 dark:to-gray-800/70">
+      <div className="relative isolate overflow-hidden bg-gradient-to-b from-primary-50/40 to-ivory-100/40 dark:from-gray-900/40 dark:to-gray-800/40">
         <MandalaPattern />
         <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 mobile-hero-padding">
           <div className="mx-auto max-w-3xl text-center">
@@ -68,7 +68,7 @@ export default async function HomePage({ params }) {
       </div>
 
       {/* Our Services section with Indian-inspired design */}
-      <div className="relative bg-gradient-to-b from-ivory-50/60 to-sage-50/60 dark:from-gray-900/60 dark:to-gray-800/60 section-padding mobile-section-spacing">
+      <div className="relative bg-gradient-to-b from-ivory-50/40 to-sage-50/40 dark:from-gray-900/40 dark:to-gray-800/40 section-padding mobile-section-spacing">
         <div className="mx-auto max-w-7xl container-padding">
           <div className="mx-auto max-w-4xl lg:text-center mb-16">
             <span className="inline-flex items-center rounded-full bg-gradient-to-r from-accent-100 to-primary-100 px-4 py-2 text-sm font-semibold text-accent-700 ring-1 ring-inset ring-accent-200/50 mb-8 shadow-soft fade-scale" style={{ animationDelay: '100ms' }}>
@@ -97,7 +97,7 @@ export default async function HomePage({ params }) {
                   image={service.image}
                   iconName={service.iconName}
                   href={service.href}
-                  lang={params.lang}
+                  lang={lang}
                 />
               </div>
             ))}
@@ -107,7 +107,7 @@ export default async function HomePage({ params }) {
       </div>
 
       {/* Testimonial section */}
-      <div className="relative bg-gradient-to-b from-primary-50/60 to-white/60 dark:from-gray-800/60 dark:to-gray-900/60 py-24 sm:py-32">
+      <div className="relative bg-gradient-to-b from-primary-50/40 to-white/40 dark:from-gray-800/40 dark:to-gray-900/40 py-24 sm:py-32">
         <div className="absolute inset-0 pattern-bg"></div>
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
@@ -149,7 +149,7 @@ export default async function HomePage({ params }) {
       </div>
 
       {/* CTA section */}
-      <div className="bg-white/60 dark:bg-gray-900/60">
+      <div className="bg-white/40 dark:bg-gray-900/40">
         <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
           <div className="relative isolate overflow-hidden bg-white/20 dark:bg-gray-900/30 backdrop-blur-md px-6 py-16 shadow-2xl sm:rounded-3xl sm:px-16 md:py-24 lg:flex lg:gap-x-20 lg:px-24 border-2 border-white/40 dark:border-gray-600/50">
 
@@ -162,13 +162,13 @@ export default async function HomePage({ params }) {
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
                 <Link
-                  href={`/${params.lang}/contact`}
+                  href={`/${lang}/contact`}
                   className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-primary-600 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   Contact Us Today
                 </Link>
                 <Link
-                  href={`/${params.lang}/services`}
+                  href={`/${lang}/services`}
                   className="text-sm font-semibold leading-6 text-white group"
                 >
                   Learn more <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1">→</span>

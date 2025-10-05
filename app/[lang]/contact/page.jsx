@@ -1,6 +1,7 @@
 import { Metadata } from 'next/types'
 import { getDictionary } from '@/utils/dictionaries'
 import Link from 'next/link';
+import ContactForm from '../../../components/ContactForm';
 
 export async function generateStaticParams() {
   return [
@@ -149,63 +150,7 @@ export default async function ContactPage(props) {
               </div>
             </div>
 
-            <form className="card p-8 hover:shadow-glow transition-all duration-300">
-              <h2 className="text-xl font-semibold text-primary-700 dark:text-primary-400 mb-6">Send us a message</h2>
-              <div className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-semibold leading-6 text-gray-900 dark:text-white">
-                    {dict.contact.name}
-                  </label>
-                  <div className="mt-2.5">
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      autoComplete="name"
-                      className="block w-full rounded-lg border-0 px-4 py-3 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 dark:bg-gray-800/50 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm transition-colors"
-                      placeholder="Your name"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-semibold leading-6 text-gray-900 dark:text-white">
-                    {dict.contact.email}
-                  </label>
-                  <div className="mt-2.5">
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      autoComplete="email"
-                      className="block w-full rounded-lg border-0 px-4 py-3 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 dark:bg-gray-800/50 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm transition-colors"
-                      placeholder="your.email@example.com"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-semibold leading-6 text-gray-900 dark:text-white">
-                    {dict.contact.message}
-                  </label>
-                  <div className="mt-2.5">
-                    <textarea
-                      name="message"
-                      id="message"
-                      rows={4}
-                      className="block w-full rounded-lg border-0 px-4 py-3 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 dark:bg-gray-800/50 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm transition-colors"
-                      placeholder="How can we help you?"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <button
-                    type="submit"
-                    className="btn btn-primary w-full rounded-lg py-3"
-                  >
-                    {dict.contact.submit}
-                  </button>
-                </div>
-              </div>
-            </form>
+            <ContactForm dict={dict} />
           </div>
           
           {/* Map or additional contact info could go here */}

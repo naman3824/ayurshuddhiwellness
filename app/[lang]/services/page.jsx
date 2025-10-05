@@ -87,6 +87,7 @@ services.forEach(service => {
 
 export default async function ServicesPage(props) {
   const params = await props.params;
+  const { lang } = params;
 
   return (
     <div 
@@ -123,7 +124,7 @@ export default async function ServicesPage(props) {
               detailedDescription={service.detailedDescription}
               image={service.image}
               iconName={service.iconName}
-              href={`/${params.lang}/${service.href}`}
+              href={`/${lang}/${service.href}`}
             />
             </div>
           ))}

@@ -26,10 +26,11 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props) {
   const params = await props.params;
+  const { lang } = params;
   return {
     alternates: {
       languages: {
-        'en-IN': `/${params.lang}`,
+        'en-IN': `/${lang}`,
       },
     },
   };
@@ -37,6 +38,7 @@ export async function generateMetadata(props) {
 
 export default async function LangLayout(props) {
   const params = await props.params;
+  const { lang } = params;
 
   const {
     children
@@ -44,11 +46,11 @@ export default async function LangLayout(props) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Navbar lang={params.lang} />
+      <Navbar lang={lang} />
       <main className="flex-grow">
         {children}
       </main>
-      <Footer lang={params.lang} />
+      <Footer lang={lang} />
     </div>
   );
 }

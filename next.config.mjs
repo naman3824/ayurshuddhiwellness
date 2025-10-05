@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const config = {
-  output: 'export', // Enable static exports
+  // Removed 'output: export' to enable API routes for contact form functionality
+  // This allows the contact form to work with server-side email processing
+  // while still generating static pages where possible
   images: {
-    unoptimized: true, // Required for static export
+    unoptimized: true, // Keep for better compatibility
   },
   trailingSlash: true, // Add trailing slashes for cleaner URLs
-  // Note: redirects don't work with static export
-  // You'll need to handle redirects at the hosting platform level
 }
 
-export default config 
+export default config
