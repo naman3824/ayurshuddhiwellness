@@ -71,7 +71,7 @@ export default async function ContactPage(props) {
                   </div>
                   <div>
                     <dt className="font-semibold text-white">Address</dt>
-                    <dd>Jaipur, Rajasthan, India</dd>
+                    <dd>A-228, Sector 36, Greater Noida, Gautam Buddha Nagar, Uttar Pradesh-201310</dd>
                   </div>
                 </div>
                 <div className="flex gap-x-4">
