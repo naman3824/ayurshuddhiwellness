@@ -18,9 +18,9 @@ function BookingContent() {
   }, [searchParams]);
 
   return (
-    <div className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 min-h-screen">
+    <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-screen">
       {/* Hero section with gradient background */}
-      <div className="relative bg-gradient-to-b from-primary-50 to-white dark:from-gray-800 dark:to-gray-900 overflow-hidden">
+      <div className="relative bg-gradient-to-b from-gray-800 to-gray-900 overflow-hidden">
         <MandalaPattern />
         <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
@@ -28,7 +28,7 @@ function BookingContent() {
             <div className="mb-8 flex justify-center">
               <button
                 onClick={() => window.history.back()}
-                className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 animated-underline"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:text-primary-400 transition-colors duration-200 animated-underline"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -40,7 +40,7 @@ function BookingContent() {
             <h1 className="text-4xl font-display font-bold tracking-tight text-gradient-indian sm:text-6xl page-hero">
               Book Your <span className="text-gradient-saffron">Consultation</span>
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 page-content" style={{ animationDelay: '200ms' }}>
+            <p className="mt-6 text-lg leading-8 text-gray-300 page-content" style={{ animationDelay: '200ms' }}>
               Schedule a personalized consultation with our expert practitioners to begin your wellness journey.
             </p>
           </div>
@@ -58,10 +58,10 @@ function BookingContent() {
 export default function BookingPage() {
   return (
     <Suspense fallback={
-      <div className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 min-h-screen flex items-center justify-center">
+      <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-300">Loading booking form...</p>
+          <p className="text-gray-300">Loading booking form...</p>
         </div>
       </div>
     }>

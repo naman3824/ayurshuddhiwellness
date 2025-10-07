@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { DarkModeToggle } from './DarkModeToggle'
 import { MandalaDecoration } from './MandalaDecoration'
 import { useState, useEffect, useRef } from 'react'
 import { staggeredAnimation } from '../utils/animations'
@@ -12,6 +11,7 @@ const navigation = [
   { name: 'About', href: 'about' },
   { name: 'Services', href: 'services' },
   { name: 'Gallery', href: 'gallery' },
+  { name: 'Blog', href: 'blog' },
   { name: 'Contact', href: 'contact' },
 ]
 
@@ -62,19 +62,18 @@ export function Navbar({ lang }) {
   }, [isOpen]);
 
   return (
-    <header className={`relative bg-gradient-to-r from-ivory-100 via-ivory-50 to-sage-50 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 backdrop-blur-md sticky top-0 z-50 transition-all duration-300 border-b border-primary-100/20 dark:border-gray-700/50 ${
-      scrolled ? 'shadow-warm py-1' : 'shadow-soft py-2'
+    <header className={`relative bg-gradient-to-b from-gray-800/70 to-gray-900/70 backdrop-blur-md sticky top-0 z-50 transition-all duration-300 border-b border-gray-700/50 ${
+      scrolled ? 'shadow-warm' : ''
     }`}>
-      {/* Subtle mandala decorations */}
       <MandalaDecoration 
-        className="absolute top-2 right-4 text-primary-200 dark:text-primary-800" 
+        className="absolute top-2 right-4 text-primary-800" 
         size="sm" 
         opacity="low" 
       />
       <MandalaDecoration 
-        className="absolute bottom-2 left-4 text-accent-200 dark:text-accent-800" 
+        className="absolute bottom-2 left-4 text-accent-800" 
         size="sm" 
-        opacity="low" 
+        opacity="low"
       />
       
       <nav className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
@@ -103,17 +102,14 @@ export function Navbar({ lang }) {
               {navigation.map((link, index) => (
                 <Link
                   key={link.name}
-                  href={`/${lang}/${link.href}`}
-                  className="nav-item relative px-4 py-2 text-base font-semibold text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300 group animate-fade-in rounded-xl hover:bg-primary-25 dark:hover:bg-gray-700/50"
+                  href={link.href ? `/${lang}/${link.href}` : `/${lang}`}
+                  className="nav-item relative px-4 py-2 text-base font-semibold text-gray-200 hover:text-primary-400 transition-all duration-300 group animate-fade-in rounded-xl hover:bg-gray-700/50"
                   style={{ animationDelay: `${index * 100}ms`, opacity: 1 }}
                 >
                   {link.name}
                   <span className="absolute bottom-1 left-0 w-0 h-0.5 bg-gradient-saffron group-hover:w-full transition-all duration-500 rounded-full"></span>
                 </Link>
               ))}
-              <div className="ml-6 border-l border-secondary-200 dark:border-gray-600 pl-6">
-                <DarkModeToggle />
-              </div>
               <div className="ml-6">
                 <Link
                   href="/book"
@@ -127,10 +123,9 @@ export function Navbar({ lang }) {
           
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-3">
-            <DarkModeToggle />
             <button
               type="button"
-              className="p-2 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-primary-50 dark:hover:bg-gray-700 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300 hover-scale"
+              className="p-2 rounded-xl text-gray-200 hover:bg-gray-700 hover:text-primary-400 transition-all duration-300 hover-scale"
               onClick={() => setIsOpen(!isOpen)}
               aria-expanded={isOpen}
               aria-controls="mobile-menu"
@@ -157,12 +152,12 @@ export function Navbar({ lang }) {
           id="mobile-menu"
           ref={mobileMenuRef}
         >
-          <div className="px-4 pt-4 pb-6 space-y-2 sm:px-6 border-t border-primary-200/30 dark:border-gray-600 bg-gradient-to-b from-primary-25 to-white dark:from-gray-700 dark:to-gray-800">
+          <div className="px-4 pt-4 pb-6 space-y-2 sm:px-6 border-t border-gray-600 bg-gradient-to-b from-gray-800/70 to-gray-900/70">
             {navigation.map((link, index) => (
               <Link
                 key={link.name}
-                href={`/${lang}/${link.href}`}
-                className="mobile-nav-item block px-4 py-3 rounded-xl text-base font-semibold text-gray-700 dark:text-gray-200 hover:bg-primary-50 dark:hover:bg-gray-700 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300 hover-lift"
+                href={link.href ? `/${lang}/${link.href}` : `/${lang}`}
+                className="mobile-nav-item block px-4 py-3 rounded-xl text-base font-semibold text-gray-200 hover:bg-gray-700 hover:text-primary-400 transition-all duration-300 hover-lift"
                 onClick={() => setIsOpen(false)}
                 style={{ animationDelay: `${index * 50}ms`, opacity: isOpen ? 1 : 0 }}
               >

@@ -5,83 +5,21 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-rgb: 245, 243, 239; /* Soft ivory #f5f3ef */
-  --primary-color: 34, 102, 68; /* Dark Green */
-  --accent-color: 20, 184, 166; /* Teal */
-  --secondary-color: 191, 160, 148; /* Clay */
-  --ivory-color: 245, 243, 239; /* Soft ivory */
-  --sage-color: 142, 222, 132; /* Light sage */
-  --transition-base: 300ms cubic-bezier(0.27, 0.01, 0.38, 1.06);
-  --transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --foreground-rgb: 255, 255, 255; /* White text for all content */
+  --background-rgb: 17, 24, 39; /* Dark background to contrast with white text */
+  --primary-color: 255, 255, 255; /* White for primary text */
+  --accent-color: 255, 255, 255; /* White for accent text */
+  --secondary-color: 255, 255, 255; /* White for secondary text */
+  --ivory-color: 255, 255, 255; /* White for ivory text */
+  --sage-color: 255, 255, 255; /* White for sage text */
+  /* Only dark mode supported - no light mode variables needed */
 }
 
-/* Dark mode variables */
-.dark {
-  --foreground-rgb: 255, 255, 255;
-  --background-rgb: 17, 24, 39;
-  --primary-color: 52, 120, 86; /* Dark Green for dark mode */
-  --accent-color: 94, 234, 212; /* Lighter teal in dark mode */
-  --secondary-color: 191, 160, 148; /* Keep clay in dark mode */
-  --ivory-color: 31, 41, 55; /* Dark mode ivory equivalent */
-  --sage-color: 74, 222, 128; /* Brighter sage for dark mode */
-}
-
-/* Custom animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes slideInRight {
-  from { transform: translateX(20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes mandalaRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes gentle-float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes slideInFromLeft {
-  from { transform: translateX(-100px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes slideInFromRight {
-  from { transform: translateX(100px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes fadeInScale {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-@keyframes staggeredFadeIn {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
+/* All animations removed for accessibility and clean design */
 
 /* Base styles */
 @layer base {
   html {
-    scroll-behavior: smooth;
     scroll-padding-top: 5rem;
   }
   
@@ -89,20 +27,17 @@
     color: rgb(var(--foreground-rgb));
     background: rgb(var(--background-rgb));
     @apply antialiased font-sans;
-    transition: background-color var(--transition-base);
     font-feature-settings: 'liga' 1, 'kern' 1;
+    font-weight: 500; /* Slightly bolder text for better readability */
   }
 
-  /* Smooth transitions for dark mode */
-  * {
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-timing-function: cubic-bezier(0.27, 0.01, 0.38, 1.06);
-    transition-duration: 200ms;
-  }
+  /* All transitions removed for clean, static design */
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-bold tracking-tight;
     letter-spacing: -0.02em;
+    color: white; /* White color for all headings */
+    font-weight: 700; /* Bolder headings for better readability */
   }
   
   h1 {
@@ -121,84 +56,103 @@
   }
   
   ::selection {
-    background-color: rgba(30, 120, 90, 0.3);
-    color: inherit;
+    background-color: rgba(255, 255, 255, 0.3); /* White selection background */
+    color: white; /* White text in selection */
   }
   
   ::-moz-selection {
-    background-color: rgba(30, 120, 90, 0.3);
-    color: inherit;
+    background-color: rgba(255, 255, 255, 0.3); /* White selection background */
+    color: white; /* White text in selection */
   }
   
-  /* Enhanced focus styles for accessibility */
+  /* Enhanced focus styles for accessibility - no transitions */
   *:focus-visible {
-    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900;
-    transition: box-shadow 0.2s;
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-gray-900;
   }
   
-  /* Page transition effect */
-  .page-transition {
-    animation: fadeIn 0.5s cubic-bezier(0.27, 0.01, 0.38, 1.06);
-  }
+  /* Page transitions removed for clean design */
 }
 
 /* Component styles */
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center rounded-xl px-6 py-3 text-center text-sm font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm;
+    @apply inline-flex items-center justify-center rounded-xl px-6 py-3 text-center text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm;
     letter-spacing: 0.025em;
+    font-weight: 600; /* Bolder text for better readability */
   }
   
   .btn-primary {
-    @apply bg-gradient-saffron text-white shadow-warm hover:shadow-glow focus:ring-primary-500 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-300;
-    background-image: linear-gradient(135deg, rgb(var(--primary-color)), rgba(var(--primary-color), 0.8));
+    @apply text-white shadow-warm focus:ring-primary-500;
+    background-color: rgb(21, 77, 51); /* Solid dark green for better contrast */
+    color: white;
   }
   
   .btn-primary:hover {
-    background-image: linear-gradient(135deg, rgba(var(--primary-color), 0.9), rgba(var(--primary-color), 0.7));
-    box-shadow: 0 0 25px rgba(var(--primary-color), 0.4);
+    background-color: rgb(16, 61, 40); /* Darker on hover for better contrast */
   }
   
   .btn-secondary {
-    @apply bg-ivory-100 text-gray-900 border border-secondary-200 hover:bg-ivory-200 hover:border-secondary-300 focus:ring-secondary-500 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-300;
+    @apply border border-gray-600 focus:ring-secondary-500 bg-gray-800 text-white;
+    background-color: rgb(55, 65, 81); /* Dark background for white text */
+    color: white; /* White text */
+    border-color: rgb(120, 113, 108); /* Darker border */
+  }
+  
+  .btn-secondary:hover {
+    background-color: rgb(75, 85, 99); /* Darker on hover */
   }
   
   .btn-accent {
-    @apply bg-gradient-teal text-white shadow-soft hover:shadow-glow-teal focus:ring-accent-500 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-300;
+    @apply text-white shadow-soft focus:ring-accent-500;
+    background-color: rgb(15, 118, 110); /* Solid dark teal */
+    color: white; /* White text */
+  }
+  
+  .btn-accent:hover {
+    background-color: rgb(12, 94, 88); /* Darker teal on hover */
   }
   
   .btn-outline {
-    @apply bg-transparent text-gray-700 dark:text-gray-300 border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-500 focus:ring-gray-500 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-300;
+    @apply bg-transparent border-2 focus:ring-gray-500;
+    color: white; /* White text */
+    border-color: rgb(255, 255, 255); /* White border for visibility */
+  }
+  
+  .btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background on hover */
+    border-color: rgb(255, 255, 255); /* White border on hover */
   }
   
   .card {
-    @apply bg-ivory-100/80 backdrop-blur-sm dark:bg-gray-800/80 rounded-2xl shadow-soft hover:shadow-warm transition-all duration-500 transform hover:translate-y-[-8px] border border-primary-100/20 dark:border-gray-700/50;
+    @apply rounded-2xl shadow-soft border bg-gray-800/80 border-gray-700/50;
+    background-color: rgb(31, 41, 55); /* Dark background for white text */
+    border-color: rgb(75, 85, 99); /* Dark border */
   }
   
   .card-hover {
-    @apply transition-all duration-500 hover:shadow-glow hover:border-primary-200/50;
+    /* Hover effects removed for clean design */
   }
   
   .section-title {
-    @apply text-4xl font-display font-bold text-gray-900 dark:text-white mb-8 text-center;
-    background: linear-gradient(135deg, rgb(var(--primary-color)), rgb(var(--accent-color)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    @apply text-4xl font-display font-bold mb-8 text-center text-white;
+    color: white; /* White color for section titles */
+    font-weight: 800; /* Extra bold for better readability */
   }
   
   .section-subtitle {
-    @apply text-xl font-semibold text-secondary-600 dark:text-secondary-400 mb-6;
+    @apply text-xl font-semibold mb-6 text-white;
+    color: white; /* White color for section subtitles */
+    font-weight: 600; /* Bolder for better readability */
   }
   
   .pattern-bg {
     @apply bg-[size:40px_40px] bg-pattern-mandala opacity-20;
   }
   
-  /* Indian-inspired decorative elements */
+  /* Decorative elements - animations removed */
   .mandala-decoration {
     @apply absolute opacity-10 pointer-events-none;
-    animation: mandalaRotate 20s linear infinite;
+    /* Animation removed for clean design */
   }
   
   .mandala-decoration::before {
@@ -207,60 +161,60 @@
     mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='black' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='20' fill='none' stroke='black' stroke-width='1'/%3E%3Cpath d='M50 10 L50 90 M10 50 L90 50' stroke='black' stroke-width='1'/%3E%3C/svg%3E");
   }
   
-  /* Enhanced hover effects */
+  /* Hover effects removed for clean design */
   .hover-lift {
-    @apply transition-all duration-500 transform hover:translate-y-[-8px] hover:shadow-warm;
+    /* All hover animations removed */
   }
   
   .hover-glow {
-    @apply transition-all duration-300 hover:shadow-glow;
+    /* All hover animations removed */
   }
   
   .hover-scale {
-    @apply transition-all duration-300 transform hover:scale-[1.05];
+    /* All hover animations removed */
   }
   
-  /* Animated underline effect */
+  /* Underline effect - animations removed */
   .animated-underline {
     @apply relative;
   }
   
   .animated-underline::after {
-    @apply content-[''] absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-saffron transition-all duration-500;
+    @apply content-[''] absolute bottom-0 left-0 w-full h-0.5;
+    background-color: rgb(21, 77, 51); /* Solid color instead of gradient */
   }
   
-  .animated-underline:hover::after {
-    @apply w-full;
-  }
-  
-  /* Form styles */
+  /* Form styles with white text */
   .form-input {
-    @apply w-full px-4 py-3 rounded-xl border border-secondary-200 bg-ivory-100/80 backdrop-blur-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-300 dark:bg-gray-800/80 dark:border-gray-600 dark:text-white;
+    @apply w-full px-4 py-3 rounded-xl border focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-gray-800/80 border-gray-600 text-white;
+    background-color: rgb(55, 65, 81); /* Dark background for white text */
+    border-color: rgb(255, 255, 255); /* White border for visibility */
+    color: white; /* White text */
   }
   
   .form-input:focus {
-    @apply shadow-glow;
+    border-color: rgb(255, 255, 255); /* White focus border */
   }
   
   .form-label {
-    @apply block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2;
+    @apply block text-sm font-semibold mb-2 text-gray-300;
+    color: white; /* White text for labels */
+    font-weight: 600; /* Bolder for better readability */
   }
   
-  /* Popup styles */
+  /* Popup styles - animations removed */
   .popup-overlay {
-    animation: fadeIn 0.3s ease forwards;
+    /* Animation removed */
   }
   
   .popup-content {
-    animation: scaleIn 0.3s cubic-bezier(0.27, 0.01, 0.38, 1.06) forwards;
+    /* Animation removed */
   }
   
-  /* Gradient text effects */
+  /* Text effects with white color */
   .text-gradient-indian {
-    background: linear-gradient(135deg, rgb(var(--primary-color)), rgb(var(--accent-color)), rgb(var(--secondary-color)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: white; /* White text instead of gradient */
+    font-weight: 700; /* Bold for better readability */
   }
 }
 
@@ -270,74 +224,79 @@
     text-wrap: balance;
   }
   
+  /* White text effects */
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-wellness;
+    color: white; /* White text */
+    font-weight: 700;
   }
   
   .text-gradient-saffron {
-    @apply bg-clip-text text-transparent bg-gradient-saffron;
+    color: white; /* White text */
+    font-weight: 700;
   }
   
   .text-gradient-teal {
-    @apply bg-clip-text text-transparent bg-gradient-teal;
+    color: white; /* White text */
+    font-weight: 700;
   }
   
   .text-gradient-clay {
-    @apply bg-clip-text text-transparent bg-gradient-clay;
+    color: white; /* White text */
+    font-weight: 700;
   }
   
-  /* Enhanced scroll animations */
+  /* All scroll animations removed for clean design */
   .animate-on-scroll {
-    @apply opacity-0 translate-y-8 transition-all duration-1000;
+    /* Animation removed */
   }
   
   .animate-on-scroll.is-visible {
-    @apply opacity-100 translate-y-0;
+    /* Animation removed */
   }
   
   .fade-in-up {
-    @apply opacity-0 translate-y-8 transition-all duration-1000;
+    /* Animation removed */
   }
   
   .fade-in-up.is-visible {
-    @apply opacity-100 translate-y-0;
+    /* Animation removed */
   }
   
   .fade-in-down {
-    @apply opacity-0 -translate-y-8 transition-all duration-1000;
+    /* Animation removed */
   }
   
   .fade-in-down.is-visible {
-    @apply opacity-100 translate-y-0;
+    /* Animation removed */
   }
   
   .fade-in-left {
-    @apply opacity-0 -translate-x-8 transition-all duration-1000;
+    /* Animation removed */
   }
   
   .fade-in-left.is-visible {
-    @apply opacity-100 translate-x-0;
+    /* Animation removed */
   }
   
   .fade-in-right {
-    @apply opacity-0 translate-x-8 transition-all duration-1000;
+    /* Animation removed */
   }
   
   .fade-in-right.is-visible {
-    @apply opacity-100 translate-x-0;
+    /* Animation removed */
   }
   
   .scale-in {
-    @apply opacity-0 scale-95 transition-all duration-1000;
+    /* Animation removed */
   }
   
   .scale-in.is-visible {
-    @apply opacity-100 scale-100;
+    /* Animation removed */
   }
   
-  /* Parallax effect */
+  /* Parallax effect removed */
   .parallax {
-    @apply transition-transform duration-300 ease-out will-change-transform;
+    /* Animation removed */
   }
   
   /* Indian-inspired spacing and layout */
@@ -349,70 +308,48 @@
     @apply px-6 lg:px-8;
   }
   
-  /* Gentle floating animation */
+  /* All animations removed for clean design */
   .float-gentle {
-    animation: gentle-float 6s ease-in-out infinite;
+    /* Animation removed */
   }
   
-  /* Enhanced page load animations */
+  /* All page load animations removed */
   .slide-in-left {
-    animation: slideInFromLeft 0.8s cubic-bezier(0.27, 0.01, 0.38, 1.06) forwards;
+    /* Animation removed */
   }
   
   .slide-in-right {
-    animation: slideInFromRight 0.8s cubic-bezier(0.27, 0.01, 0.38, 1.06) forwards;
+    /* Animation removed */
   }
   
   .fade-scale {
-    animation: fadeInScale 0.6s cubic-bezier(0.27, 0.01, 0.38, 1.06) forwards;
+    /* Animation removed */
   }
   
   .staggered-fade {
-    animation: staggeredFadeIn 0.8s cubic-bezier(0.27, 0.01, 0.38, 1.06) forwards;
+    /* Animation removed */
   }
   
-  /* Page transition improvements */
+  /* Page transition animations removed */
   .page-enter {
-    animation: fadeIn 0.4s ease-out forwards;
+    /* Animation removed */
   }
   
   .page-exit {
-    animation: fadeOut 0.3s ease-in forwards;
+    /* Animation removed */
   }
   
-  @keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
-  }
-  
-  /* Universal page load animations */
+  /* Universal page load animations removed */
   .page-content {
-    animation: pageLoadFadeIn 0.8s cubic-bezier(0.27, 0.01, 0.38, 1.06) forwards;
+    /* Animation removed */
   }
   
   .page-hero {
-    animation: pageHeroSlideUp 1s cubic-bezier(0.27, 0.01, 0.38, 1.06) forwards;
+    /* Animation removed */
   }
   
   .page-section {
-    animation: pageSectionFadeIn 0.8s cubic-bezier(0.27, 0.01, 0.38, 1.06) forwards;
-    animation-delay: 0.2s;
-    opacity: 0;
-  }
-  
-  @keyframes pageLoadFadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  @keyframes pageHeroSlideUp {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  @keyframes pageSectionFadeIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    /* Animation removed */
   }
 
   /* Mobile-specific optimizations */
@@ -432,13 +369,7 @@
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    /* Reduce animation intensity on mobile for better performance */
-    .slide-in-left,
-    .slide-in-right,
-    .fade-scale,
-    .staggered-fade {
-      animation-duration: 0.4s;
-    }
+    /* All animations removed for clean design */
 
     /* Optimize hero sections for mobile */
     .mobile-hero-padding {
@@ -517,68 +448,272 @@
   }
 
   /* Tree background specific optimizations */
+  /* ===========================================
+     RESPONSIVE BACKGROUND IMAGE SOLUTION
+     =========================================== */
+  
+  /* Base tree background - Mobile First Approach */
   .tree-bg-optimized {
-    background-image: 
-      linear-gradient(to bottom right, rgba(255, 253, 245, 0.05), rgba(255, 253, 245, 0.03), rgba(245, 245, 220, 0.05)),
-      url('/images/hero/tree.jpg');
-    background-size: cover;
-    background-position: center center;
+    /* Mobile default: No background image */
+    background-image: none;
     background-repeat: no-repeat;
     background-attachment: scroll;
     min-height: 100vh;
+    /* Mobile default: no background size needed */
+    background-size: auto;
+    background-position: center top;
   }
   
-  /* Dark mode tree background */
+  /* Dark mode tree background - Mobile: No background image */
   .dark .tree-bg-optimized {
-    background-image: 
-      linear-gradient(to bottom right, rgba(17, 24, 39, 0.08), rgba(31, 41, 55, 0.05), rgba(17, 24, 39, 0.08)),
-      url('/images/hero/tree.jpg');
+    background-image: none;
   }
   
-  /* Responsive adjustments for tree background */
+  /* ===========================================
+     MOBILE RESPONSIVE SCALING (≤ 768px)
+     =========================================== */
+  
+  /* Extra Small Mobile (≤ 480px) - No background image */
   @media (max-width: 480px) {
     .tree-bg-optimized {
-      background-position: center 20%;
-      background-size: cover;
+      background-image: none;
+      background-size: auto;
+      background-position: center top;
+    }
+    
+    .dark .tree-bg-optimized {
+      background-image: none;
     }
   }
   
+  /* Small Mobile (481px - 768px) - No background image */
   @media (min-width: 481px) and (max-width: 768px) {
     .tree-bg-optimized {
-      background-position: center 25%;
-      background-size: cover;
+      background-image: none;
+      background-size: auto;
+      background-position: center top;
+    }
+    
+    .dark .tree-bg-optimized {
+      background-image: none;
     }
   }
   
-  @media (min-width: 769px) and (max-width: 1024px) {
-    .tree-bg-optimized {
-      background-position: center 30%;
-      background-size: cover;
-    }
-  }
-  
-  @media (min-width: 1025px) {
-    .tree-bg-optimized {
-      background-position: center center;
-      background-size: cover;
-      background-attachment: fixed;
-    }
-  }
-  
-  /* Landscape orientation specific adjustments */
+  /* Mobile Landscape Orientation - No background image */
   @media (max-width: 768px) and (orientation: landscape) {
     .tree-bg-optimized {
-      background-position: center center;
-      background-size: cover;
+      background-image: none;
+      background-size: auto;
+      background-position: center top;
       min-height: 100vh;
+    }
+    
+    .dark .tree-bg-optimized {
+      background-image: none;
     }
   }
   
-  /* High DPI optimization for tree background */
+  /* ===========================================
+     DESKTOP RESPONSIVE SCALING (> 768px)
+     =========================================== */
+  
+  /* Tablet (769px - 1024px) - Enable background image */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .tree-bg-optimized {
+      background-image: 
+        linear-gradient(to bottom right, rgba(255, 253, 245, 0.05), rgba(255, 253, 245, 0.03), rgba(245, 245, 220, 0.05)),
+        url('/images/hero/tree.jpg');
+      background-size: cover; /* Full cover for desktop */
+      background-position: center center;
+      background-attachment: scroll; /* Scroll for better performance on tablets */
+    }
+    
+    .dark .tree-bg-optimized {
+      background-image: 
+        linear-gradient(to bottom right, rgba(17, 24, 39, 0.08), rgba(31, 41, 55, 0.05), rgba(17, 24, 39, 0.08)),
+        url('/images/hero/tree.jpg');
+    }
+  }
+  
+  /* Desktop (1025px - 1439px) - Enable background image */
+  @media (min-width: 1025px) and (max-width: 1439px) {
+    .tree-bg-optimized {
+      background-image: 
+        linear-gradient(to bottom right, rgba(255, 253, 245, 0.05), rgba(255, 253, 245, 0.03), rgba(245, 245, 220, 0.05)),
+        url('/images/hero/tree.jpg');
+      background-size: cover; /* Full cover for desktop */
+      background-position: center center;
+      background-attachment: fixed; /* Parallax effect on desktop */
+    }
+    
+    .dark .tree-bg-optimized {
+      background-image: 
+        linear-gradient(to bottom right, rgba(17, 24, 39, 0.08), rgba(31, 41, 55, 0.05), rgba(17, 24, 39, 0.08)),
+        url('/images/hero/tree.jpg');
+    }
+  }
+  
+  /* Large Desktop (≥ 1440px) - Enable background image */
+  @media (min-width: 1440px) {
+    .tree-bg-optimized {
+      background-image: 
+        linear-gradient(to bottom right, rgba(255, 253, 245, 0.05), rgba(255, 253, 245, 0.03), rgba(245, 245, 220, 0.05)),
+        url('/images/hero/tree.jpg');
+      background-size: cover; /* Full cover for large screens */
+      background-position: center center;
+      background-attachment: fixed; /* Parallax effect */
+    }
+    
+    .dark .tree-bg-optimized {
+      background-image: 
+        linear-gradient(to bottom right, rgba(17, 24, 39, 0.08), rgba(31, 41, 55, 0.05), rgba(17, 24, 39, 0.08)),
+        url('/images/hero/tree.jpg');
+    }
+  }
+  
+  /* ===========================================
+     PERFORMANCE & QUALITY OPTIMIZATIONS
+     =========================================== */
+  
+  /* High DPI displays optimization */
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .tree-bg-optimized {
       image-rendering: -webkit-optimize-contrast;
       image-rendering: crisp-edges;
+    }
+  }
+
+  /* ===========================================
+     UNIVERSAL RESPONSIVE BACKGROUND UTILITIES
+     =========================================== */
+
+  /* Base responsive background class */
+  .responsive-bg {
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    min-height: 100vh;
+    /* Mobile first: contain to prevent zooming */
+    background-size: contain;
+    background-position: center top;
+  }
+
+  /* Desktop override for responsive backgrounds */
+  @media (min-width: 769px) {
+    .responsive-bg {
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+    }
+  }
+
+  /* ===========================================
+     BACKGROUND SIZE UTILITIES
+     =========================================== */
+
+  /* Mobile-specific background sizes */
+  .bg-size-mobile-contain { background-size: contain; }
+  .bg-size-mobile-cover { background-size: cover; }
+  .bg-size-mobile-auto { background-size: auto; }
+
+  /* Desktop overrides */
+  @media (min-width: 769px) {
+    .bg-size-desktop-cover { background-size: cover !important; }
+    .bg-size-desktop-contain { background-size: contain !important; }
+    .bg-size-desktop-auto { background-size: auto !important; }
+  }
+
+  /* ===========================================
+     BACKGROUND POSITION UTILITIES
+     =========================================== */
+
+  /* Mobile positioning utilities */
+  .bg-pos-mobile-top { background-position: center top; }
+  .bg-pos-mobile-center { background-position: center center; }
+  .bg-pos-mobile-bottom { background-position: center bottom; }
+  .bg-pos-mobile-left { background-position: left center; }
+  .bg-pos-mobile-right { background-position: right center; }
+
+  /* Custom percentage positioning for mobile */
+  .bg-pos-mobile-10 { background-position: center 10%; }
+  .bg-pos-mobile-20 { background-position: center 20%; }
+  .bg-pos-mobile-30 { background-position: center 30%; }
+  .bg-pos-mobile-40 { background-position: center 40%; }
+
+  /* Desktop positioning overrides */
+  @media (min-width: 769px) {
+    .bg-pos-desktop-center { background-position: center center !important; }
+    .bg-pos-desktop-top { background-position: center top !important; }
+    .bg-pos-desktop-bottom { background-position: center bottom !important; }
+    .bg-pos-desktop-left { background-position: left center !important; }
+    .bg-pos-desktop-right { background-position: right center !important; }
+  }
+
+  /* ===========================================
+     BACKGROUND ATTACHMENT UTILITIES
+     =========================================== */
+
+  .bg-attachment-scroll { background-attachment: scroll; }
+  .bg-attachment-fixed { background-attachment: fixed; }
+
+  /* Responsive attachment */
+  @media (min-width: 769px) {
+    .bg-attachment-desktop-fixed { background-attachment: fixed; }
+  }
+
+  /* ===========================================
+     COMBINED RESPONSIVE BACKGROUND CLASSES
+     =========================================== */
+
+  /* Mobile: contain, Desktop: cover */
+  .bg-mobile-contain-desktop-cover {
+    background-size: contain;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+  }
+
+  @media (min-width: 769px) {
+    .bg-mobile-contain-desktop-cover {
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+    }
+  }
+
+  /* Mobile: cover with top positioning, Desktop: cover centered */
+  .bg-mobile-cover-top-desktop-cover-center {
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+  }
+
+  @media (min-width: 769px) {
+    .bg-mobile-cover-top-desktop-cover-center {
+      background-position: center center;
+      background-attachment: fixed;
+    }
+  }
+
+  /* ===========================================
+     ACCESSIBILITY & PERFORMANCE
+     =========================================== */
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .tree-bg-optimized,
+    .responsive-bg,
+    .bg-attachment-fixed,
+    .bg-attachment-desktop-fixed {
+      background-attachment: scroll !important;
+    }
+  }
+
+  /* Print styles */
+  @media print {
+    .tree-bg-optimized,
+    .responsive-bg {
+      background: none !important;
     }
   }
 }

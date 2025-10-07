@@ -45,7 +45,7 @@ export default function FeaturedServiceCard({
     : description;
 
   return (
-    <div className="group relative bg-ivory-100/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-soft hover:shadow-warm transition-all duration-500 transform hover:translate-y-[-8px] border border-primary-100/20 dark:border-gray-700/50 overflow-hidden h-[520px] flex flex-col">
+    <div className="group relative bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-soft hover:shadow-warm transition-all duration-500 transform hover:translate-y-[-8px] border border-gray-700/50 overflow-hidden h-[520px] flex flex-col">
       {/* Service Image */}
       <div className="relative w-full aspect-[4/3] overflow-hidden flex-shrink-0">
         <Image 
@@ -69,13 +69,13 @@ export default function FeaturedServiceCard({
               <IconComponent className="h-5 w-5" aria-hidden="true" />
             </div>
           )}
-          <h3 className="text-xl font-display font-bold text-gray-900 dark:text-white leading-tight">
+          <h3 className="text-xl font-display font-bold text-white leading-tight">
             {title}
           </h3>
         </div>
 
         {/* Description */}
-        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 flex-grow text-sm sm:text-base">
+        <p className="text-gray-300 leading-relaxed mb-6 flex-grow text-sm sm:text-base">
           {truncatedDescription}
         </p>
 
@@ -105,4 +105,4 @@ export default function FeaturedServiceCard({
       <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 via-transparent to-accent-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
     </div>
   );
-} 
+}

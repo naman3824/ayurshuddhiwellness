@@ -1,12 +1,12 @@
 -- Supabase Database Migration for Ayur Shuddhi Wellness
 -- Run this SQL in your Supabase SQL Editor to create the required tables
 
--- Enable UUID extension if not already enabled
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- Enable pgcrypto extension for UUID generation (preferred for Supabase)
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- Create users table
 CREATE TABLE IF NOT EXISTS users (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     email TEXT NOT NULL,
     phone TEXT,
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- Create payments table
 CREATE TABLE IF NOT EXISTS payments (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     amount NUMERIC(10,2) NOT NULL,
     receipt_url TEXT,
@@ -24,11 +24,23 @@ CREATE TABLE IF NOT EXISTS payments (
 
 -- Create posts table
 CREATE TABLE IF NOT EXISTS posts (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title TEXT NOT NULL,
     content TEXT NOT NULL,
     image_url TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Create admin_messages table for homepage announcements
+CREATE TABLE IF NOT EXISTS admin_messages (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title TEXT,
+    content TEXT,
+    image_url TEXT,
+    message_type TEXT NOT NULL CHECK (message_type IN ('text', 'image')),
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 
@@ -39,12 +51,15 @@ CREATE INDEX IF NOT EXISTS idx_users_created_at ON users(created_at);
 CREATE INDEX IF NOT EXISTS idx_payments_user_id ON payments(user_id);
 CREATE INDEX IF NOT EXISTS idx_payments_payment_date ON payments(payment_date);
 CREATE INDEX IF NOT EXISTS idx_posts_created_at ON posts(created_at);
+CREATE INDEX IF NOT EXISTS idx_admin_messages_is_active ON admin_messages(is_active);
+CREATE INDEX IF NOT EXISTS idx_admin_messages_created_at ON admin_messages(created_at);
 
 
 -- Enable Row Level Security (RLS) for better security
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE payments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE posts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE admin_messages ENABLE ROW LEVEL SECURITY;
 
 
 -- Create policies for public access (adjust as needed for your security requirements)
@@ -76,7 +91,6 @@ CREATE POLICY "Posts can be updated by everyone" ON posts
 
 CREATE POLICY "Posts can be deleted by everyone" ON posts
     FOR DELETE USING (true);
-
 
 
 -- Insert some sample data for testing (optional)

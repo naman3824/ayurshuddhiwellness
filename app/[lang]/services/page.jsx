@@ -98,13 +98,13 @@ export default async function ServicesPage(props) {
         <MandalaPattern />
         <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center page-hero">
-            <span className="inline-flex items-center rounded-full bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700 ring-1 ring-inset ring-primary-700/10 mb-6 dark:bg-primary-900/30 dark:text-primary-300">
+            <span className="inline-flex items-center rounded-full bg-primary-900/30 px-3 py-1 text-sm font-medium text-primary-300 ring-1 ring-inset ring-primary-700/10 mb-6">
               Our Offerings
             </span>
             <h1 className="text-4xl font-display font-bold tracking-tight text-gradient-indian sm:text-5xl">
               Holistic Wellness Solutions
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
+            <p className="mt-6 text-lg leading-8 text-gray-300">
               Discover our comprehensive range of holistic health services designed to promote wellness, 
               balance, and healing in your life through ancient wisdom and modern practices.
             </p>

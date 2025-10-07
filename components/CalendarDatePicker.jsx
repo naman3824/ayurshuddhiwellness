@@ -130,7 +130,7 @@ export function CalendarDatePicker({ value, onChange, className = '', error = ''
           error ? 'border-red-500 focus:ring-red-500' : ''
         }`}
       >
-        <span className={selectedDate ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}>
+        <span className={selectedDate ? 'text-white' : 'text-gray-400'}>
           {formatDisplayDate(selectedDate)}
         </span>
         <svg 
@@ -145,27 +145,27 @@ export function CalendarDatePicker({ value, onChange, className = '', error = ''
 
       {/* Calendar dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-ivory-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl shadow-warm p-4 z-50 animate-fade-in">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-gray-800 border border-gray-600 rounded-xl shadow-warm p-4 z-50 animate-fade-in">
           {/* Month/Year header */}
           <div className="flex items-center justify-between mb-4">
             <button
               type="button"
               onClick={goToPreviousMonth}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-semibold text-white">
               {months[currentMonth]} {currentYear}
             </h3>
             
             <button
               type="button"
               onClick={goToNextMonth}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -176,7 +176,7 @@ export function CalendarDatePicker({ value, onChange, className = '', error = ''
           {/* Days of week header */}
           <div className="grid grid-cols-7 gap-1 mb-2">
             {daysOfWeek.map((day) => (
-              <div key={day} className="text-center text-sm font-medium text-gray-500 dark:text-gray-400 py-2">
+              <div key={day} className="text-center text-sm font-medium text-gray-400 py-2">
                 {day}
               </div>
             ))}
@@ -214,10 +214,10 @@ export function CalendarDatePicker({ value, onChange, className = '', error = ''
                     ${isSelected 
                       ? 'bg-primary-500 text-white shadow-glow' 
                       : isToday
-                      ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300'
+                      ? 'bg-primary-900/30 text-primary-300'
                       : isAvailable
-                      ? 'text-gray-900 dark:text-white hover:bg-primary-50 dark:hover:bg-primary-900/20 hover-scale'
-                      : 'text-gray-300 dark:text-gray-600 cursor-not-allowed'
+                      ? 'text-white hover:bg-primary-900/20 hover-scale'
+                      : 'text-gray-600 cursor-not-allowed'
                     }
                   `}
                 >
@@ -228,7 +228,7 @@ export function CalendarDatePicker({ value, onChange, className = '', error = ''
           </div>
 
           {/* Helper text */}
-          <div className="mt-4 text-xs text-gray-500 dark:text-gray-400 text-center">
+          <div className="mt-4 text-xs text-gray-400 text-center">
             Sundays are not available for appointments
           </div>
         </div>
@@ -236,8 +236,8 @@ export function CalendarDatePicker({ value, onChange, className = '', error = ''
 
       {/* Error message */}
       {error && (
-        <p className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</p>
+        <p className="mt-1 text-sm text-red-400">{error}</p>
       )}
     </div>
   );
-} 
+}

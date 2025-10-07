@@ -1,7 +1,11 @@
+'use client'
+
 import { Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import AdminProtection from '../components/AdminProtection'
 
 function AdminSettings() {
+  const searchParams = useSearchParams();
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       <div className="container mx-auto px-4 py-8">
@@ -19,7 +23,7 @@ function AdminSettings() {
         <div className="bg-gray-800 rounded-lg p-4 mb-8">
           <nav className="flex space-x-4">
             <a 
-              href="/admin?key=ayur_admin_2024_secure_key_xyz789" 
+              href={`/admin?key=${searchParams.get('key')}`} 
               className="text-blue-400 hover:text-blue-300 transition-colors"
             >
               ← Back to Dashboard

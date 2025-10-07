@@ -131,7 +131,7 @@ export default function ServiceCard({ title, description, detailedDescription, i
         
         {/* Service title */}
         <div className="w-full flex-grow flex flex-col">
-          <div className="flex items-center gap-x-3 text-xl font-semibold leading-7 text-primary-700 dark:text-primary-400 mb-4">
+          <div className="flex items-center gap-x-3 text-xl font-semibold leading-7 text-primary-400 mb-4">
             {IconComponent && (
               <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-wellness text-white shadow-soft transform transition-transform duration-300 hover:rotate-3">
                 <IconComponent className="h-6 w-6" aria-hidden="true" />
@@ -141,13 +141,13 @@ export default function ServiceCard({ title, description, detailedDescription, i
           </div>
           
           {/* Description - always visible */}
-          <div className="text-base leading-7 text-gray-600 dark:text-gray-300 flex-grow">
+          <div className="text-base leading-7 text-gray-300 flex-grow">
             <p className="md:line-clamp-2">{description}</p>
           </div>
           
           {/* Expanded content */}
           {expanded && detailedDescription && (
-            <div className="mt-4 text-base leading-7 text-gray-600 dark:text-gray-300">
+            <div className="mt-4 text-base leading-7 text-gray-300">
               {renderFormattedText(detailedDescription)}
             </div>
           )}

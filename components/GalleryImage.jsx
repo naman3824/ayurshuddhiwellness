@@ -43,9 +43,9 @@ export default function GalleryImage({ src, alt, fill = false, onLoadingComplete
 
   if (error) {
     return (
-      <div className="flex items-center justify-center bg-gray-200 dark:bg-gray-700 w-full h-full">
-        <div className="text-center p-4">
-          <p className="text-gray-600 dark:text-gray-300">
+      <div className="flex items-center justify-center bg-gray-700 w-full h-full">
+        <div className="text-center">
+          <p className="text-gray-300">
             This image is in HEIC format which is not supported by your browser.
           </p>
         </div>
@@ -75,4 +75,4 @@ export default function GalleryImage({ src, alt, fill = false, onLoadingComplete
       {...props}
     />
   );
-} 
+}

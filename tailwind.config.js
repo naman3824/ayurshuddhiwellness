@@ -8,73 +8,85 @@ const config = {
   theme: {
     extend: {
       colors: {
-        // Warm saffron/orange primary palette - Indian-inspired
+        // White text color for all text elements
+        white: '#ffffff',
+        // Primary wellness colors - enhanced for better contrast
         primary: {
-          50: '#f0f9f4',
+          50: '#f0fdf4',
           100: '#dcfce7',
           200: '#bbf7d0',
           300: '#86efac',
           400: '#4ade80',
-          500: '#226644', // Main dark green
-          600: '#1e5a3a',
-          700: '#1a4e32',
-          800: '#16422a',
-          900: '#123622',
-          950: '#0e2a1a',
+          500: '#22c55e',
+          600: '#16a34a',
+          700: '#15803d', // Darker for better contrast
+          800: '#166534', // Much darker for text
+          900: '#14532d', // Very dark for high contrast
+          950: '#052e16',
         },
-        // Calming teal - for accent and balance
+        // Accent colors for highlights - improved contrast
         accent: {
-          50: '#f0fdfa',
-          100: '#ccfbf1',
-          200: '#99f6e4',
-          300: '#5eead4',
-          400: '#2dd4bf',
-          500: '#14b8a6', // Main teal
-          600: '#0d9488',
-          700: '#0f766e',
-          800: '#115e59',
-          900: '#134e4a',
-          950: '#042f2e',
+          50: '#fefce8',
+          100: '#fef9c3',
+          200: '#fef08a',
+          300: '#fde047',
+          400: '#facc15',
+          500: '#eab308',
+          600: '#ca8a04', // Darker for better readability
+          700: '#a16207', // Much darker for text
+          800: '#854d0e', // Very dark for high contrast
+          900: '#713f12',
+          950: '#422006',
         },
-        // Muted clay/terracotta - for secondary accents
+        // Secondary colors for depth - enhanced contrast
         secondary: {
-          50: '#fdf8f6',
-          100: '#f2e8e5',
-          200: '#eaddd7',
-          300: '#e0cec7',
-          400: '#d2bab0',
-          500: '#bfa094',
-          600: '#a18072',
-          700: '#977669',
-          800: '#846358',
-          900: '#43302b',
-          950: '#362318',
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569', // Darker for better contrast
+          700: '#334155', // Much darker for text
+          800: '#1e293b', // Very dark for high contrast
+          900: '#0f172a',
+          950: '#020617',
         },
-        // Soft ivory variations - updated for reduced brightness
+        // Warm ivory tones - improved for light mode
         ivory: {
-          50: '#faf8f4',
-          100: '#f5f3ef', // Soft ivory #F5F3EF
-          200: '#f0edea',
-          300: '#ebe8e4',
-          400: '#e6e3df',
-          500: '#f5f3ef', // Main soft ivory
-          600: '#e0ddd9',
-          700: '#d0cdc9',
-          800: '#c0bdb9',
-          900: '#b0ada9',
+          50: '#fefdfb',
+          100: '#fdf9f0',
+          200: '#faf4e6',
+          300: '#f5ead1',
+          400: '#eed9b3',
+          500: '#e4c28a',
+          600: '#d4a574', // Darker for better contrast
+          700: '#b8845a', // Much darker for text
+          800: '#9a6b47', // Very dark for high contrast
+          900: '#7d5539',
+          950: '#422b1c',
         },
-        // Light sage variations - new addition
+        // Sage green for natural feel - enhanced contrast
         sage: {
-          50: '#f0f9f0',
-          100: '#e1f2e1',
-          200: '#c3e6c3',
-          300: '#a4d9a4',
-                     400: '#8ede84', // Light sage #8EDE84
-          500: '#8ede84', // Corrected light sage
-          600: '#7bc97b',
-          700: '#68b468',
-          800: '#559f55',
-          900: '#428a42',
+          50: '#f6f7f6',
+          100: '#e3e7e3',
+          200: '#c7d0c7',
+          300: '#a3b2a3',
+          400: '#7a8f7a',
+          500: '#5c735c',
+          600: '#485a48', // Darker for better contrast
+          700: '#3c4a3c', // Much darker for text
+          800: '#333d33', // Very dark for high contrast
+          900: '#2c342c',
+          950: '#161b16',
+        },
+        // Text colors - all set to white for dark mode only
+        text: {
+          'DEFAULT': '#ffffff',
+          'white': '#ffffff',
+          'primary': '#ffffff',
+          'secondary': '#ffffff',
+          'accent': '#ffffff',
         },
       },
       fontFamily: {
@@ -113,6 +125,45 @@ const config = {
         'pattern-dots': 'radial-gradient(#226644 1px, transparent 1px)',
         'pattern-dots-dark': 'radial-gradient(rgba(34, 102, 68, 0.3) 1px, transparent 1px)',
         'pattern-mandala': 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23226644\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'4\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+        // Responsive background images
+        'hero-tree': 'linear-gradient(to bottom right, rgba(255, 253, 245, 0.05), rgba(255, 253, 245, 0.03), rgba(245, 245, 220, 0.05)), url("/images/hero/tree.jpg")',
+        'hero-tree-dark': 'linear-gradient(to bottom right, rgba(17, 24, 39, 0.08), rgba(31, 41, 55, 0.05), rgba(17, 24, 39, 0.08)), url("/images/hero/tree.jpg")',
+      },
+      backgroundSize: {
+        'auto': 'auto',
+        'cover': 'cover',
+        'contain': 'contain',
+        '50%': '50%',
+        '100%': '100%',
+        // Responsive background sizes
+        'mobile-contain': 'contain',
+        'mobile-cover': 'cover',
+        'desktop-cover': 'cover',
+        'desktop-contain': 'contain',
+      },
+      backgroundPosition: {
+        'bottom': 'bottom',
+        'center': 'center',
+        'left': 'left',
+        'left-bottom': 'left bottom',
+        'left-top': 'left top',
+        'right': 'right',
+        'right-bottom': 'right bottom',
+        'right-top': 'right top',
+        'top': 'top',
+        // Custom percentage positions
+        'top-10': 'center 10%',
+        'top-20': 'center 20%',
+        'top-30': 'center 30%',
+        'top-40': 'center 40%',
+        'bottom-10': 'center 90%',
+        'bottom-20': 'center 80%',
+        'bottom-30': 'center 70%',
+        // Mobile-specific positions
+        'mobile-top': 'center top',
+        'mobile-center': 'center center',
+        'mobile-20': 'center 20%',
+        'desktop-center': 'center center',
       },
       // Enhanced box shadow utilities with warm tones
       boxShadow: {
@@ -123,79 +174,9 @@ const config = {
         'inner-glow': 'inset 0 2px 4px 0 rgba(34, 102, 68, 0.06)',
         'warm': '0 10px 25px -5px rgba(34, 102, 68, 0.1), 0 10px 10px -5px rgba(34, 102, 68, 0.04)',
       },
-      // Enhanced animation utilities
-      animation: {
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'bounce-slow': 'bounce 2s infinite',
-        'fade-in': 'fadeIn 0.5s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
-        'fade-in-up': 'fadeInUp 0.7s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
-        'fade-in-down': 'fadeInDown 0.7s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
-        'fade-in-left': 'fadeInLeft 0.7s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
-        'fade-in-right': 'fadeInRight 0.7s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
-        'slide-up': 'slideUp 0.5s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
-        'slide-down': 'slideDown 0.5s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
-        'slide-in-right': 'slideInRight 0.5s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
-        'slide-in-left': 'slideInLeft 0.5s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
-        'scale-in': 'scaleIn 0.5s cubic-bezier(0.27, 0.01, 0.38, 1.06)',
-        'float': 'float 6s ease-in-out infinite',
-        'spin-slow': 'spin 8s linear infinite',
-        'wiggle': 'wiggle 1s ease-in-out infinite',
-        'mandala-rotate': 'mandalaRotate 20s linear infinite',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        fadeInUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        fadeInDown: {
-          '0%': { transform: 'translateY(-20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        fadeInLeft: {
-          '0%': { transform: 'translateX(-20px)', opacity: '0' },
-          '100%': { transform: 'translateX(0)', opacity: '1' },
-        },
-        fadeInRight: {
-          '0%': { transform: 'translateX(20px)', opacity: '0' },
-          '100%': { transform: 'translateX(0)', opacity: '1' },
-        },
-        slideUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        slideDown: {
-          '0%': { transform: 'translateY(-20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        slideInRight: {
-          '0%': { transform: 'translateX(20px)', opacity: '0' },
-          '100%': { transform: 'translateX(0)', opacity: '1' },
-        },
-        slideInLeft: {
-          '0%': { transform: 'translateX(-20px)', opacity: '0' },
-          '100%': { transform: 'translateX(0)', opacity: '1' },
-        },
-        scaleIn: {
-          '0%': { transform: 'scale(0.95)', opacity: '0' },
-          '100%': { transform: 'scale(1)', opacity: '1' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
-        wiggle: {
-          '0%, 100%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' },
-        },
-        mandalaRotate: {
-          '0%': { transform: 'rotate(0deg)' },
-          '100%': { transform: 'rotate(360deg)' },
-        },
-      },
+      // All animations removed for clean design
+      animation: {},
+      keyframes: {},
       // Add border radius utilities
       borderRadius: {
         'xl': '1rem',

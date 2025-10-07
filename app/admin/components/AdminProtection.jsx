@@ -3,8 +3,6 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 
-const ADMIN_KEY = 'ayur_admin_2024_secure_key_xyz789'
-
 export default function AdminProtection({ children }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -12,16 +10,40 @@ export default function AdminProtection({ children }) {
   const router = useRouter()
 
   useEffect(() => {
-    const providedKey = searchParams.get('key')
-    
-    if (!providedKey || providedKey !== ADMIN_KEY) {
-      // Redirect to home page if key is missing or incorrect
-      router.replace('/')
-      return
+    const validateKey = async () => {
+      const providedKey = searchParams.get('key')
+      
+      if (!providedKey) {
+        router.replace('/')
+        return
+      }
+
+      try {
+        // Validate key with server
+        const response = await fetch('/api/admin/validate-key/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ key: providedKey }),
+        });
+
+        if (response.ok) {
+          setIsAuthorized(true)
+        } else {
+          router.replace('/')
+          return
+        }
+      } catch (error) {
+        console.error('Key validation failed:', error)
+        router.replace('/')
+        return
+      }
+      
+      setIsLoading(false)
     }
-    
-    setIsAuthorized(true)
-    setIsLoading(false)
+
+    validateKey()
   }, [searchParams, router])
 
   if (isLoading) {

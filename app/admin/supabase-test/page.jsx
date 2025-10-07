@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import AdminProtection from '../components/AdminProtection'
 import { 
   testConnection, 
@@ -11,6 +12,7 @@ import {
 } from '../../../lib/supabaseClient'
 
 function SupabaseTestDashboard() {
+  const searchParams = useSearchParams();
   const [connectionStatus, setConnectionStatus] = useState('testing')
   const [users, setUsers] = useState([])
   const [posts, setPosts] = useState([])
@@ -144,7 +146,7 @@ function SupabaseTestDashboard() {
         <div className="bg-gray-800 rounded-lg p-4 mb-8">
           <nav className="flex space-x-4">
             <a 
-              href="/admin?key=ayur_admin_2024_secure_key_xyz789" 
+              href={`/admin?key=${searchParams.get('key')}`} 
               className="text-blue-400 hover:text-blue-300 transition-colors"
             >
               ← Back to Admin Dashboard

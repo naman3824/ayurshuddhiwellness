@@ -63,16 +63,16 @@ export default function ReviewPaymentPage() {
   const { serviceDetails } = bookingData;
 
   return (
-    <div className="bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 min-h-screen">
+    <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-screen">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-b from-primary-50 to-white dark:from-gray-800 dark:to-gray-900 overflow-hidden">
+      <div className="relative bg-gradient-to-b from-gray-800 to-gray-900 overflow-hidden">
         <MandalaPattern />
         <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center page-hero">
             <h1 className="text-4xl font-display font-bold tracking-tight text-gradient-indian sm:text-6xl">
               Review & Payment
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 page-content">
+            <p className="mt-6 text-lg leading-8 text-gray-300 page-content">
               Please review your booking details before proceeding to payment.
             </p>
           </div>
@@ -85,15 +85,15 @@ export default function ReviewPaymentPage() {
           
           {/* Booking Summary */}
           <div className="lg:col-span-2">
-            <div className="relative bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 rounded-2xl shadow-warm border border-primary-100/20 dark:border-gray-700/50 overflow-hidden">
+            <div className="relative bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-warm border border-gray-700/50 overflow-hidden">
               <div className="p-8">
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-display font-bold text-gray-900 dark:text-white">
+                  <h2 className="text-2xl font-display font-bold text-white">
                     Booking Summary
                   </h2>
                   <button
                     onClick={handleEdit}
-                    className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium transition-colors duration-200"
+                    className="text-primary-400 hover:text-primary-300 font-medium transition-colors duration-200"
                   >
                     Edit Details
                   </button>
@@ -101,44 +101,44 @@ export default function ReviewPaymentPage() {
 
                 <div className="space-y-6">
                   {/* Personal Information */}
-                  <div className="border-b border-gray-200 dark:border-gray-700 pb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="border-b border-gray-700 pb-6">
+                    <h3 className="text-lg font-semibold text-white mb-4">
                       Personal Information
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Full Name</p>
-                        <p className="font-medium text-gray-900 dark:text-white">{bookingData.name}</p>
+                        <p className="text-sm text-gray-400">Full Name</p>
+                        <p className="font-medium text-white">{bookingData.name}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Phone Number</p>
-                        <p className="font-medium text-gray-900 dark:text-white">{bookingData.phone}</p>
+                        <p className="text-sm text-gray-400">Phone Number</p>
+                        <p className="font-medium text-white">{bookingData.phone}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Service Information */}
-                  <div className="border-b border-gray-200 dark:border-gray-700 pb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="border-b border-gray-700 pb-6">
+                    <h3 className="text-lg font-semibold text-white mb-4">
                       Service Details
                     </h3>
-                    <div className="bg-primary-50 dark:bg-gray-700/50 rounded-xl p-4">
+                    <div className="bg-gray-700/50 rounded-xl p-4">
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
-                          <h4 className="font-semibold text-gray-900 dark:text-white">
+                          <h4 className="font-semibold text-white">
                             {serviceDetails.name}
                           </h4>
-                          <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                          <p className="text-sm text-gray-300 mt-1">
                             {serviceDetails.description}
                           </p>
                           <div className="flex items-center space-x-4 mt-3">
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent-100 text-accent-800 dark:bg-accent-900/20 dark:text-accent-300">
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent-900/20 text-accent-300">
                               Duration: {serviceDetails.duration}
                             </span>
                           </div>
                         </div>
                         <div className="text-right ml-4">
-                          <div className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                          <div className="text-2xl font-bold text-primary-400">
                             {serviceDetails.price}
                           </div>
                         </div>
@@ -148,17 +148,17 @@ export default function ReviewPaymentPage() {
 
                   {/* Appointment Information */}
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-lg font-semibold text-white mb-4">
                       Appointment Details
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Date</p>
-                        <p className="font-medium text-gray-900 dark:text-white">{formatDate(bookingData.date)}</p>
+                        <p className="text-sm text-gray-400">Date</p>
+                        <p className="font-medium text-white">{formatDate(bookingData.date)}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Time</p>
-                        <p className="font-medium text-gray-900 dark:text-white">{bookingData.time}</p>
+                        <p className="text-sm text-gray-400">Time</p>
+                        <p className="font-medium text-white">{bookingData.time}</p>
                       </div>
                     </div>
                   </div>
@@ -170,25 +170,25 @@ export default function ReviewPaymentPage() {
           {/* Payment Section */}
           <div className="lg:col-span-1">
             <div className="sticky top-8">
-              <div className="relative bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded-2xl shadow-warm border border-primary-200/30 dark:border-gray-600/50 overflow-hidden">
+              <div className="relative bg-gradient-to-br from-gray-800 via-gray-700 to-gray-800 rounded-2xl shadow-warm border border-gray-600/50 overflow-hidden">
                 <div className="p-8">
-                  <h2 className="text-xl font-display font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-xl font-display font-bold text-white mb-6">
                     Payment Summary
                   </h2>
 
                   <div className="space-y-4 mb-6">
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-600 dark:text-gray-300">Service Fee</span>
-                      <span className="font-medium text-gray-900 dark:text-white">{serviceDetails.price}</span>
+                      <span className="text-gray-300">Service Fee</span>
+                      <span className="font-medium text-white">{serviceDetails.price}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-600 dark:text-gray-300">Platform Fee</span>
-                      <span className="font-medium text-gray-900 dark:text-white">₹0</span>
+                      <span className="text-gray-300">Platform Fee</span>
+                      <span className="font-medium text-white">₹0</span>
                     </div>
-                    <div className="border-t border-gray-200 dark:border-gray-600 pt-4">
+                    <div className="border-t border-gray-600 pt-4">
                       <div className="flex justify-between items-center">
-                        <span className="text-lg font-semibold text-gray-900 dark:text-white">Total Amount</span>
-                        <span className="text-2xl font-bold text-primary-600 dark:text-primary-400">{serviceDetails.price}</span>
+                        <span className="text-lg font-semibold text-white">Total Amount</span>
+                        <span className="text-2xl font-bold text-primary-400">{serviceDetails.price}</span>
                       </div>
                     </div>
                   </div>
@@ -225,12 +225,12 @@ export default function ReviewPaymentPage() {
                     )}
                   </button>
 
-                  <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+                  <p className="text-xs text-gray-400 text-center">
                     This is a placeholder payment button. No actual payment will be processed.
                   </p>
 
-                  <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-600">
-                    <h4 className="font-medium text-gray-900 dark:text-white mb-3">
+                  <div className="mt-6 pt-6 border-t border-gray-600">
+                    <h4 className="font-medium text-white mb-3">
                       We Accept
                     </h4>
                     <div className="flex items-center space-x-3">
@@ -261,7 +261,7 @@ export default function ReviewPaymentPage() {
         <div className="mt-12 text-center">
           <Link 
             href="/" 
-            className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium transition-colors duration-200 animated-underline"
+            className="text-primary-400 hover:text-primary-300 font-medium transition-colors duration-200 animated-underline"
           >
             ← Back to Home
           </Link>
@@ -269,4 +269,4 @@ export default function ReviewPaymentPage() {
       </div>
     </div>
   );
-} 
+}

@@ -33,7 +33,7 @@ export const themeColor = [
 export default function RootLayout({ children }) {
   return (
     <html lang="en-IN" suppressHydrationWarning className="scroll-smooth">
-      <body className={`${inter.className} ${inter.variable} bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased`}>
+      <body className={`${inter.className} ${inter.variable} bg-gray-900 text-gray-100 antialiased`}>
         <ThemeProvider>
           <AnimationProvider>
             <div className="flex flex-col min-h-screen">

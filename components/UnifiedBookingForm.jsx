@@ -186,16 +186,16 @@ export function UnifiedBookingForm({ preSelectedService }) {
   };
 
   return (
-    <div className="relative bg-gradient-to-br from-ivory-100 via-ivory-50 to-sage-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 rounded-3xl shadow-warm border border-primary-100/20 dark:border-gray-700/50 overflow-hidden">
-      <MandalaPattern />
+    <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl p-8 border border-gray-700/50 shadow-2xl">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary-900/10 via-transparent to-accent-900/10 rounded-3xl" />
       
-      <div className="relative z-10 p-8 md:p-12">
+      <div className="relative z-10">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-display font-bold text-gradient-indian mb-4">
+          <h2 className="text-3xl font-bold text-white mb-3">
             Book Your Consultation
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
-            Fill in your details below to schedule your wellness journey
+          <p className="text-gray-300 text-lg">
+            Take the first step towards holistic wellness
           </p>
         </div>
 
@@ -215,7 +215,7 @@ export function UnifiedBookingForm({ preSelectedService }) {
               placeholder="Enter your full name"
             />
             {errors.name && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>
+              <p className="mt-1 text-sm text-red-400">{errors.name}</p>
             )}
           </div>
 
@@ -234,7 +234,7 @@ export function UnifiedBookingForm({ preSelectedService }) {
               placeholder="Enter your phone number"
             />
             {errors.phone && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.phone}</p>
+              <p className="mt-1 text-sm text-red-400">{errors.phone}</p>
             )}
           </div>
 
@@ -260,21 +260,21 @@ export function UnifiedBookingForm({ preSelectedService }) {
             
             {/* Service Price Display */}
             {selectedServiceDetails && (
-              <div className="mt-3 p-4 bg-primary-50 dark:bg-gray-700/50 rounded-xl border border-primary-200/30">
+              <div className="mt-3 p-4 bg-gray-700/50 rounded-xl border border-primary-200/30">
                 <div className="flex justify-between items-center">
                   <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">
+                    <h4 className="font-semibold text-white">
                       {selectedServiceDetails.name}
                     </h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                    <p className="text-sm text-gray-300 mt-1">
                       {selectedServiceDetails.description}
                     </p>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                    <div className="text-2xl font-bold text-primary-400">
                       {selectedServiceDetails.price}
                     </div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                    <div className="text-sm text-gray-400">
                       {selectedServiceDetails.duration}
                     </div>
                   </div>
@@ -283,7 +283,7 @@ export function UnifiedBookingForm({ preSelectedService }) {
             )}
             
             {errors.service && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.service}</p>
+              <p className="mt-1 text-sm text-red-400">{errors.service}</p>
             )}
           </div>
 
@@ -311,8 +311,8 @@ export function UnifiedBookingForm({ preSelectedService }) {
                   key={time}
                   className={`relative flex items-center justify-center p-3 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
                     formData.time === time
-                      ? 'border-primary-500 bg-primary-50 text-primary-700 dark:bg-primary-900/20 dark:text-primary-300'
-                      : 'border-gray-200 bg-white hover:border-primary-300 hover:bg-primary-25 dark:border-gray-600 dark:bg-gray-800 dark:hover:border-primary-400'
+                      ? 'border-primary-500 bg-primary-900/20 text-primary-300'
+                      : 'border-gray-600 bg-gray-800 hover:border-primary-400'
                   }`}
                 >
                   <input
@@ -328,7 +328,7 @@ export function UnifiedBookingForm({ preSelectedService }) {
               ))}
             </div>
             {errors.time && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.time}</p>
+              <p className="mt-1 text-sm text-red-400">{errors.time}</p>
             )}
           </div>
 
@@ -370,4 +370,4 @@ export function UnifiedBookingForm({ preSelectedService }) {
       </div>
     </div>
   );
-} 
+}

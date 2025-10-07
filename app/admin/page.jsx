@@ -1,104 +1,104 @@
+'use client';
+
 import { Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import AdminProtection from './components/AdminProtection'
 
 function AdminDashboard() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentKey = searchParams.get('key');
+  
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-6">
+      <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="bg-gray-800 rounded-lg shadow-xl p-6 mb-8">
-          <h1 className="text-3xl font-bold text-green-400 mb-2">
-            🔒 Admin Panel
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold text-green-400 mb-4 tracking-wide">
+            🌿 Admin Panel
           </h1>
-          <p className="text-gray-300">
-            Ayur Shuddhi Wellness - Administrative Dashboard
+          <p className="text-gray-300 text-xl">
+            Manage your Ayur Shuddhi Wellness platform
           </p>
+          <div className="mt-4 w-24 h-1 bg-gradient-to-r from-green-400 to-blue-400 mx-auto rounded-full"></div>
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm">System Status</p>
-                <p className="text-2xl font-bold text-green-400">Online</p>
-              </div>
-              <div className="text-green-400 text-3xl">✅</div>
+        {/* Action Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Post a Message */}
+          <div className="bg-gray-800 rounded-xl shadow-2xl p-8 border border-gray-700 hover:border-green-500 transition-all duration-300 hover:shadow-green-500/20 hover:scale-105">
+            <div className="text-center">
+              <div className="text-6xl mb-6">📝</div>
+              <h2 className="text-2xl font-bold text-green-400 mb-3">Post a Message</h2>
+              <p className="text-gray-300 mb-6 leading-relaxed">Create announcements and notifications for the homepage</p>
+              <button
+                onClick={() => router.push(`/admin/post-message?key=${currentKey}`)}
+                className="w-full px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold border border-green-500 hover:border-green-400 shadow-lg"
+              >
+                🚀 Create Message
+              </button>
             </div>
           </div>
-          
-          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm">Security</p>
-                <p className="text-2xl font-bold text-green-400">Protected</p>
+
+          {/* Manage Content */}
+          <div className="bg-gray-800 rounded-xl shadow-2xl p-8 border border-gray-700 hover:border-blue-500 transition-all duration-300 hover:shadow-blue-500/20 hover:scale-105">
+            <div className="text-center">
+              <div className="text-6xl mb-6">📋</div>
+              <h2 className="text-2xl font-bold text-blue-400 mb-3">Manage Content</h2>
+              <p className="text-gray-300 mb-6 leading-relaxed">View, edit, and delete messages & blog posts</p>
+              <div className="space-y-3">
+                <button
+                  onClick={() => router.push(`/admin/manage-messages?key=${currentKey}`)}
+                  className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold border border-blue-500 hover:border-blue-400 shadow-lg"
+                >
+                  📊 Manage Messages
+                </button>
+                <button
+                  onClick={() => router.push(`/admin/blog/manage?key=${currentKey}`)}
+                  className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold border border-purple-500 hover:border-purple-400 shadow-lg"
+                >
+                  📝 Manage Blogs
+                </button>
               </div>
-              <div className="text-green-400 text-3xl">🛡️</div>
             </div>
           </div>
-          
-          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-400 text-sm">Access Level</p>
-                <p className="text-2xl font-bold text-yellow-400">Admin</p>
-              </div>
-              <div className="text-yellow-400 text-3xl">👑</div>
+
+          {/* Write a Blog */}
+          <div className="bg-gray-800 rounded-xl shadow-2xl p-8 border border-gray-700 hover:border-purple-500 transition-all duration-300 hover:shadow-purple-500/20 hover:scale-105">
+            <div className="text-center">
+              <div className="text-6xl mb-6">✍️</div>
+              <h2 className="text-2xl font-bold text-purple-400 mb-3">Write a Blog</h2>
+              <p className="text-gray-300 mb-6 leading-relaxed">Create engaging blog posts for your audience</p>
+              <button
+                onClick={() => router.push(`/admin/blog/new?key=${currentKey}`)}
+                className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold border border-purple-500 hover:border-purple-400 shadow-lg"
+              >
+                ✨ Write Blog
+              </button>
+            </div>
+          </div>
+
+          {/* Broadcast Message */}
+          <div className="bg-gray-800 rounded-xl shadow-2xl p-8 border border-gray-700 hover:border-orange-500 transition-all duration-300 hover:shadow-orange-500/20 hover:scale-105">
+            <div className="text-center">
+              <div className="text-6xl mb-6">📢</div>
+              <h2 className="text-2xl font-bold text-orange-400 mb-3">WhatsApp Broadcast</h2>
+              <p className="text-gray-300 mb-6 leading-relaxed">Send messages to WhatsApp contacts</p>
+              <button
+                onClick={() => alert('WhatsApp broadcast feature coming soon! 🚧')}
+                className="w-full px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors font-semibold border border-orange-500 hover:border-orange-400 shadow-lg"
+              >
+                📱 Broadcast
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Admin Actions */}
-        <div className="bg-gray-800 rounded-lg shadow-xl p-6">
-          <h2 className="text-xl font-semibold text-green-400 mb-4">
-            Administrative Functions
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2">
-              <span>📊</span>
-              <span>Analytics</span>
-            </button>
-            
-            <button className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2">
-              <span>👥</span>
-              <span>User Management</span>
-            </button>
-            
-            <button className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2">
-              <span>📝</span>
-              <span>Content Management</span>
-            </button>
-            
-            <button className="bg-orange-600 hover:bg-orange-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2">
-              <span>📅</span>
-              <span>Appointments</span>
-            </button>
-            
-            <button className="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2">
-              <span>⚙️</span>
-              <span>System Settings</span>
-            </button>
-            
-            <button className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2">
-              <span>📋</span>
-              <span>Reports</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Security Notice */}
-        <div className="mt-8 bg-yellow-900 border border-yellow-600 rounded-lg p-4">
-          <div className="flex items-center space-x-2">
-            <span className="text-yellow-400 text-xl">⚠️</span>
-            <div>
-              <p className="text-yellow-200 font-medium">Security Notice</p>
-              <p className="text-yellow-300 text-sm">
-                This admin panel is protected by middleware authentication. 
-                Access is granted only with the correct secret key parameter.
-              </p>
-            </div>
-          </div>
+        {/* Footer */}
+        <div className="text-center mt-12 pt-8 border-t border-gray-700">
+          <p className="text-gray-400">
+            🌿 Ayur Shuddhi Wellness Admin Dashboard
+          </p>
         </div>
       </div>
     </div>

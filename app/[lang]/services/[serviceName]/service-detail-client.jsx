@@ -39,13 +39,13 @@ export function ServiceDetailClient({ service, params }) {
   }
 
   return (
-    <div className="bg-white dark:bg-gray-900">
+    <div className="bg-gray-900">
       {/* Hero section with service image */}
-      <div className="relative bg-gradient-to-b from-primary-50 to-white dark:from-gray-800 dark:to-gray-900">
+      <div className="relative bg-gradient-to-b from-gray-800/70 to-gray-900/70">
         <div className="absolute inset-0 pattern-bg"></div>
         <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl text-gradient">
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl text-gradient">
               {service.name}
             </h1>
           </div>
@@ -68,10 +68,10 @@ export function ServiceDetailClient({ service, params }) {
           
           {/* Service description */}
           <div>
-            <h2 className="text-2xl font-bold mb-6 text-primary-700 dark:text-primary-400">
+            <h2 className="text-2xl font-bold mb-6 text-primary-400">
               About {service.name}
             </h2>
-            <div className="prose prose-lg dark:prose-invert max-w-none">
+            <div className="prose prose-lg prose-invert max-w-none">
               {renderFormattedText(service.detailedDescription || service.description)}
             </div>
             
