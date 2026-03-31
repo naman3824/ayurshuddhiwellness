@@ -93,41 +93,44 @@ export default async function ServicesPage(props) {
     <div 
       className="tree-bg-optimized"
     >
-      {/* Hero section */}
-      <div className="relative">
-        <MandalaPattern />
-        <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center page-hero">
-            <span className="inline-flex items-center rounded-full bg-primary-900/30 px-3 py-1 text-sm font-medium text-primary-300 ring-1 ring-inset ring-primary-700/10 mb-6">
-              Our Offerings
-            </span>
-            <h1 className="text-4xl font-display font-bold tracking-tight text-gradient-indian sm:text-5xl">
-              Holistic Wellness Solutions
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-300">
-              Discover our comprehensive range of holistic health services designed to promote wellness, 
-              balance, and healing in your life through ancient wisdom and modern practices.
-            </p>
+      {/* Dark gradient overlay to tone down background image exposure */}
+      <div className="relative bg-gradient-to-b from-gray-800/70 to-gray-900/70">
+        {/* Hero section */}
+        <div className="relative">
+          <MandalaPattern />
+          <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
+            <div className="mx-auto max-w-2xl lg:text-center page-hero">
+              <span className="inline-flex items-center rounded-full bg-primary-900/30 px-3 py-1 text-sm font-medium text-primary-300 ring-1 ring-inset ring-primary-700/10 mb-6">
+                Our Offerings
+              </span>
+              <h1 className="text-4xl font-display font-bold tracking-tight text-gradient-indian sm:text-5xl">
+                Holistic Wellness Solutions
+              </h1>
+              <p className="mt-6 text-lg leading-8 text-gray-300">
+                Discover our comprehensive range of holistic health services designed to promote wellness, 
+                balance, and healing in your life through ancient wisdom and modern practices.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Services grid */}
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 page-section">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <div key={service.name} className="staggered-fade" style={{ animationDelay: `${index * 150}ms` }}>
-            <ServiceCard
-              id={`service-${index}`}
-              title={service.name}
-              description={service.description}
-              detailedDescription={service.detailedDescription}
-              image={service.image}
-              iconName={service.iconName}
-              href={`/${lang}/${service.href}`}
-            />
-            </div>
-          ))}
+        {/* Services grid */}
+        <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 page-section">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <div key={service.name} className="staggered-fade" style={{ animationDelay: `${index * 150}ms` }}>
+              <ServiceCard
+                id={`service-${index}`}
+                title={service.name}
+                description={service.description}
+                detailedDescription={service.detailedDescription}
+                image={service.image}
+                iconName={service.iconName}
+                href={`/${lang}/${service.href}`}
+              />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

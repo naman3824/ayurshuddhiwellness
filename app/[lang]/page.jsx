@@ -24,7 +24,7 @@ const getFeaturedServices = (lang) => [
   },
   {
     name: 'Panchakarma',
-    description: 'Experience profound detoxification and rejuvenation through ancient Ayurvedic science. Eliminate deep-rooted toxins and restore dosha balance with therapeutic treatments.',
+    description: 'Profound detoxification and rejuvenation rooted in ancient Ayurvedic science. Eliminate deep-rooted toxins, restore dosha balance, and revitalize body and mind.',
     href: 'services/panchakarma',
     image: '/images/services/panchakarma.JPG',
     iconName: 'flask',
@@ -57,7 +57,7 @@ export default async function HomePage({ params }) {
     <div 
       className="tree-bg-optimized"
     >
-      {/* Unified Hero and Featured Services section with shared gradient */}
+      {/* Single unified dark gradient overlay covering entire page */}
       <div className="relative bg-gradient-to-b from-gray-800/70 to-gray-900/70">
         {/* Hero section with Indian-inspired design */}
         <div className="relative isolate overflow-hidden">
@@ -105,6 +105,7 @@ export default async function HomePage({ params }) {
                     image={service.image}
                     iconName={service.iconName}
                     href={service.href}
+                    hideBookNow={true}
                     lang={lang}
                   />
                 </div>
@@ -154,32 +155,32 @@ export default async function HomePage({ params }) {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* CTA section */}
-      <div className="bg-gray-900/40">
-        <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
-          <div className="relative isolate overflow-hidden bg-gray-900/30 backdrop-blur-md px-6 py-16 shadow-2xl sm:rounded-3xl sm:px-16 md:py-24 lg:flex lg:gap-x-20 lg:px-24 border-2 border-gray-600/50">
-            <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:text-left">
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Ready to begin your wellness journey?
-              </h2>
-              <p className="mt-6 text-lg leading-8 text-gray-100">
-                Schedule a consultation with our experts and take the first step towards holistic health.
-              </p>
-              <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
-                <Link
-                  href={`/${lang}/contact`}
-                  className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-primary-600 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  Contact Us Today
-                </Link>
-                <Link
-                  href={`/${lang}/services`}
-                  className="text-sm font-semibold leading-6 text-white group"
-                >
-                  Learn more <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1">→</span>
-                </Link>
+        {/* CTA section */}
+        <div className="py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div className="relative isolate overflow-hidden bg-gray-900/30 backdrop-blur-md px-6 py-16 shadow-2xl sm:rounded-3xl sm:px-16 md:py-24 lg:flex lg:gap-x-20 lg:px-24 border-2 border-gray-600/50">
+              <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:text-left">
+                <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                  Ready to begin your wellness journey?
+                </h2>
+                <p className="mt-6 text-lg leading-8 text-gray-100">
+                  Schedule a consultation with our experts and take the first step towards holistic health.
+                </p>
+                <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
+                  <Link
+                    href={`/${lang}/contact`}
+                    className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-primary-600 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  >
+                    Contact Us Today
+                  </Link>
+                  <Link
+                    href={`/${lang}/services`}
+                    className="text-sm font-semibold leading-6 text-white group"
+                  >
+                    Learn more <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1">→</span>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

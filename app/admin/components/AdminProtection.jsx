@@ -29,7 +29,19 @@ export default function AdminProtection({ children }) {
         });
 
         if (response.ok) {
-          setIsAuthorized(true)
+          // Check if response is actually JSON
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const data = await response.json();
+            if (data.valid) {
+              setIsAuthorized(true)
+            } else {
+              router.replace('/')
+              return
+            }
+          } else {
+            setIsAuthorized(true) // Fallback for non-JSON success response
+          }
         } else {
           router.replace('/')
           return

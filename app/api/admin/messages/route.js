@@ -19,14 +19,17 @@ export async function GET() {
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('Error fetching admin messages:', error);
-      return NextResponse.json({ error: 'Failed to fetch messages' }, { status: 500 });
+      // If the table doesn't exist or query fails, return empty array gracefully
+      // This prevents console errors when admin_messages table hasn't been created yet
+      console.warn('Admin messages fetch skipped:', error.message);
+      return NextResponse.json({ messages: [] });
     }
 
     return NextResponse.json({ messages: data || [] });
   } catch (error) {
-    console.error('Unexpected error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    // Return empty messages on any unexpected error so the popup simply doesn't show
+    console.warn('Admin messages unavailable:', error.message);
+    return NextResponse.json({ messages: [] });
   }
 }
 

@@ -34,6 +34,7 @@ export default function FeaturedServiceCard({
   iconName, 
   href, 
   learnMoreHref,
+  hideBookNow = false,
   lang = 'en-IN' 
 }) {
   // Get the icon component based on the icon name
@@ -81,16 +82,18 @@ export default function FeaturedServiceCard({
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-3 mt-auto">
-          <Link 
-            href={`/book?service=${encodeURIComponent(title)}`}
-            className="flex-1 btn btn-primary text-center py-2.5 px-4 text-sm font-semibold rounded-xl hover-scale focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-            aria-label={`Book ${title} service`}
-          >
-            📅 Book Now
-          </Link>
+          {!hideBookNow && (
+            <Link 
+              href={`/book?service=${encodeURIComponent(title)}`}
+              className="flex-1 btn btn-primary text-center py-2.5 px-4 text-sm font-semibold rounded-xl hover-scale focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              aria-label={`Book ${title} service`}
+            >
+              📅 Book Now
+            </Link>
+          )}
           <Link 
             href={learnMoreHref || `/${lang}/${href}`}
-            className="flex-1 btn btn-secondary text-center py-2.5 px-4 text-sm font-semibold rounded-xl hover-scale focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 group/link"
+            className={`${hideBookNow ? 'w-full' : 'flex-1'} btn btn-secondary text-center py-2.5 px-4 text-sm font-semibold rounded-xl hover-scale focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 group/link`}
             aria-label={`Learn more about ${title}`}
           >
             Learn More

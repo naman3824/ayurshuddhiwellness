@@ -14,7 +14,14 @@ export default function ReviewPaymentPage() {
     // Get booking data from sessionStorage
     const storedData = sessionStorage.getItem('bookingData');
     if (storedData) {
-      setBookingData(JSON.parse(storedData));
+      try {
+        setBookingData(JSON.parse(storedData));
+      } catch (error) {
+        console.error('Error parsing booking data from sessionStorage:', error);
+        // Clear corrupted data and redirect back to booking
+        sessionStorage.removeItem('bookingData');
+        router.push('/book');
+      }
     } else {
       // Redirect back to booking if no data
       router.push('/book');

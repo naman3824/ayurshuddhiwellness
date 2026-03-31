@@ -15,9 +15,20 @@ export default function AdminMessagePopup() {
   const fetchMessages = async () => {
     try {
       const response = await fetch('/api/admin/messages/');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      // Check if response is actually JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Response is not JSON');
+      }
+      
       const data = await response.json();
       
-      if (response.ok && data.messages && data.messages.length > 0) {
+      if (data.messages && data.messages.length > 0) {
         setMessages(data.messages);
         setIsVisible(true);
       }

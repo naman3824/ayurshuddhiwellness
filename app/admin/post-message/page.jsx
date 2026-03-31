@@ -23,6 +23,17 @@ function PostMessageContent() {
     const initCSRF = async () => {
       try {
         const response = await fetch('/api/csrf/');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Check if response is actually JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new Error('Response is not JSON');
+        }
+        
         const data = await response.json();
         if (data.success) {
           setCsrfToken(data.token);
