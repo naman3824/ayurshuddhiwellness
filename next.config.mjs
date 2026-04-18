@@ -3,6 +3,10 @@ const config = {
   // Removed 'output: export' to enable API routes for contact form functionality
   // This allows the contact form to work with server-side email processing
   // while still generating static pages where possible
+  eslint: {
+    // ESLint 8 + flat config causes build failures on Vercel. Lint locally instead.
+    ignoreDuringBuilds: true,
+  },
   images: {
     unoptimized: true, // Keep for better compatibility
   },
