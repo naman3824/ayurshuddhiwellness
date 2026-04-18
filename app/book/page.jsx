@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { UnifiedBookingForm } from '../../components/UnifiedBookingForm';
 import { MandalaPattern } from '../../components/MandalaDecoration';
+import ProtectedRoute from '../../components/ProtectedRoute';
 
 function BookingContent() {
   const searchParams = useSearchParams();
@@ -65,7 +66,9 @@ export default function BookingPage() {
         </div>
       </div>
     }>
-      <BookingContent />
+      <ProtectedRoute>
+        <BookingContent />
+      </ProtectedRoute>
     </Suspense>
   );
 }

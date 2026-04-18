@@ -1,11 +1,11 @@
 'use client'
 
 import { Suspense } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import AdminProtection from '../components/AdminProtection'
 
 function AdminSettings() {
-  const searchParams = useSearchParams();
+  const router = useRouter();
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       <div className="container mx-auto px-4 py-8">
@@ -22,12 +22,12 @@ function AdminSettings() {
         {/* Navigation */}
         <div className="bg-gray-800 rounded-lg p-4 mb-8">
           <nav className="flex space-x-4">
-            <a 
-              href={`/admin?key=${searchParams.get('key')}`} 
+            <button 
+              onClick={() => router.push('/admin')}
               className="text-blue-400 hover:text-blue-300 transition-colors"
             >
               ← Back to Dashboard
-            </a>
+            </button>
           </nav>
         </div>
 
@@ -64,23 +64,18 @@ function AdminSettings() {
 
           {/* Security Settings */}
           <div className="bg-gray-800 rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-red-400 mb-4">
+            <h2 className="text-xl font-semibold text-green-400 mb-4">
               Security Settings
             </h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-gray-300 text-sm font-medium mb-2">
-                  Admin Key Status
+                  Authentication
                 </label>
                 <div className="flex items-center space-x-2">
                   <span className="text-green-400">✅</span>
-                  <span className="text-gray-300">Active and Secure</span>
+                  <span className="text-gray-300">Firebase Auth — Session Cookie Active</span>
                 </div>
-              </div>
-              <div>
-                <button className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200">
-                  Regenerate Admin Key
-                </button>
               </div>
             </div>
           </div>

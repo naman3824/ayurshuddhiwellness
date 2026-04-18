@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { MandalaDecoration } from './MandalaDecoration'
 import { useState, useEffect, useRef } from 'react'
 import { staggeredAnimation } from '../utils/animations'
+import { useAuth } from './AuthProvider'
 
 const navigation = [
   { name: 'Home', href: '' },
@@ -18,8 +19,11 @@ const navigation = [
 export function Navbar({ lang }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const navRef = useRef(null);
   const mobileMenuRef = useRef(null);
+  const userMenuRef = useRef(null);
+  const { currentUser, isAdmin, logout } = useAuth();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -60,6 +64,22 @@ export function Navbar({ lang }) {
       }, mobileNavItems.length * 50 + 50);
     }
   }, [isOpen]);
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setShowUserMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleLogout = async () => {
+    setShowUserMenu(false);
+    await logout();
+  };
 
   return (
     <header className={`relative bg-gradient-to-b from-gray-800/70 to-gray-900/70 backdrop-blur-md sticky top-0 z-50 transition-all duration-300 border-b border-gray-700/50 ${
@@ -110,13 +130,58 @@ export function Navbar({ lang }) {
                   <span className="absolute bottom-1 left-0 w-0 h-0.5 bg-gradient-saffron group-hover:w-full transition-all duration-500 rounded-full"></span>
                 </Link>
               ))}
-              <div className="ml-6">
+              <div className="ml-6 flex items-center gap-3">
                 <Link
                   href="/book"
                   className="btn btn-primary hover-scale"
                 >
                   📅 Book Consultation
                 </Link>
+                {currentUser ? (
+                  <div className="relative" ref={userMenuRef}>
+                    <button
+                      onClick={() => setShowUserMenu(!showUserMenu)}
+                      className="flex items-center gap-2 px-3 py-2 rounded-xl text-gray-200 hover:bg-gray-700/50 transition-all duration-300"
+                    >
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white text-sm font-bold">
+                        {currentUser.displayName?.charAt(0)?.toUpperCase() || currentUser.email?.charAt(0)?.toUpperCase() || 'U'}
+                      </div>
+                      <svg className={`w-4 h-4 text-gray-400 transition-transform ${showUserMenu ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {showUserMenu && (
+                      <div className="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-xl shadow-2xl py-2 z-50">
+                        <div className="px-4 py-2 border-b border-gray-700">
+                          <p className="text-sm text-white font-medium truncate">{currentUser.displayName || 'User'}</p>
+                          <p className="text-xs text-gray-400 truncate">{currentUser.email}</p>
+                        </div>
+                        {isAdmin && (
+                          <Link
+                            href="/admin"
+                            onClick={() => setShowUserMenu(false)}
+                            className="block w-full text-left px-4 py-2 text-sm text-green-400 hover:bg-gray-700/50 transition-colors"
+                          >
+                            🛡️ Admin Dashboard
+                          </Link>
+                        )}
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700/50 transition-colors"
+                        >
+                          🚪 Sign Out
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="px-4 py-2 text-sm font-semibold text-green-400 border border-green-500/30 rounded-xl hover:bg-green-500/10 transition-all duration-300"
+                  >
+                    Login
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -164,7 +229,7 @@ export function Navbar({ lang }) {
                 {link.name}
               </Link>
             ))}
-            <div className="mt-6 px-2">
+            <div className="mt-4 px-2 space-y-2">
               <Link
                 href="/book"
                 className="mobile-nav-item block w-full btn btn-primary text-center hover-scale"
@@ -173,6 +238,36 @@ export function Navbar({ lang }) {
               >
                 📅 Book Consultation
               </Link>
+              {currentUser ? (
+                <>
+                  {isAdmin && (
+                    <Link
+                      href="/admin"
+                      className="mobile-nav-item block w-full px-4 py-3 rounded-xl text-center text-sm font-semibold text-green-400 border border-green-500/30 hover:bg-green-500/10 transition-all"
+                      onClick={() => setIsOpen(false)}
+                      style={{ animationDelay: `${(navigation.length + 1) * 50}ms`, opacity: isOpen ? 1 : 0 }}
+                    >
+                      🛡️ Admin Dashboard
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => { setIsOpen(false); handleLogout(); }}
+                    className="mobile-nav-item block w-full px-4 py-3 rounded-xl text-center text-sm font-semibold text-red-400 border border-red-500/30 hover:bg-red-500/10 transition-all"
+                    style={{ animationDelay: `${(navigation.length + (isAdmin ? 2 : 1)) * 50}ms`, opacity: isOpen ? 1 : 0 }}
+                  >
+                    🚪 Sign Out ({currentUser.displayName || currentUser.email?.split('@')[0]})
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  className="mobile-nav-item block w-full px-4 py-3 rounded-xl text-center text-sm font-semibold text-green-400 border border-green-500/30 hover:bg-green-500/10 transition-all"
+                  onClick={() => setIsOpen(false)}
+                  style={{ animationDelay: `${(navigation.length + 1) * 50}ms`, opacity: isOpen ? 1 : 0 }}
+                >
+                  Login / Sign Up
+                </Link>
+              )}
             </div>
           </div>
         </div>

@@ -1,13 +1,18 @@
 'use client';
 
 import { Suspense } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { useAuth } from '../../components/AuthProvider'
 import AdminProtection from './components/AdminProtection'
 
 function AdminDashboard() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const currentKey = searchParams.get('key');
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    router.push('/');
+  };
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-6">
@@ -32,7 +37,7 @@ function AdminDashboard() {
               <h2 className="text-2xl font-bold text-green-400 mb-3">Post a Message</h2>
               <p className="text-gray-300 mb-6 leading-relaxed">Create announcements and notifications for the homepage</p>
               <button
-                onClick={() => router.push(`/admin/post-message?key=${currentKey}`)}
+                onClick={() => router.push('/admin/post-message')}
                 className="w-full px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold border border-green-500 hover:border-green-400 shadow-lg"
               >
                 🚀 Create Message
@@ -48,13 +53,13 @@ function AdminDashboard() {
               <p className="text-gray-300 mb-6 leading-relaxed">View, edit, and delete messages & blog posts</p>
               <div className="space-y-3">
                 <button
-                  onClick={() => router.push(`/admin/manage-messages?key=${currentKey}`)}
+                  onClick={() => router.push('/admin/manage-messages')}
                   className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold border border-blue-500 hover:border-blue-400 shadow-lg"
                 >
                   📊 Manage Messages
                 </button>
                 <button
-                  onClick={() => router.push(`/admin/blog/manage?key=${currentKey}`)}
+                  onClick={() => router.push('/admin/blog/manage')}
                   className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold border border-purple-500 hover:border-purple-400 shadow-lg"
                 >
                   📝 Manage Blogs
@@ -70,7 +75,7 @@ function AdminDashboard() {
               <h2 className="text-2xl font-bold text-purple-400 mb-3">Write a Blog</h2>
               <p className="text-gray-300 mb-6 leading-relaxed">Create engaging blog posts for your audience</p>
               <button
-                onClick={() => router.push(`/admin/blog/new?key=${currentKey}`)}
+                onClick={() => router.push('/admin/blog/new')}
                 className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold border border-purple-500 hover:border-purple-400 shadow-lg"
               >
                 ✨ Write Blog
@@ -94,8 +99,14 @@ function AdminDashboard() {
           </div>
         </div>
 
-        {/* Footer */}
+        {/* Footer with Logout */}
         <div className="text-center mt-12 pt-8 border-t border-gray-700">
+          <button
+            onClick={handleLogout}
+            className="px-6 py-2 bg-red-600/20 text-red-400 rounded-lg hover:bg-red-600/30 transition-colors font-medium border border-red-500/30 hover:border-red-500/50 mb-4"
+          >
+            🚪 Sign Out
+          </button>
           <p className="text-gray-400">
             🌿 Ayur Shuddhi Wellness Admin Dashboard
           </p>

@@ -2,9 +2,10 @@
 
 import { useState, useEffect, use } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import DOMPurify from 'isomorphic-dompurify';
+import DOMPurify from 'dompurify';
 import { MandalaDecoration } from '../../../../components/MandalaDecoration';
+import { db } from '../../../../lib/firebaseClient';
+import { doc, getDoc } from 'firebase/firestore';
 
 export default function BlogPostPage({ params }) {
   const { id, lang } = use(params);
@@ -21,13 +22,19 @@ export default function BlogPostPage({ params }) {
   const fetchPost = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/blog/posts/${id}/`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch post');
+      const docSnap = await getDoc(doc(db, 'blogs', id));
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setPost({
+          id: docSnap.id,
+          ...data,
+          created_at: data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+        });
+      } else {
+        setPost(null);
       }
-      const data = await response.json();
-      setPost(data.post);
     } catch (err) {
+      console.error('Error fetching blog post:', err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -47,6 +54,7 @@ export default function BlogPostPage({ params }) {
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
+            <div className="animate-spin rounded-full h-10 w-10 border-2 border-green-400 border-t-transparent mx-auto mb-3"></div>
             <p className="mt-4 text-gray-400">Loading blog post...</p>
           </div>
         </div>
@@ -66,7 +74,7 @@ export default function BlogPostPage({ params }) {
               {error || 'The blog post you are looking for does not exist.'}
             </p>
             <Link 
-              href={`/${params.lang}/blog`}
+              href={`/${lang}/blog`}
               className="btn btn-primary"
             >
               ← Back to Blog
@@ -110,12 +118,10 @@ export default function BlogPostPage({ params }) {
           {/* Featured Image */}
           {post.image_url && (
             <div className="relative h-64 md:h-96 mb-8 rounded-2xl overflow-hidden shadow-warm">
-              <Image
+              <img
                 src={post.image_url}
                 alt={post.title}
-                fill
-                className="object-cover"
-                priority
+                className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
             </div>
@@ -130,11 +136,13 @@ export default function BlogPostPage({ params }) {
             {/* Meta Information */}
             <div className="flex items-center space-x-6 text-gray-400">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary-100 to-accent-100 rounded-full flex items-center justify-center">
-                  <span className="text-sm font-semibold text-primary-700">A</span>
+                <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-semibold text-white">
+                    {post.authorName?.charAt(0)?.toUpperCase() || 'A'}
+                  </span>
                 </div>
                 <div>
-                  <p className="font-medium text-white">Admin</p>
+                  <p className="font-medium text-white">{post.authorName || 'Author'}</p>
                   <p className="text-sm">Author</p>
                 </div>
               </div>
@@ -145,7 +153,7 @@ export default function BlogPostPage({ params }) {
             </div>
           </header>
 
-          {/* Content */}
+          {/* Content — rendered with Tailwind Typography */}
           <div className="bg-gray-800 rounded-2xl shadow-soft p-8 md:p-12">
             <div 
               className="prose prose-lg prose-invert max-w-none
@@ -158,12 +166,15 @@ export default function BlogPostPage({ params }) {
                 prose-strong:text-white
                 prose-ul:text-gray-300
                 prose-ol:text-gray-300
+                prose-li:text-gray-300
                 prose-blockquote:border-primary-700
                 prose-blockquote:bg-primary-900/20
                 prose-blockquote:rounded-lg prose-blockquote:p-4
                 prose-code:text-primary-400
                 prose-code:bg-primary-900/30
-                prose-code:px-2 prose-code:py-1 prose-code:rounded"
+                prose-code:px-2 prose-code:py-1 prose-code:rounded
+                prose-img:rounded-xl prose-img:shadow-lg
+                prose-hr:border-gray-600"
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
             />
           </div>

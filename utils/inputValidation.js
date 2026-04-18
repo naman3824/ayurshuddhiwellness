@@ -94,23 +94,7 @@ export function validateContent(content) {
   return { success: true, sanitized };
 }
 
-// Validate admin key
-export function validateAdminKey(key) {
-  if (!key || typeof key !== 'string') {
-    return { success: false, error: 'Admin key is required' };
-  }
-  
-  if (key.length < 10) {
-    return { success: false, error: 'Invalid admin key format' };
-  }
-  
-  // Check for suspicious characters
-  if (!/^[a-zA-Z0-9_-]+$/.test(key)) {
-    return { success: false, error: 'Admin key contains invalid characters' };
-  }
-  
-  return { success: true, sanitized: key };
-}
+// NOTE: Admin key validation removed — authentication is now handled by Firebase session cookies
 
 // Validate message type
 export function validateMessageType(type) {
@@ -146,7 +130,7 @@ export function validateId(id) {
 
 // Comprehensive validation for blog posts
 export function validateBlogPost(data) {
-  const { title, content, admin_key } = data;
+  const { title, content } = data;
   
   const titleValidation = validateTitle(title);
   if (!titleValidation.success) {
@@ -158,33 +142,22 @@ export function validateBlogPost(data) {
     return contentValidation;
   }
   
-  const keyValidation = validateAdminKey(admin_key);
-  if (!keyValidation.success) {
-    return keyValidation;
-  }
-  
   return {
     success: true,
     sanitized: {
       title: titleValidation.sanitized,
       content: contentValidation.sanitized,
-      admin_key: keyValidation.sanitized
     }
   };
 }
 
 // Comprehensive validation for admin messages
 export function validateAdminMessage(data) {
-  const { title, content, message_type, admin_key } = data;
+  const { title, content, message_type } = data;
   
   const typeValidation = validateMessageType(message_type);
   if (!typeValidation.success) {
     return typeValidation;
-  }
-  
-  const keyValidation = validateAdminKey(admin_key);
-  if (!keyValidation.success) {
-    return keyValidation;
   }
   
   // Title is optional for messages
@@ -216,7 +189,6 @@ export function validateAdminMessage(data) {
       title: sanitizedTitle,
       content: sanitizedContent,
       message_type: typeValidation.sanitized,
-      admin_key: keyValidation.sanitized
     }
   };
 }

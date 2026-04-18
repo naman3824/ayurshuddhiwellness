@@ -205,7 +205,7 @@ export function CalendarDatePicker({ value, onChange, className = '', error = ''
 
               return (
                 <button
-                  key={day}
+                  key={`date-${day}`}
                   type="button"
                   onClick={() => handleDateSelect(day)}
                   disabled={!isAvailable}

@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '../components/ThemeProvider'
 import { AnimationProvider } from '../components/AnimationProvider'
+import { AuthProvider } from '../components/AuthProvider'
 
 // Load Inter with more character sets for better language support
 const inter = Inter({ 
@@ -34,14 +35,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en-IN" suppressHydrationWarning className="scroll-smooth">
       <body className={`${inter.className} ${inter.variable} bg-gray-900 text-gray-100 antialiased`}>
-        <ThemeProvider>
-          <AnimationProvider>
-            <div className="flex flex-col min-h-screen">
-              {children}
-            </div>
-          </AnimationProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <AnimationProvider>
+              <div className="flex flex-col min-h-screen">
+                {children}
+              </div>
+            </AnimationProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   )
-}
+}

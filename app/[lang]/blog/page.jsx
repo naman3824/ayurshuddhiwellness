@@ -4,6 +4,8 @@ import { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MandalaDecoration } from '../../../components/MandalaDecoration';
+import { db } from '../../../lib/firebaseClient';
+import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 
 export default function BlogPage({ params }) {
   const { lang } = use(params);
@@ -18,13 +20,17 @@ export default function BlogPage({ params }) {
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/blog/posts/');
-      if (!response.ok) {
-        throw new Error('Failed to fetch posts');
-      }
-      const data = await response.json();
-      setPosts(data.posts || []);
+      const q = query(collection(db, 'blogs'), orderBy('createdAt', 'desc'));
+      const snapshot = await getDocs(q);
+      const fetchedPosts = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        // Convert Firestore Timestamp to ISO string for display
+        created_at: doc.data().createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+      }));
+      setPosts(fetchedPosts);
     } catch (err) {
+      console.error('Error fetching blog posts:', err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -126,11 +132,10 @@ export default function BlogPage({ params }) {
                   {/* Featured Image */}
                   {post.image_url && (
                     <div className="relative h-48 overflow-hidden">
-                      <Image
+                      <img
                         src={post.image_url}
                         alt={post.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                     </div>
@@ -153,10 +158,12 @@ export default function BlogPage({ params }) {
                     {/* Meta Information */}
                     <div className="flex items-center justify-between text-sm text-gray-400">
                       <div className="flex items-center space-x-2">
-                        <div className="w-8 h-8 bg-gradient-to-br from-primary-100 to-accent-100 rounded-full flex items-center justify-center">
-                          <span className="text-xs font-semibold text-primary-700">A</span>
+                        <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
+                          <span className="text-xs font-semibold text-white">
+                            {post.authorName?.charAt(0)?.toUpperCase() || 'A'}
+                          </span>
                         </div>
-                        <span>Admin</span>
+                        <span>{post.authorName || 'Author'}</span>
                       </div>
                       <time dateTime={post.created_at}>
                         {formatDate(post.created_at)}

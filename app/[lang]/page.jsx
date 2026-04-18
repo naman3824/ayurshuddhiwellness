@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import FeaturedServiceCard from '../../components/FeaturedServiceCard'
 import { MandalaPattern } from '../../components/MandalaDecoration'
-import AdminMessagePopup from '../../components/AdminMessagePopup'
+
 
 
 export function generateStaticParams() {
@@ -186,9 +186,6 @@ export default async function HomePage({ params }) {
           </div>
         </div>
       </div>
-      
-      {/* Admin Message Popup */}
-      <AdminMessagePopup />
     </div>
   );
 }

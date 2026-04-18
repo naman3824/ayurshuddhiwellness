@@ -1,14 +1,15 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, Suspense } from 'react';
+import { useRouter } from 'next/navigation';
 import AdminProtection from '../components/AdminProtection';
-import { validateFileClient, secureFileToBase64 } from '../../../utils/secureFileUpload';
-import { CSRFManager } from '../../../utils/csrf';
+import { useAuth } from '../../../components/AuthProvider';
+import { db } from '../../../lib/firebaseClient';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 function PostMessageContent() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const { currentUser } = useAuth();
   const [messageType, setMessageType] = useState('text');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -16,56 +17,25 @@ function PostMessageContent() {
   const [imagePreview, setImagePreview] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const [csrfToken, setCsrfToken] = useState('');
-
-  // Initialize CSRF token
-  useEffect(() => {
-    const initCSRF = async () => {
-      try {
-        const response = await fetch('/api/csrf/');
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        // Check if response is actually JSON
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json')) {
-          throw new Error('Response is not JSON');
-        }
-        
-        const data = await response.json();
-        if (data.success) {
-          setCsrfToken(data.token);
-          CSRFManager.setToken(data.token);
-        }
-      } catch (error) {
-        console.error('Failed to initialize CSRF token:', error);
-      }
-    };
-    
-    initCSRF();
-  }, []);
 
   // Handle file selection and preview
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const validation = validateFileClient(file);
-      if (!validation.success) {
-        setMessage(`Error: File validation failed: ${validation.error}`);
+      if (!file.type.startsWith('image/')) {
+        setMessage('Error: Please select a valid image file.');
         return;
       }
-      
+      if (file.size > 5 * 1024 * 1024) {
+        setMessage('Error: Image must be smaller than 5MB.');
+        return;
+      }
+
       setSelectedFile(file);
-      
-      // Create preview
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagePreview(e.target.result);
-      };
+      reader.onload = (e) => setImagePreview(e.target.result);
       reader.readAsDataURL(file);
-      setMessage(''); // Clear any previous error messages
+      setMessage('');
     }
   };
 
@@ -74,55 +44,40 @@ function PostMessageContent() {
     setLoading(true);
     setMessage('');
 
+    // Validate
+    if (messageType === 'text' && !content.trim()) {
+      setMessage('Error: Message content is required.');
+      setLoading(false);
+      return;
+    }
+    if (messageType === 'image' && !imagePreview) {
+      setMessage('Error: Please select an image.');
+      setLoading(false);
+      return;
+    }
+
     try {
-      let imageData = null;
-      let filename = null;
-      let mimeType = null;
-      
-      // If image type and file selected, convert to base64
-      if (messageType === 'image' && selectedFile) {
-        imageData = await secureFileToBase64(selectedFile);
-        filename = selectedFile.name;
-        mimeType = selectedFile.type;
-      }
+      const docData = {
+        title: title.trim() || '',
+        content: content.trim(),
+        message_type: messageType,
+        image_url: messageType === 'image' ? imagePreview : '',
+        createdBy: currentUser?.uid || '',
+        createdAt: serverTimestamp(),
+        isActive: true,
+      };
 
-      const response = await fetch('/api/admin/messages/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          admin_key: searchParams.get('key'),
-          message_type: messageType,
-          title: title.trim() || null,
-          content: messageType === 'text' ? content.trim() : null,
-          image_url: messageType === 'image' ? imageData : null,
-          filename,
-          mimeType,
-          csrf_token: csrfToken
-        }),
-      });
+      await addDoc(collection(db, 'homepage_messages'), docData);
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage('Message posted successfully!');
-        // Reset form
-        setTitle('');
-        setContent('');
-        setSelectedFile(null);
-        setImagePreview('');
-        setMessageType('text');
-        
-        // Reset file input
-        const fileInput = document.getElementById('imageFile');
-        if (fileInput) fileInput.value = '';
-      } else {
-        setMessage(`Error: ${data.error || 'Failed to create message'}`);
-      }
+      setMessage('Message posted successfully!');
+      // Reset form
+      setTitle('');
+      setContent('');
+      setSelectedFile(null);
+      setImagePreview('');
     } catch (error) {
       console.error('Error posting message:', error);
-      setMessage('Error: Failed to create message');
+      setMessage('Error: Failed to create message. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -137,7 +92,7 @@ function PostMessageContent() {
             <div className="flex items-center justify-between">
               <h1 className="text-2xl font-bold text-green-400">📝 Post a Message</h1>
               <button
-                onClick={() => router.push(`/admin?key=${searchParams.get('key')}`)}
+                onClick={() => router.push('/admin')}
                 className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-500 transition-colors border border-gray-500"
               >
                 ← Back to Dashboard
