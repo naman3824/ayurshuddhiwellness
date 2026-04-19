@@ -22,10 +22,16 @@ export function AuthProvider({ children }) {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    if (!auth) {
+      console.error('Firebase Auth is not initialized. Please check your environment variables.');
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
 
-      if (user) {
+      if (user && db) {
         // Fetch the user's role from Firestore
         try {
           const userDoc = await getDoc(doc(db, 'users', user.uid));
@@ -50,6 +56,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const logout = async () => {
+    if (!auth) return;
     try {
       await signOut(auth);
     } catch (error) {

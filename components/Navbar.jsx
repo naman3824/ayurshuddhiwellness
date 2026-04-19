@@ -212,7 +212,7 @@ export function Navbar({ lang }) {
         {/* Mobile menu with animation */}
         <div 
           className={`md:hidden overflow-hidden transition-all duration-500 ease-smooth ${
-            isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+            isOpen ? 'max-h-[80vh] opacity-100' : 'max-h-0 opacity-0'
           }`}
           id="mobile-menu"
           ref={mobileMenuRef}

@@ -74,9 +74,6 @@ export default async function AboutPage(props) {
           <MandalaPattern />
           <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
             <div className="mx-auto max-w-2xl lg:text-center page-hero">
-              <span className="inline-flex items-center rounded-full bg-primary-900/30 px-3 py-1 text-sm font-medium text-primary-300 ring-1 ring-inset ring-primary-700/10 mb-6">
-                Our Story
-              </span>
               <h1 className="text-4xl font-display font-bold tracking-tight text-gradient-indian sm:text-5xl">
                 About Us
               </h1>
@@ -147,9 +144,7 @@ export default async function AboutPage(props) {
             
             <div className="mt-10 grid gap-10 md:grid-cols-2">
               <div className="card p-6 hover:shadow-glow transition-all duration-300">
-                <div className="h-12 w-12 rounded-lg bg-gradient-wellness flex items-center justify-center mb-4 text-white shadow-soft">
-                  <span className="text-2xl">🌿</span>
-                </div>
+
                 <h3 className="text-xl font-semibold text-primary-400">Holistic Wellness Coaching</h3>
                 <p className="mt-3 text-base leading-7 text-white">
                   My approach to wellness blends modern practices with ancient Ayurvedic wisdom. By combining traditional 
@@ -159,9 +154,7 @@ export default async function AboutPage(props) {
               </div>
               
               <div className="card p-6 hover:shadow-glow transition-all duration-300">
-                <div className="h-12 w-12 rounded-lg bg-gradient-accent flex items-center justify-center mb-4 text-white shadow-soft">
-                  <span className="text-2xl">🕉️</span>
-                </div>
+
                 <h3 className="text-xl font-semibold text-primary-400">Spiritual Coaching & Counselling</h3>
                 <p className="mt-3 text-base leading-7 text-white">
                   I offer a transformative coaching experience where spirituality, wellness, and ancient wisdom converge. 

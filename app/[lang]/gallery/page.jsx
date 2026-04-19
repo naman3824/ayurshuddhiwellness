@@ -32,11 +32,7 @@ export default function GalleryPage({ params }) {
         <div className="relative">
           <div className="container mx-auto px-4 py-16 sm:py-24">
             <div className="text-center">
-              {/* Badge */}
-              <span className="inline-flex items-center rounded-full bg-primary-900/30 px-3 py-1 text-sm font-medium text-primary-300 ring-1 ring-inset ring-primary-700/10 mb-6">
-                ✨ Visual Journey
-              </span>
-              
+
               {/* Title */}
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl text-gradient">
                 Gallery

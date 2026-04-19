@@ -100,13 +100,21 @@ function AdminDashboard() {
         </div>
 
         {/* Footer with Logout */}
-        <div className="text-center mt-12 pt-8 border-t border-gray-700">
-          <button
-            onClick={handleLogout}
-            className="px-6 py-2 bg-red-600/20 text-red-400 rounded-lg hover:bg-red-600/30 transition-colors font-medium border border-red-500/30 hover:border-red-500/50 mb-4"
-          >
-            🚪 Sign Out
-          </button>
+        <div className="text-center mt-12 pt-8 border-t border-gray-700 flex flex-col items-center gap-4">
+          <div className="flex gap-4">
+            <button
+              onClick={() => router.push('/')}
+              className="px-6 py-2 bg-gray-600/20 text-gray-400 rounded-lg hover:bg-gray-600/30 transition-colors font-medium border border-gray-500/30 hover:border-gray-500/50"
+            >
+              ← Go Back to Home
+            </button>
+            <button
+              onClick={handleLogout}
+              className="px-6 py-2 bg-red-600/20 text-red-400 rounded-lg hover:bg-red-600/30 transition-colors font-medium border border-red-500/30 hover:border-red-500/50"
+            >
+              🚪 Sign Out
+            </button>
+          </div>
           <p className="text-gray-400">
             🌿 Ayur Shuddhi Wellness Admin Dashboard
           </p>

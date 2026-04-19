@@ -64,9 +64,7 @@ export default async function HomePage({ params }) {
           <MandalaPattern />
           <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 mobile-hero-padding">
             <div className="mx-auto max-w-3xl text-center">
-              <span className="inline-flex items-center rounded-full bg-gradient-to-r from-primary-100 to-accent-100 px-4 py-2 text-sm font-semibold text-primary-700 ring-1 ring-inset ring-primary-200/50 mb-8 fade-scale shadow-soft">
-                🕉️ Holistic Wellness & Ancient Wisdom
-              </span>
+
               <h1 className="text-5xl font-display font-bold tracking-tight text-gradient-indian sm:text-7xl slide-in-left mobile-text-shadow">
                 Transform Your Life Through Holistic Wellness
               </h1>
@@ -79,9 +77,7 @@ export default async function HomePage({ params }) {
         <div className="relative section-padding mobile-section-spacing">
           <div className="mx-auto max-w-7xl container-padding">
             <div className="mx-auto max-w-4xl lg:text-center mb-16">
-              <span className="inline-flex items-center rounded-full bg-gradient-to-r from-accent-100 to-primary-100 px-4 py-2 text-sm font-semibold text-accent-700 ring-1 ring-inset ring-accent-200/50 mb-8 shadow-soft fade-scale" style={{ animationDelay: '100ms' }}>
-                ✨ Featured Services
-              </span>
+
               <h2 className="text-4xl font-display font-bold tracking-tight text-gradient-indian sm:text-5xl mb-6 staggered-fade mobile-text-shadow" style={{ animationDelay: '200ms' }}>
                 Our Most Popular Wellness Services
               </h2>

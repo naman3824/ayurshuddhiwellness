@@ -45,9 +45,6 @@ export default async function ContactPage(props) {
           <div className="absolute inset-0 pattern-bg"></div>
           <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
             <div className="mx-auto max-w-2xl lg:text-center">
-              <span className="inline-flex items-center rounded-full bg-primary-900/30 px-3 py-1 text-sm font-medium text-primary-300 ring-1 ring-inset ring-primary-700/10 mb-6 animate-fade-in">
-                📞 Get in Touch
-              </span>
               <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl text-gradient">
                 Contact Us
               </h1>

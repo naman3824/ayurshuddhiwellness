@@ -6,9 +6,11 @@ import Image from 'next/image';
 import { MandalaDecoration } from '../../../components/MandalaDecoration';
 import { db } from '../../../lib/firebaseClient';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
+import { useAuth } from '../../../components/AuthProvider';
 
 export default function BlogPage({ params }) {
   const { lang } = use(params);
+  const { currentUser } = useAuth();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -98,13 +100,33 @@ export default function BlogPage({ params }) {
 
         <div className="relative container mx-auto px-4 py-16">
           {/* Header */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-display font-bold text-gradient-indian mb-6">
-              Our Blog
-            </h1>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-              Discover insights on wellness, Ayurveda, and holistic health practices to enhance your journey to well-being.
-            </p>
+          <div className="flex flex-col md:flex-row items-center justify-between mb-16 gap-6">
+            <div className="text-center md:text-left">
+              <h1 className="text-4xl md:text-5xl font-display font-bold text-gradient-indian mb-4">
+                Our Blog
+              </h1>
+              <p className="text-lg text-gray-300 max-w-2xl leading-relaxed">
+                Discover insights on wellness, Ayurveda, and holistic health practices to enhance your journey to well-being.
+              </p>
+            </div>
+            
+            <div className="shrink-0 flex items-center justify-center">
+              {currentUser ? (
+                <Link
+                  href="/admin/blog/new"
+                  className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold border border-purple-500 shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 hover:-translate-y-1 transform whitespace-nowrap"
+                >
+                  Publish Blog
+                </Link>
+              ) : (
+                <Link
+                  href="/login?redirect=/admin/blog/new"
+                  className="px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors font-semibold border border-gray-500 flex items-center space-x-2 shadow-soft hover:shadow-warm hover:-translate-y-1 transform whitespace-nowrap"
+                >
+                  <span>Publish Blog</span>
+                </Link>
+              )}
+            </div>
           </div>
 
           {/* Blog Posts Grid */}
