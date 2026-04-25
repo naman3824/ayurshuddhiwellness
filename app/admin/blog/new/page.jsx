@@ -15,7 +15,7 @@ const RichTextEditor = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="border border-gray-600 rounded-xl bg-gray-800/50 min-h-[400px] flex items-center justify-center">
+      <div className="min-h-[500px] flex items-center justify-center">
         <div className="text-gray-500 animate-pulse">Loading editor...</div>
       </div>
     ),
@@ -27,45 +27,20 @@ function NewBlogPostContent() {
   const { currentUser } = useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
-
-  // Handle featured image file selection
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (!file.type.startsWith('image/')) {
-        setMessage('Error: Please select a valid image file.');
-        return;
-      }
-      if (file.size > 5 * 1024 * 1024) {
-        setMessage('Error: Image must be smaller than 5MB.');
-        return;
-      }
-
-      setSelectedFile(file);
-      const reader = new FileReader();
-      reader.onload = (e) => setImagePreview(e.target.result);
-      reader.readAsDataURL(file);
-      setMessage('');
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setMessage('');
 
-    // Validate
     if (!title.trim()) {
       setMessage('Error: Title is required.');
       setIsLoading(false);
       return;
     }
 
-    // Strip HTML and check if content is empty
     const textContent = content.replace(/<[^>]*>/g, '').trim();
     if (!textContent) {
       setMessage('Error: Blog content is required.');
@@ -74,33 +49,29 @@ function NewBlogPostContent() {
     }
 
     try {
-      // Sanitize the HTML content to prevent XSS
       const sanitizedContent = DOMPurify.sanitize(content, {
         ADD_TAGS: ['img'],
         ADD_ATTR: ['src', 'alt', 'class', 'target', 'rel', 'href'],
       });
 
-      // Build the blog document
       const blogData = {
         title: title.trim(),
         content: sanitizedContent,
         authorId: currentUser?.uid || '',
         authorName: currentUser?.displayName || currentUser?.email?.split('@')[0] || 'Anonymous',
         authorEmail: currentUser?.email || '',
-        image_url: imagePreview || '', // base64 for now; upgrade to Storage URL later
+        image_url: '', // featured images are now inline via Cloudinary
         status: 'published',
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       };
 
       const docRef = await addDoc(collection(db, 'blogs'), blogData);
-      console.log('Blog post saved with ID:', docRef.id);
 
-      setMessage('Blog post published successfully! Redirecting...');
-      setTimeout(() => router.push('/en/blog'), 1500);
-    } catch (error) {
-      console.error('Error creating blog post:', error);
-      setMessage('Error: Failed to publish blog post. Please try again.');
+      setMessage('Published! Redirecting...');
+      setTimeout(() => router.push('/en/blog'), 1200);
+    } catch {
+      setMessage('Error: Failed to publish. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -108,104 +79,60 @@ function NewBlogPostContent() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-4 sm:p-6">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2">Create New Blog Post</h1>
-            <p className="text-gray-400">
-              Write and publish a new blog post. Use the rich text editor for formatting.
-            </p>
-          </div>
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950">
+        {/* Top bar */}
+        <div className="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
+          <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+              Back
+            </button>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Title */}
-            <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-              <label htmlFor="title" className="block text-sm font-medium text-gray-300 mb-2">
-                Blog Title *
-              </label>
-              <input
-                type="text"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-                placeholder="Enter your blog post title..."
-                required
-              />
-            </div>
-
-            {/* Featured Image */}
-            <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-              <label htmlFor="featuredImage" className="block text-sm font-medium text-gray-300 mb-2">
-                Featured Image (Optional)
-              </label>
-              <input
-                type="file"
-                id="featuredImage"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-600 file:text-white hover:file:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
-              <p className="text-sm text-gray-400 mt-2">Max 5MB, image files only</p>
-
-              {imagePreview && (
-                <div className="mt-4">
-                  <p className="text-sm text-gray-300 mb-2">Preview:</p>
-                  <img
-                    src={imagePreview}
-                    alt="Featured image preview"
-                    className="max-w-xs max-h-48 object-cover rounded-lg border border-gray-600"
-                  />
-                </div>
+            <div className="flex items-center gap-3">
+              {message && (
+                <span className={`text-sm ${message.includes('Error') ? 'text-red-400' : 'text-green-400'}`}>
+                  {message}
+                </span>
               )}
-            </div>
-
-            {/* Rich Text Editor */}
-            <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-              <label className="block text-sm font-medium text-gray-300 mb-3">
-                Blog Content *
-              </label>
-              <RichTextEditor content={content} onChange={setContent} />
-            </div>
-
-            {/* Action buttons */}
-            <div className="flex items-center justify-between">
               <button
                 type="button"
-                onClick={() => router.back()}
-                className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-500 transition-colors"
-              >
-                Cancel
-              </button>
-
-              <button
-                type="submit"
+                onClick={handleSubmit}
                 disabled={isLoading}
-                className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center space-x-2"
+                className="px-5 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all text-sm font-semibold flex items-center gap-2"
               >
                 {isLoading ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                    <span>Publishing...</span>
+                    <div className="animate-spin rounded-full h-3.5 w-3.5 border-2 border-white border-t-transparent"></div>
+                    Publishing...
                   </>
                 ) : (
-                  <span>✨ Publish Blog Post</span>
+                  'Publish'
                 )}
               </button>
             </div>
+          </div>
+        </div>
 
-            {/* Status Message */}
-            {message && (
-              <div className={`p-4 rounded-lg ${
-                message.includes('Error')
-                  ? 'bg-red-900/50 border border-red-700 text-red-300'
-                  : 'bg-green-900/50 border border-green-700 text-green-300'
-              }`}>
-                {message}
-              </div>
-            )}
-          </form>
+        {/* Editor area */}
+        <div className="max-w-3xl mx-auto px-4 pt-12 pb-32">
+          {/* Title */}
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Title"
+            className="w-full text-4xl sm:text-5xl font-bold bg-transparent border-none outline-none text-white placeholder-gray-600 mb-8 leading-tight"
+          />
+
+          {/* Divider */}
+          <div className="w-16 h-0.5 bg-gray-700 mb-8"></div>
+
+          {/* Content editor */}
+          <RichTextEditor content={content} onChange={setContent} />
         </div>
       </div>
     </ProtectedRoute>

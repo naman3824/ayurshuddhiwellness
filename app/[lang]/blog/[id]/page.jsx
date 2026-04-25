@@ -1,200 +1,74 @@
-'use client';
+import { adminDb } from '../../../../lib/firebaseAdmin';
+import BlogPostClient from './BlogPostClient';
 
-import { useState, useEffect, use } from 'react';
-import Link from 'next/link';
-import DOMPurify from 'dompurify';
-import { MandalaDecoration } from '../../../../components/MandalaDecoration';
-import { db } from '../../../../lib/firebaseClient';
-import { doc, getDoc } from 'firebase/firestore';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.ayurshuddhiwellness.com';
 
-export default function BlogPostPage({ params }) {
-  const { id, lang } = use(params);
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+// Strip HTML tags and truncate to maxLen characters
+function truncateText(html, maxLen = 150) {
+  const text = (html || '').replace(/<[^>]*>/g, '').trim();
+  if (text.length <= maxLen) return text;
+  return text.substring(0, maxLen).trim() + '...';
+}
 
-  useEffect(() => {
-    if (id) {
-      fetchPost();
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+
+  try {
+    const docSnap = await adminDb.collection('blogs').doc(id).get();
+
+    if (!docSnap.exists) {
+      return {
+        title: 'Post Not Found - Ayur Shuddhi Wellness',
+        description: 'The requested blog post could not be found.',
+      };
     }
-  }, [id]);
 
-  const fetchPost = async () => {
-    try {
-      setLoading(true);
-      const docSnap = await getDoc(doc(db, 'blogs', id));
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setPost({
-          id: docSnap.id,
-          ...data,
-          created_at: data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-        });
-      } else {
-        setPost(null);
-      }
-    } catch (err) {
-      console.error('Error fetching blog post:', err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const data = docSnap.data();
+    const title = data.title || 'Blog Post';
+    const description = truncateText(data.content, 150);
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
+    // Find the first Cloudinary image in the content, or use image_url
+    const imgMatch = data.content?.match(/src="(https:\/\/res\.cloudinary\.com[^"]+)"/);
+    const ogImage = data.image_url || (imgMatch ? imgMatch[1] : null);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-10 w-10 border-2 border-green-400 border-t-transparent mx-auto mb-3"></div>
-            <p className="mt-4 text-gray-400">Loading blog post...</p>
-          </div>
-        </div>
-      </div>
-    );
+    return {
+      title: `${title} - Ayur Shuddhi Wellness`,
+      description,
+      openGraph: {
+        title,
+        description,
+        type: 'article',
+        url: `${SITE_URL}/en/blog/${id}`,
+        ...(ogImage && {
+          images: [
+            {
+              url: ogImage,
+              width: 1200,
+              height: 630,
+              alt: title,
+            },
+          ],
+        }),
+        siteName: 'Ayur Shuddhi Wellness',
+        publishedTime: data.createdAt?.toDate?.()?.toISOString() || undefined,
+        authors: [data.authorName || 'Ayur Shuddhi Wellness'],
+      },
+      twitter: {
+        card: ogImage ? 'summary_large_image' : 'summary',
+        title,
+        description,
+        ...(ogImage && { images: [ogImage] }),
+      },
+    };
+  } catch {
+    return {
+      title: 'Blog - Ayur Shuddhi Wellness',
+      description: 'Read our latest wellness blog posts.',
+    };
   }
+}
 
-  if (error || !post) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-        <div className="container mx-auto px-4 py-16">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-white mb-4">
-              Post Not Found
-            </h1>
-            <p className="text-gray-400 mb-8">
-              {error || 'The blog post you are looking for does not exist.'}
-            </p>
-            <Link 
-              href={`/${lang}/blog`}
-              className="btn btn-primary"
-            >
-              ← Back to Blog
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      {/* Decorative Elements */}
-      <MandalaDecoration 
-        className="absolute top-20 right-10 text-primary-800" 
-        size="lg" 
-        opacity="low" 
-      />
-      <MandalaDecoration 
-        className="absolute bottom-20 left-10 text-accent-800" 
-        size="md" 
-        opacity="low" 
-      />
-
-      <div className="relative container mx-auto px-4 py-8">
-        {/* Back to Blog Link */}
-        <div className="mb-8">
-          <Link 
-            href={`/${lang}/blog`}
-            className="inline-flex items-center text-primary-400 hover:text-primary-300 font-medium transition-colors duration-300"
-          >
-            <svg className="mr-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to Blog
-          </Link>
-        </div>
-
-        {/* Article */}
-        <article className="max-w-4xl mx-auto">
-          {/* Featured Image */}
-          {post.image_url && (
-            <div className="relative h-64 md:h-96 mb-8 rounded-2xl overflow-hidden shadow-warm">
-              <img
-                src={post.image_url}
-                alt={post.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-            </div>
-          )}
-
-          {/* Header */}
-          <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-gradient-indian mb-6 leading-tight">
-              {post.title}
-            </h1>
-            
-            {/* Meta Information */}
-            <div className="flex items-center space-x-6 text-gray-400">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
-                  <span className="text-sm font-semibold text-white">
-                    {post.authorName?.charAt(0)?.toUpperCase() || 'A'}
-                  </span>
-                </div>
-                <div>
-                  <p className="font-medium text-white">{post.authorName || 'Author'}</p>
-                  <p className="text-sm">Author</p>
-                </div>
-              </div>
-              <div className="h-6 w-px bg-gray-600"></div>
-              <time dateTime={post.created_at} className="text-sm">
-                {formatDate(post.created_at)}
-              </time>
-            </div>
-          </header>
-
-          {/* Content — rendered with Tailwind Typography */}
-          <div className="bg-gray-800 rounded-2xl shadow-soft p-8 md:p-12">
-            <div 
-              className="prose prose-lg prose-invert max-w-none
-                prose-headings:text-white
-                prose-headings:font-display prose-headings:font-bold
-                prose-p:text-gray-300
-                prose-p:leading-relaxed prose-p:mb-6
-                prose-a:text-primary-400
-                prose-a:no-underline hover:prose-a:underline
-                prose-strong:text-white
-                prose-ul:text-gray-300
-                prose-ol:text-gray-300
-                prose-li:text-gray-300
-                prose-blockquote:border-primary-700
-                prose-blockquote:bg-primary-900/20
-                prose-blockquote:rounded-lg prose-blockquote:p-4
-                prose-code:text-primary-400
-                prose-code:bg-primary-900/30
-                prose-code:px-2 prose-code:py-1 prose-code:rounded
-                prose-img:rounded-xl prose-img:shadow-lg
-                prose-hr:border-gray-600"
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
-            />
-          </div>
-
-          {/* Footer */}
-          <footer className="mt-12 pt-8 border-t border-gray-700">
-            <div className="flex items-center justify-between">
-              <div className="text-sm text-gray-400">
-                Published on {formatDate(post.created_at)}
-              </div>
-              <Link 
-                href={`/${lang}/blog`}
-                className="btn btn-outline"
-              >
-                View All Posts
-              </Link>
-            </div>
-          </footer>
-        </article>
-      </div>
-    </div>
-  );
+export default async function BlogPostPage({ params }) {
+  const { id, lang } = await params;
+  return <BlogPostClient id={id} lang={lang} />;
 }

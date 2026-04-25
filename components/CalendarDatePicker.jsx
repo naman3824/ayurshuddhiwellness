@@ -57,12 +57,15 @@ export function CalendarDatePicker({ value, onChange, className = '', error = ''
     return date.getDay() !== 0 && date >= today;
   };
 
-  // Handle date selection
   const handleDateSelect = (day) => {
     const date = new Date(currentYear, currentMonth, day);
     if (isDateAvailable(date)) {
       setSelectedDate(date);
-      const dateString = date.toISOString().split('T')[0];
+      // Construct YYYY-MM-DD using local time to prevent timezone shift issues
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const dd = String(date.getDate()).padStart(2, '0');
+      const dateString = `${yyyy}-${mm}-${dd}`;
       onChange({ target: { name: 'date', value: dateString } });
       setIsOpen(false);
     }

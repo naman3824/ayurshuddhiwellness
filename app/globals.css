@@ -716,4 +716,29 @@
       background: none !important;
     }
   }
+
+  /* Tiptap Placeholder CSS */
+  .tiptap p.is-editor-empty:first-child::before {
+    color: #9ca3af !important;
+    content: attr(data-placeholder) !important;
+    float: left !important;
+    height: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+/* Modal entrance animation */
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-modal-in {
+  animation: modal-in 0.3s ease-out forwards;
 }

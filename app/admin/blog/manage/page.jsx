@@ -32,7 +32,6 @@ function ManageBlogsPageContent() {
       }));
       setPosts(fetchedPosts);
     } catch (err) {
-      console.error('Error fetching blog posts:', err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -49,7 +48,6 @@ function ManageBlogsPageContent() {
       await deleteDoc(doc(db, 'blogs', postId));
       setPosts(posts.filter(post => post.id !== postId));
     } catch (err) {
-      console.error('Error deleting post:', err);
       alert('Error deleting post: ' + err.message);
     } finally {
       setDeleteLoading(null);

@@ -23,7 +23,6 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (!auth) {
-      console.error('Firebase Auth is not initialized. Please check your environment variables.');
       setLoading(false);
       return;
     }
@@ -41,8 +40,7 @@ export function AuthProvider({ children }) {
           } else {
             setIsAdmin(false);
           }
-        } catch (error) {
-          console.error('Failed to fetch user role:', error);
+        } catch {
           setIsAdmin(false);
         }
       } else {
@@ -59,8 +57,8 @@ export function AuthProvider({ children }) {
     if (!auth) return;
     try {
       await signOut(auth);
-    } catch (error) {
-      console.error('Logout error:', error);
+    } catch {
+      // Logout failed silently
     }
   };
 

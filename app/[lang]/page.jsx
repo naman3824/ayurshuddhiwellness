@@ -1,7 +1,11 @@
 import Link from 'next/link'
 import FeaturedServiceCard from '../../components/FeaturedServiceCard'
 import { MandalaPattern } from '../../components/MandalaDecoration'
+import { adminDb } from '../../lib/firebaseAdmin'
+import HomepageMessageModal from '../../components/HomepageMessageModal'
 
+// Force dynamic rendering so homepage_messages are fetched on every request
+export const dynamic = 'force-dynamic';
 
 
 export function generateStaticParams() {
@@ -47,10 +51,44 @@ export async function generateMetadata({ params }) {
   };
 }
 
+// Fetch active homepage messages from Firestore
+async function getHomepageMessages() {
+  try {
+    // Avoid compound query (where + orderBy) which requires a composite index.
+    // Instead, fetch by isActive and sort/limit in code.
+    const snapshot = await adminDb
+      .collection('homepage_messages')
+      .where('isActive', '==', true)
+      .get();
+
+    const messages = snapshot.docs
+      .map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          title: data.title || '',
+          content: data.content || '',
+          message_type: data.message_type || 'text',
+          image_url: data.image_url || '',
+          createdAt: data.createdAt?.toDate?.()?.toISOString() || null,
+        };
+      })
+      // Sort newest first, then limit to 5
+      .sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''))
+      .slice(0, 5);
+
+    return messages;
+  } catch (err) {
+    console.error('[Homepage Messages] Firestore error:', err.message || err);
+    return [];
+  }
+}
+
 
 export default async function HomePage({ params }) {
   const { lang } = await params;
   const featuredServices = getFeaturedServices(lang);
+  const messages = await getHomepageMessages();
 
 
   return (
@@ -71,6 +109,9 @@ export default async function HomePage({ params }) {
             </div>
           </div>
         </div>
+
+        {/* Homepage Message Modal */}
+        <HomepageMessageModal messages={messages} />
 
 
         {/* Our Services section with Indian-inspired design */}

@@ -83,17 +83,17 @@ function AdminDashboard() {
             </div>
           </div>
 
-          {/* Broadcast Message */}
-          <div className="bg-gray-800 rounded-xl shadow-2xl p-8 border border-gray-700 hover:border-orange-500 transition-all duration-300 hover:shadow-orange-500/20 hover:scale-105">
+          {/* Manage Bookings */}
+          <div className="bg-gray-800 rounded-xl shadow-2xl p-8 border border-gray-700 hover:border-cyan-500 transition-all duration-300 hover:shadow-cyan-500/20 hover:scale-105">
             <div className="text-center">
-              <div className="text-6xl mb-6">📢</div>
-              <h2 className="text-2xl font-bold text-orange-400 mb-3">WhatsApp Broadcast</h2>
-              <p className="text-gray-300 mb-6 leading-relaxed">Send messages to WhatsApp contacts</p>
+              <div className="text-6xl mb-6">📅</div>
+              <h2 className="text-2xl font-bold text-cyan-400 mb-3">Manage Bookings</h2>
+              <p className="text-gray-300 mb-6 leading-relaxed">View and manage all customer appointment bookings</p>
               <button
-                onClick={() => alert('WhatsApp broadcast feature coming soon! 🚧')}
-                className="w-full px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors font-semibold border border-orange-500 hover:border-orange-400 shadow-lg"
+                onClick={() => router.push('/admin/bookings')}
+                className="w-full px-6 py-3 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors font-semibold border border-cyan-500 hover:border-cyan-400 shadow-lg"
               >
-                📱 Broadcast
+                📋 View Bookings
               </button>
             </div>
           </div>

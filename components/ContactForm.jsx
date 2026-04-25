@@ -73,8 +73,7 @@ export default function ContactForm({ dict }) {
         email: '',
         message: ''
       });
-    } catch (error) {
-      console.error('EmailJS Error:', error);
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

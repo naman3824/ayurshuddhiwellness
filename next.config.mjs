@@ -9,6 +9,12 @@ const config = {
   },
   images: {
     unoptimized: true, // Keep for better compatibility
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+    ],
   },
   trailingSlash: true, // Add trailing slashes for cleaner URLs
   

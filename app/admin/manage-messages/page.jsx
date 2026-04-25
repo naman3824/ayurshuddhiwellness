@@ -29,7 +29,6 @@ function ManageMessagesContent() {
       }));
       setMessages(fetched);
     } catch (error) {
-      console.error('Error fetching messages:', error);
       setStatusMsg('Failed to fetch messages. Please try again.');
     } finally {
       setIsLoading(false);
@@ -46,7 +45,6 @@ function ManageMessagesContent() {
       setMessages(messages.filter(m => m.id !== messageId));
       setStatusMsg('Message deleted successfully!');
     } catch (error) {
-      console.error('Error deleting message:', error);
       setStatusMsg('Failed to delete message. Please try again.');
     }
   };

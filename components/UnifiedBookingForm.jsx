@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { CalendarDatePicker } from './CalendarDatePicker';
 import { useAuth } from './AuthProvider';
@@ -101,9 +101,69 @@ export function UnifiedBookingForm({ preSelectedService }) {
   const [errors, setErrors] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [confirmationData, setConfirmationData] = useState(null);
+  const [bookedSlots, setBookedSlots] = useState([]);
+  const [loadingSlots, setLoadingSlots] = useState(false);
+  const [bookingError, setBookingError] = useState('');
 
   // Selected service details
   const selectedService = services.find(s => s.name === formData.service);
+
+  // ── Parse duration string (e.g. '60 min') to minutes ──
+  const parseDuration = (durationStr) => {
+    const match = durationStr?.match(/(\d+)/);
+    return match ? parseInt(match[1], 10) : 30;
+  };
+
+  // ── Convert '9:00 AM' to minutes since midnight ──
+  const timeToMinutes = (timeStr) => {
+    if (!timeStr) return 0;
+    const [time, period] = timeStr.split(' ');
+    let [hours, minutes] = time.split(':').map(Number);
+    if (period === 'PM' && hours !== 12) hours += 12;
+    if (period === 'AM' && hours === 12) hours = 0;
+    return hours * 60 + minutes;
+  };
+
+  // ── Check if a time slot conflicts with any existing booking ──
+  // This is SERVICE-AGNOSTIC: if the doctor is busy, the slot is blocked for everyone.
+  const isSlotConflicting = (slotTime) => {
+    if (bookedSlots.length === 0) return false;
+    const slotStart = timeToMinutes(slotTime);
+    // Use the currently selected service's duration for the NEW booking's end time.
+    // If no service is selected yet, use 30 min as minimum to still show conflicts.
+    const newDuration = selectedService ? parseDuration(selectedService.duration) : 30;
+    const slotEnd = slotStart + newDuration;
+
+    return bookedSlots.some(
+      (booked) => slotStart < booked.endMinutes && slotEnd > booked.startMinutes
+    );
+  };
+
+  // ── Fetch existing bookings via secure API route ──
+  useEffect(() => {
+    if (!formData.date) return;
+    const fetchBookedSlots = async () => {
+      try {
+        setLoadingSlots(true);
+        const res = await fetch(`/api/bookings/availability?date=${formData.date}`);
+        if (!res.ok) throw new Error('Failed to fetch availability');
+        const data = await res.json();
+        const slots = (data.slots || []).map((slot) => {
+          const start = timeToMinutes(slot.appointmentTime);
+          const duration = slot.durationMinutes || 30;
+          return { startMinutes: start, endMinutes: start + duration };
+        });
+        setBookedSlots(slots);
+      } catch {
+        setBookedSlots([]);
+      } finally {
+        setLoadingSlots(false);
+      }
+    };
+    fetchBookedSlots();
+    // Reset selected time when date changes
+    setFormData(prev => ({ ...prev, time: '' }));
+  }, [formData.date]);
 
   const formatDate = (dateString) => {
     try {
@@ -156,7 +216,43 @@ export function UnifiedBookingForm({ preSelectedService }) {
   // ── Step 2: Payment & Firestore save ──
   const handlePayment = async () => {
     setIsProcessing(true);
+    setBookingError('');
     try {
+      // ── Backend re-validation via API to prevent race conditions ──
+      const durationMins = parseDuration(selectedService?.duration);
+      const newStart = timeToMinutes(formData.time);
+      const newEnd = newStart + durationMins;
+
+      try {
+        const res = await fetch(`/api/bookings/availability?date=${formData.date}`);
+        if (res.ok) {
+          const data = await res.json();
+          const hasConflict = (data.slots || []).some((slot) => {
+            const existStart = timeToMinutes(slot.appointmentTime);
+            const existEnd = existStart + (slot.durationMinutes || 30);
+            return newStart < existEnd && newEnd > existStart;
+          });
+          if (hasConflict) {
+            setBookingError('This time slot has just been booked by someone else. Please choose a different time.');
+            setIsProcessing(false);
+            setCurrentStep(1);
+            // Refresh available slots
+            const refreshRes = await fetch(`/api/bookings/availability?date=${formData.date}`);
+            if (refreshRes.ok) {
+              const refreshData = await refreshRes.json();
+              const slots = (refreshData.slots || []).map((s) => {
+                const start = timeToMinutes(s.appointmentTime);
+                return { startMinutes: start, endMinutes: start + (s.durationMinutes || 30) };
+              });
+              setBookedSlots(slots);
+            }
+            return;
+          }
+        }
+      } catch {
+        // Availability check failed — proceed with booking
+      }
+
       // Simulate payment processing (replace with Razorpay in production)
       await new Promise(resolve => setTimeout(resolve, 2000));
 
@@ -170,6 +266,7 @@ export function UnifiedBookingForm({ preSelectedService }) {
           serviceName: formData.service,
           appointmentDate: formData.date,
           appointmentTime: formData.time,
+          durationMinutes: durationMins,
           customerName: formData.name,
           customerPhone: formData.phone,
           customerEmail: formData.email || currentUser?.email || '',
@@ -181,7 +278,6 @@ export function UnifiedBookingForm({ preSelectedService }) {
           confirmationNumber,
           createdAt: serverTimestamp(),
         });
-        console.log('Booking saved with ID:', docRef.id);
 
         // Trigger EmailJS Confirmation (booking receipt)
         const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
@@ -201,12 +297,10 @@ export function UnifiedBookingForm({ preSelectedService }) {
           };
           
           await emailjs.send(serviceId, templateId, templateParams, publicKey)
-            .then(() => console.log('Booking receipt sent successfully'))
-            .catch((err) => console.error('Failed to send booking receipt', err));
+            .catch(() => { /* Email send failed silently */ });
         }
 
-      } catch (firestoreError) {
-        console.error('Failed to save booking to Firestore:', firestoreError);
+      } catch {
         // Continue — show confirmation even if Firestore fails
       }
 
@@ -220,8 +314,8 @@ export function UnifiedBookingForm({ preSelectedService }) {
       });
       setCurrentStep(3);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch (error) {
-      console.error('Payment processing error:', error);
+    } catch {
+      // Payment processing error handled silently
     } finally {
       setIsProcessing(false);
     }
@@ -337,27 +431,43 @@ export function UnifiedBookingForm({ preSelectedService }) {
       {/* Time */}
       <div>
         <label htmlFor="time" className="form-label">Preferred Time *</label>
+        {loadingSlots && (
+          <p className="text-sm text-gray-400 mb-2 animate-pulse">Checking availability...</p>
+        )}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {timeSlots.map((time) => (
-            <label
-              key={time}
-              className={`relative flex items-center justify-center p-3 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
-                formData.time === time
-                  ? 'border-primary-500 bg-primary-900/20 text-primary-300'
-                  : 'border-gray-600 bg-gray-800 hover:border-primary-400'
-              }`}
-            >
-              <input
-                type="radio" name="time" value={time}
-                checked={formData.time === time}
-                onChange={handleInputChange}
-                className="sr-only"
-              />
-              <span className="text-sm font-medium">{time}</span>
-            </label>
-          ))}
+          {timeSlots.map((time) => {
+            const conflicting = isSlotConflicting(time);
+            return (
+              <label
+                key={time}
+                className={`relative flex items-center justify-center p-3 rounded-xl border-2 transition-all duration-300 ${
+                  conflicting
+                    ? 'border-gray-700 bg-gray-800/40 text-gray-600 cursor-not-allowed opacity-50'
+                    : formData.time === time
+                      ? 'border-primary-500 bg-primary-900/20 text-primary-300 cursor-pointer'
+                      : 'border-gray-600 bg-gray-800 hover:border-primary-400 cursor-pointer'
+                }`}
+                title={conflicting ? 'This slot is already booked' : ''}
+              >
+                <input
+                  type="radio" name="time" value={time}
+                  checked={formData.time === time}
+                  onChange={handleInputChange}
+                  className="sr-only"
+                  disabled={conflicting}
+                />
+                <span className="text-sm font-medium">{time}</span>
+                {conflicting && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+                    <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" /></svg>
+                  </span>
+                )}
+              </label>
+            );
+          })}
         </div>
         {errors.time && <p className="mt-1 text-sm text-red-400">{errors.time}</p>}
+        {bookingError && <p className="mt-2 text-sm text-red-400">{bookingError}</p>}
       </div>
 
       {/* Submit */}

@@ -76,7 +76,6 @@ function PostMessageContent() {
       setSelectedFile(null);
       setImagePreview('');
     } catch (error) {
-      console.error('Error posting message:', error);
       setMessage('Error: Failed to create message. Please try again.');
     } finally {
       setLoading(false);

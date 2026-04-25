@@ -7,6 +7,7 @@ import { MandalaDecoration } from '../../../components/MandalaDecoration';
 import { db } from '../../../lib/firebaseClient';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 import { useAuth } from '../../../components/AuthProvider';
+import ShareButton from '../../../components/ShareButton';
 
 export default function BlogPage({ params }) {
   const { lang } = use(params);
@@ -32,7 +33,6 @@ export default function BlogPage({ params }) {
       }));
       setPosts(fetchedPosts);
     } catch (err) {
-      console.error('Error fetching blog posts:', err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -193,7 +193,7 @@ export default function BlogPage({ params }) {
                     </div>
 
                     {/* Read More Link */}
-                    <div className="mt-4 pt-4 border-t border-gray-700">
+                    <div className="mt-4 pt-4 border-t border-gray-700 flex items-center justify-between">
                       <Link 
                         href={`/${lang}/blog/${post.id}`}
                         className="inline-flex items-center text-primary-400 hover:text-primary-300 font-medium transition-colors duration-300"
@@ -203,6 +203,11 @@ export default function BlogPage({ params }) {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </Link>
+                      <ShareButton
+                        title={post.title}
+                        text={getExcerpt(post.content, 100)}
+                        url={typeof window !== 'undefined' ? `${window.location.origin}/${lang}/blog/${post.id}` : ''}
+                      />
                     </div>
                   </div>
                 </article>
