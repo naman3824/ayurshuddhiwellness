@@ -91,8 +91,8 @@ const config = {
       },
       fontFamily: {
         sans: [
-          'Noto Sans', 
-          'Poppins',
+          'var(--font-noto-sans)',
+          'var(--font-poppins)',
           'system-ui', 
           '-apple-system', 
           'BlinkMacSystemFont',
@@ -103,8 +103,8 @@ const config = {
           'sans-serif'
         ],
         display: [
-          'Poppins',
-          'Noto Sans',
+          'var(--font-poppins)',
+          'var(--font-noto-sans)',
           'system-ui', 
           '-apple-system', 
           'sans-serif'

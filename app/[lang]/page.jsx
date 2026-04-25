@@ -1,11 +1,10 @@
 import Link from 'next/link'
+import Image from 'next/image'
+import { Suspense } from 'react'
 import FeaturedServiceCard from '../../components/FeaturedServiceCard'
 import { MandalaPattern } from '../../components/MandalaDecoration'
 import { adminDb } from '../../lib/firebaseAdmin'
 import HomepageMessageModal from '../../components/HomepageMessageModal'
-
-// Force dynamic rendering so homepage_messages are fetched on every request
-export const dynamic = 'force-dynamic';
 
 
 export function generateStaticParams() {
@@ -51,11 +50,9 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// Fetch active homepage messages from Firestore
-async function getHomepageMessages() {
+// Async server component that fetches messages — streamed via Suspense
+async function HomepageMessagesFetcher() {
   try {
-    // Avoid compound query (where + orderBy) which requires a composite index.
-    // Instead, fetch by isActive and sort/limit in code.
     const snapshot = await adminDb
       .collection('homepage_messages')
       .where('isActive', '==', true)
@@ -73,29 +70,34 @@ async function getHomepageMessages() {
           createdAt: data.createdAt?.toDate?.()?.toISOString() || null,
         };
       })
-      // Sort newest first, then limit to 5
       .sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''))
       .slice(0, 5);
 
-    return messages;
-  } catch (err) {
-    console.error('[Homepage Messages] Firestore error:', err.message || err);
-    return [];
+    if (messages.length === 0) return null;
+    return <HomepageMessageModal messages={messages} />;
+  } catch {
+    return null;
   }
 }
-
 
 export default async function HomePage({ params }) {
   const { lang } = await params;
   const featuredServices = getFeaturedServices(lang);
-  const messages = await getHomepageMessages();
 
 
   return (
-    <div 
-      className="tree-bg-optimized"
-    >
-      {/* Single unified dark gradient overlay covering entire page */}
+    <div className="relative min-h-screen">
+      {/* Hero background image via Next/Image — preloaded for LCP */}
+      <Image
+        src="/images/hero/tree.jpg"
+        alt="AyurShuddhi Forest"
+        fill
+        className="object-cover"
+        priority={true}
+        sizes="100vw"
+        quality={75}
+      />
+      {/* Dark gradient overlay */}
       <div className="relative bg-gradient-to-b from-gray-800/70 to-gray-900/70">
         {/* Hero section with Indian-inspired design */}
         <div className="relative isolate overflow-hidden">
@@ -110,8 +112,10 @@ export default async function HomePage({ params }) {
           </div>
         </div>
 
-        {/* Homepage Message Modal */}
-        <HomepageMessageModal messages={messages} />
+        {/* Homepage Messages — streamed via Suspense to avoid blocking TTFB */}
+        <Suspense fallback={null}>
+          <HomepageMessagesFetcher />
+        </Suspense>
 
 
         {/* Our Services section with Indian-inspired design */}
