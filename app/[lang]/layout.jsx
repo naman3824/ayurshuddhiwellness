@@ -1,27 +1,15 @@
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 
+// Allow non-pre-rendered [lang] values to work at runtime
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-  // Define all supported languages here
-  const languages = ['en-IN'];
-  
-  // Generate paths for all pages in all languages
-  const paths = [];
-  
-  // Add root pages
-  const pages = ['', 'about', 'contact', 'booking', 'services'];
-  
-  languages.forEach(lang => {
-    pages.forEach(page => {
-      paths.push({
-        lang,
-        // If it's the root page, don't include a page segment
-        ...(page ? { page } : {})
-      });
-    });
-  });
-  
-  return paths;
+  return [
+    { lang: 'en' },
+    { lang: 'en-IN' },
+    { lang: 'hi' },
+  ];
 }
 
 export async function generateMetadata(props) {

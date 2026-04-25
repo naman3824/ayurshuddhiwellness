@@ -87,22 +87,27 @@ export default async function HomePage({ params }) {
 
   return (
     <div className="relative min-h-screen">
-      {/* Hero background image via Next/Image — preloaded for LCP */}
-      <Image
-        src="/images/hero/tree.jpg"
-        alt="AyurShuddhi Forest"
-        fill
-        className="object-cover"
-        priority={true}
-        sizes="100vw"
-        quality={75}
-      />
-      {/* Dark gradient overlay */}
-      <div className="relative bg-gradient-to-b from-gray-800/70 to-gray-900/70">
-        {/* Hero section with Indian-inspired design */}
+      {/* Fixed viewport background — matches About page styling exactly */}
+      <div className="fixed inset-0 z-[-1]">
+        <Image
+          src="/images/hero/tree.jpg"
+          alt="AyurShuddhi Forest"
+          fill
+          className="object-cover object-top"
+          priority={true}
+          sizes="100vw"
+          quality={75}
+        />
+        {/* Overlay — identical to About page: from-gray-800/70 to-gray-900/70 */}
+        <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-b from-gray-800/70 to-gray-900/70"></div>
+      </div>
+
+      {/* All content scrolls over the fixed background */}
+      <div className="relative">
+        {/* Hero section */}
         <div className="relative isolate overflow-hidden">
           <MandalaPattern />
-          <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 mobile-hero-padding">
+          <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 mobile-hero-padding">
             <div className="mx-auto max-w-3xl text-center">
 
               <h1 className="text-5xl font-display font-bold tracking-tight text-gradient-indian sm:text-7xl slide-in-left mobile-text-shadow">
@@ -118,7 +123,7 @@ export default async function HomePage({ params }) {
         </Suspense>
 
 
-        {/* Our Services section with Indian-inspired design */}
+        {/* Our Services section */}
         <div className="relative section-padding mobile-section-spacing">
           <div className="mx-auto max-w-7xl container-padding">
             <div className="mx-auto max-w-4xl lg:text-center mb-16">
