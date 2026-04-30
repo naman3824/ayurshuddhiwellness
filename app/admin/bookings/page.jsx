@@ -1,23 +1,21 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminProtection from '../components/AdminProtection';
+import { useAuth } from '../../../components/AuthProvider';
 import { db } from '../../../lib/firebaseClient';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 
 function ManageBookingsContent() {
   const router = useRouter();
+  const { loading: authLoading, isAdmin } = useAuth();
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [expandedBookingId, setExpandedBookingId] = useState(null);
 
-  useEffect(() => {
-    fetchBookings();
-  }, []);
-
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
@@ -36,7 +34,19 @@ function ManageBookingsContent() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (authLoading) return;
+
+    if (!isAdmin) {
+      setIsLoading(false);
+      setBookings([]);
+      return;
+    }
+
+    fetchBookings();
+  }, [authLoading, fetchBookings, isAdmin]);
 
   const toggleExpand = (id) => {
     setExpandedBookingId((prev) => (prev === id ? null : id));

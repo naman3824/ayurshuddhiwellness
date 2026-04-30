@@ -69,7 +69,7 @@ export default function SignupPage() {
         phone: formData.phone,
         healthGoal: formData.healthGoal || 'General Wellness',
         medicalConditions: formData.medicalConditions || '',
-        role: 'customer',
+        role: 'user',
         createdAt: serverTimestamp(),
       });
 
@@ -278,6 +278,12 @@ export default function SignupPage() {
                 Sign In
               </Link>
             </p>
+            <Link
+              href="/"
+              className="mt-4 inline-flex items-center justify-center rounded-xl border border-gray-600/60 px-4 py-2 text-sm font-semibold text-gray-300 transition-colors hover:bg-gray-700/50 hover:text-white"
+            >
+              Back to Home
+            </Link>
           </div>
         </div>
       </div>

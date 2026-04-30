@@ -1,65 +1,61 @@
 # Ayur Shuddhi Wellness
 
-A modern, responsive website for Ayur Shuddhi Wellness, built with Next.js 15, React 19, and Tailwind CSS. This platform showcases holistic wellness services, including Ayurveda, Panchakarma, Yoga, and Meditation, with an integrated booking system and secure user authentication.
+A modern, responsive, production-ready website for Ayur Shuddhi Wellness. Built with Next.js 15, React 19, and Tailwind CSS. This platform showcases holistic wellness services (Ayurveda, Panchakarma, Yoga, Meditation) and features a fully integrated booking system, role-based authentication, an admin dashboard, and advanced SEO/Performance optimizations.
 
 ## 📋 Project Overview
 
 ### Purpose
-Ayur Shuddhi Wellness website serves as a digital platform to connect clients with authentic Ayurvedic wellness services. The site aims to educate visitors about traditional healing practices while providing a seamless, secure booking experience for various treatments and consultations.
+Ayur Shuddhi Wellness serves as a digital platform to connect clients with authentic Ayurvedic wellness services. The site educates visitors about traditional healing practices while providing a seamless, secure booking experience and a dedicated dashboard for users to manage their appointments.
 
-## ✨ Features
+## ✨ Key Features
 
-- 🌐 Multilingual support (currently English - India)
-- 🔒 Secure User Authentication (Login, Signup, Password Reset) via Firebase
-- 📱 Fully responsive design for all devices
-- ⚡ Fast, optimized performance with Next.js 15
-- 🎨 Modern, wellness-inspired UI with dark mode support
-- 📅 Multi-step interactive booking system integrated with Firestore
-- 📸 Beautiful gallery showcasing our wellness center and services
-- 📝 Service details with comprehensive descriptions and images
-- 📧 Automated Email Notifications via EmailJS
-- 🔍 SEO optimized for better discoverability
-- 🌓 Dark/light theme toggle
+- 🌐 **Multilingual Routing Architecture** (currently supporting English - India via `[lang]` routing)
+- 🔒 **Role-Based Authentication** (Firebase Auth) with User and Admin access levels
+- 📅 **Integrated Booking System** with real-time Firestore syncing and EmailJS receipt notifications
+- 👤 **User Dashboard ("My Bookings")** allowing users to view and manage/cancel their personal appointments
+- 🛡️ **Secure API Routes** utilizing the Firebase Admin SDK to verify tokens and enforce data ownership
+- 📢 **Dynamic Homepage Announcements** with a session-persisted modal
+- ⚡ **Production Performance** optimized with Next.js `<Suspense>` streaming and `<Image>` LCP prioritization
+- 🔍 **Technical SEO** implemented via dynamic `sitemap.xml`, `robots.js`, and comprehensive OpenGraph metadata
+- 🎨 **Modern Indian-Inspired UI** with custom Tailwind typography, glassmorphism overlays, and smooth micro-animations
 
 ## 🛠 Tech Stack
 
-- **Frontend Framework**: Next.js 15.5 with App Router
+- **Frontend Framework**: Next.js 15.5 (App Router)
 - **UI Library**: React 19
-- **Styling**: Tailwind CSS 3.4 with custom theming
-- **Backend & Database**: Firebase (Auth, Firestore)
+- **Styling**: Tailwind CSS 3.4
+- **Backend & Database**: Firebase (Auth, Firestore Client SDK, Firebase Admin SDK)
 - **Emails**: EmailJS
-- **Icons**: Custom SVG and Heroicons
-- **Form Handling**: React Hook Form / State-driven validation
-- **State Management**: React Context API (`AuthProvider`, `ThemeProvider`)
+- **Fonts**: Self-hosted Google Fonts (Noto Sans, Poppins) via `next/font`
 
 ## 📂 Project Structure
 
 ```text
 ayurshuddhiwellness/
 ├── app/                    # Next.js App Router
-│   ├── (auth)/             # Authentication route group (login, signup)
-│   ├── [lang]/             # Language-specific routes
+│   ├── [lang]/             # Language-specific routes (Core App)
 │   │   ├── about/          # About page
-│   │   ├── blog/           # Wellness blog
-│   │   ├── contact/        # Contact page
-│   │   ├── gallery/        # Photo gallery
-│   │   ├── services/       # Services pages
+│   │   ├── blog/           # Wellness blog (Dynamic routing)
+│   │   ├── bookings/       # User dashboard to view/cancel their bookings
+│   │   ├── contact/        # Contact form
+│   │   ├── login/          # Unified Login / Registration page
+│   │   ├── profile/        # User profile management
+│   │   ├── services/       # Services directory
 │   │   └── layout.jsx      # Language-specific layout
-│   ├── admin/              # Admin dashboard & management
-│   ├── api/                # API Routes (CSRF, etc.)
-│   ├── book/               # Protected Single-page booking system
+│   ├── admin/              # Admin dashboard (Role-protected)
+│   ├── api/                # Secure API Routes (Firebase Admin verified)
+│   ├── book/               # Single-page multi-step booking system
 │   ├── layout.jsx          # Root layout with Global Providers
-│   └── globals.css         # Global styles
-├── components/             # Reusable components
-│   ├── AuthProvider.jsx    # Global Authentication context
-│   ├── ProtectedRoute.jsx  # Route protection guard
-│   ├── UnifiedBookingForm.jsx # Multi-step booking form
-│   └── ...                 # UI Components (Navbar, Footer, etc.)
+│   ├── globals.css         # Global styles and Tailwind directives
+│   ├── robots.js           # SEO crawler configuration
+│   └── sitemap.js          # Dynamic XML sitemap generator
+├── components/             # Reusable UI Components
+│   ├── AuthProvider.jsx    # Global Authentication context & Role management
+│   ├── UnifiedBookingForm.jsx # Multi-step booking engine
+│   └── HomepageMessageModal.jsx # Dynamic announcements
 ├── lib/                    # Backend Integrations
-│   ├── firebaseClient.js   # Firebase Client SDK setup
-│   ├── firebaseAdmin.js    # Firebase Admin SDK setup
-│   └── firestoreUtils.js   # Firestore database query helpers
-├── utils/                  # Utility functions (validation, i18n, csrf)
+│   ├── firebaseClient.js   # Public Firebase Client SDK setup
+│   └── firebaseAdmin.js    # Secure Firebase Admin SDK setup (for API/Server)
 └── public/                 # Static assets (images, icons)
 ```
 
@@ -84,9 +80,10 @@ ayurshuddhiwellness/
    ```
 
 3. Environment Variables setup:
-   Create a `.env.local` file in the root directory with Firebase and EmailJS credentials:
+   Create a `.env.local` file in the root directory. **Note: Never commit this file to version control.**
+
    ```env
-   # Firebase Variables
+   # Firebase Public Client Variables
    NEXT_PUBLIC_FIREBASE_API_KEY="your_api_key"
    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your_domain"
    NEXT_PUBLIC_FIREBASE_PROJECT_ID="your_project_id"
@@ -94,10 +91,18 @@ ayurshuddhiwellness/
    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="your_sender_id"
    NEXT_PUBLIC_FIREBASE_APP_ID="your_app_id"
    
+   # Firebase Admin Variables (SERVER SIDE ONLY - REQUIRED FOR VERCEL)
+   FIREBASE_PROJECT_ID="your_project_id"
+   FIREBASE_CLIENT_EMAIL="firebase-adminsdk-xxxxx@your-project.iam.gserviceaccount.com"
+   FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour\nLong\nKey\nHere\n-----END PRIVATE KEY-----\n"
+
    # EmailJS
    NEXT_PUBLIC_EMAILJS_SERVICE_ID="your_service"
    NEXT_PUBLIC_EMAILJS_TEMPLATE_ID="your_template"
    NEXT_PUBLIC_EMAILJS_PUBLIC_KEY="your_key"
+
+   # Site Configuration
+   NEXT_PUBLIC_SITE_URL="http://localhost:3000"
    ```
 
 4. Start the development server:
@@ -107,47 +112,17 @@ ayurshuddhiwellness/
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
 
-### Deployment
+### Deployment (Vercel)
 
-#### Production Mode
+This application is optimized for Vercel deployment. Because `.env.local` is ignored by Git, you **must** manually add all of the above environment variables into your Vercel Project Settings dashboard before building. The `FIREBASE_PRIVATE_KEY` must be pasted exactly as it appears, including the `\n` characters.
+
 ```bash
-# Build the application
+# Build the application locally to verify production readiness
 npm run build
 
-# Start the production server
+# Start the local production server
 npm start
 ```
-
-## 🌟 Key Features in Detail
-
-### Secure Authentication & Dashboard
-- Full login, registration, and password recovery flows.
-- Firebase integration securing user sessions locally and across APIs.
-- Protected Routes blocking unauthorized access to booking screens.
-
-### Unified Booking System
-- Single-page, multi-step booking process.
-- Calendar and time slot selection.
-- Automatic Firestore syncing upon successful booking verification.
-- Integrated EmailJS notifications sending receipts instantly to the user.
-
-### Services
-- Detailed service pages for Ayurveda, Panchakarma, and Yoga/Meditation.
-- Service-specific information and benefits.
-- High-quality images and descriptions.
-
-### Gallery
-- Beautiful image grid layout.
-- Lightbox for full-screen viewing.
-- Organized by categories.
-
-### Responsive Design
-- Mobile-first approach optimized for all screen sizes.
-- Touch-friendly interfaces and adaptive layouts.
-
-### Theme Support
-- Dark/light mode toggle.
-- Persistent theme preference based on user configurations.
 
 ## 🤝 Contributing
 

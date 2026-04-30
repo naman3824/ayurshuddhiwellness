@@ -1,11 +1,11 @@
 'use client';
 
-import Link from 'next/link'
-import Image from 'next/image'
-import { MandalaDecoration } from './MandalaDecoration'
-import { useState, useEffect, useRef } from 'react'
-import { staggeredAnimation } from '../utils/animations'
-import { useAuth } from './AuthProvider'
+import Link from 'next/link';
+import Image from 'next/image';
+import { MandalaDecoration } from './MandalaDecoration';
+import { useState, useEffect, useRef } from 'react';
+import { staggeredAnimation } from '../utils/animations';
+import { useAuth } from './AuthProvider';
 
 const navigation = [
   { name: 'Home', href: '' },
@@ -14,7 +14,7 @@ const navigation = [
   { name: 'Gallery', href: 'gallery' },
   { name: 'Blog', href: 'blog' },
   { name: 'Contact', href: 'contact' },
-]
+];
 
 export function Navbar({ lang }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,41 +23,41 @@ export function Navbar({ lang }) {
   const navRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const userMenuRef = useRef(null);
-  const { currentUser, isAdmin, logout } = useAuth();
-  
+  const { currentUser, logout, isAdmin } = useAuth();
+
+  const avatarFallback = currentUser?.displayName?.charAt(0)?.toUpperCase()
+    || currentUser?.email?.charAt(0)?.toUpperCase()
+    || 'U';
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
-  // Apply staggered animation to nav items
+
   useEffect(() => {
     if (navRef.current) {
       const navItems = navRef.current.querySelectorAll('.nav-item');
       staggeredAnimation(navItems, 50);
-      
-      // Make sure nav items are visible after animation is applied
+
       setTimeout(() => {
-        navItems.forEach(item => {
+        navItems.forEach((item) => {
           item.style.opacity = 1;
         });
       }, navigation.length * 50 + 100);
     }
   }, []);
-  
-  // Handle mobile menu animation
+
   useEffect(() => {
     if (mobileMenuRef.current && isOpen) {
       const mobileNavItems = mobileMenuRef.current.querySelectorAll('.mobile-nav-item');
       staggeredAnimation(mobileNavItems, 50);
-      
-      // Make mobile nav items visible
+
       setTimeout(() => {
-        mobileNavItems.forEach(item => {
+        mobileNavItems.forEach((item) => {
           item.style.opacity = 1;
           item.style.transform = 'translateX(0)';
         });
@@ -65,58 +65,73 @@ export function Navbar({ lang }) {
     }
   }, [isOpen]);
 
-  // Close user menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
         setShowUserMenu(false);
       }
     };
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const handleLogout = async () => {
+    setIsOpen(false);
     setShowUserMenu(false);
     await logout();
   };
+
+  const renderAvatar = (sizeClass = 'h-full w-full') => (
+    currentUser?.photoURL ? (
+      <img
+        src={currentUser.photoURL}
+        alt={currentUser.displayName || 'User profile'}
+        className={`${sizeClass} object-cover`}
+        referrerPolicy="no-referrer"
+      />
+    ) : (
+      <span className={`${sizeClass} flex items-center justify-center bg-gradient-to-br from-green-500 to-emerald-600 text-sm font-bold text-white`}>
+        {avatarFallback}
+      </span>
+    )
+  );
 
   return (
     <header className={`relative bg-gradient-to-b from-gray-800/70 to-gray-900/70 backdrop-blur-md sticky top-0 z-50 transition-all duration-300 border-b border-gray-700/50 ${
       scrolled ? 'shadow-warm' : ''
     }`}>
-      <MandalaDecoration 
-        className="absolute top-2 right-4 text-primary-800" 
-        size="sm" 
-        opacity="low" 
-      />
-      <MandalaDecoration 
-        className="absolute bottom-2 left-4 text-accent-800" 
-        size="sm" 
+      <MandalaDecoration
+        className="absolute top-2 right-4 text-primary-800"
+        size="sm"
         opacity="low"
       />
-      
+      <MandalaDecoration
+        className="absolute bottom-2 left-4 text-accent-800"
+        size="sm"
+        opacity="low"
+      />
+
       <nav className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
-            <Link 
-              href={`/${lang}`} 
+            <Link
+              href={`/${lang}`}
               className="text-2xl font-display font-bold text-gradient-indian hover:scale-105 transition-transform duration-300 flex items-center group"
             >
               <div className="mr-3 h-10 w-10 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-primary-100 to-accent-100 p-1 shadow-soft group-hover:shadow-glow transition-all duration-300">
-                <Image 
-                  src="/images/hero/logo.png" 
-                  alt="Ayur Shuddhi Wellness Logo" 
-                  width={40} 
-                  height={40} 
+                <Image
+                  src="/images/hero/logo.png"
+                  alt="Ayur Shuddhi Wellness Logo"
+                  width={40}
+                  height={40}
                 />
               </div>
               <span className="hidden sm:inline">Ayur Shuddhi Wellness</span>
               <span className="sm:hidden">ASW</span>
             </Link>
           </div>
-          
-          {/* Desktop navigation */}
+
           <div className="hidden md:flex items-center space-x-1" ref={navRef}>
             <div className="flex items-center">
               {navigation.map((link, index) => (
@@ -135,21 +150,21 @@ export function Navbar({ lang }) {
                   href="/book"
                   className="btn btn-primary hover-scale"
                 >
-                  📅 Book Consultation
+                  Book Consultation
                 </Link>
+
                 {currentUser ? (
                   <div className="relative" ref={userMenuRef}>
                     <button
+                      type="button"
                       onClick={() => setShowUserMenu(!showUserMenu)}
-                      className="flex items-center gap-2 px-3 py-2 rounded-xl text-gray-200 hover:bg-gray-700/50 transition-all duration-300"
+                      className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-gray-600/70 bg-gray-800 hover:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-400/50 transition-all duration-300"
+                      aria-label="Open user menu"
+                      aria-expanded={showUserMenu}
                     >
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white text-sm font-bold">
-                        {currentUser.displayName?.charAt(0)?.toUpperCase() || currentUser.email?.charAt(0)?.toUpperCase() || 'U'}
-                      </div>
-                      <svg className={`w-4 h-4 text-gray-400 transition-transform ${showUserMenu ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
+                      {renderAvatar()}
                     </button>
+
                     {showUserMenu && (
                       <div className="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-xl shadow-2xl py-2 z-50">
                         <div className="px-4 py-2 border-b border-gray-700">
@@ -160,33 +175,40 @@ export function Navbar({ lang }) {
                           <Link
                             href="/admin"
                             onClick={() => setShowUserMenu(false)}
-                            className="block w-full text-left px-4 py-2 text-sm text-green-400 hover:bg-gray-700/50 transition-colors"
+                            className="block w-full text-left px-4 py-2 text-sm text-gray-200 hover:bg-gray-700/50 transition-colors"
                           >
-                            🛡️ Admin Dashboard
+                            Admin Panel
                           </Link>
                         )}
+                        <Link
+                          href={`/${lang}/profile`}
+                          onClick={() => setShowUserMenu(false)}
+                          className="block w-full text-left px-4 py-2 text-sm text-gray-200 hover:bg-gray-700/50 transition-colors"
+                        >
+                          My Profile
+                        </Link>
                         <button
+                          type="button"
                           onClick={handleLogout}
                           className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700/50 transition-colors"
                         >
-                          🚪 Sign Out
+                          Logout
                         </button>
                       </div>
                     )}
                   </div>
                 ) : (
                   <Link
-                    href="/login"
+                    href={`/${lang}/login`}
                     className="px-4 py-2 text-sm font-semibold text-green-400 border border-green-500/30 rounded-xl hover:bg-green-500/10 transition-all duration-300"
                   >
-                    Login
+                    Sign In / Sign Up
                   </Link>
                 )}
               </div>
             </div>
           </div>
-          
-          {/* Mobile menu button */}
+
           <div className="md:hidden flex items-center space-x-3">
             <button
               type="button"
@@ -208,9 +230,8 @@ export function Navbar({ lang }) {
             </button>
           </div>
         </div>
-        
-        {/* Mobile menu with animation */}
-        <div 
+
+        <div
           className={`md:hidden overflow-hidden transition-all duration-500 ease-smooth ${
             isOpen ? 'max-h-[80vh] opacity-100' : 'max-h-0 opacity-0'
           }`}
@@ -236,36 +257,49 @@ export function Navbar({ lang }) {
                 onClick={() => setIsOpen(false)}
                 style={{ animationDelay: `${navigation.length * 50}ms`, opacity: isOpen ? 1 : 0 }}
               >
-                📅 Book Consultation
+                Book Consultation
               </Link>
+
               {currentUser ? (
                 <>
                   {isAdmin && (
                     <Link
                       href="/admin"
-                      className="mobile-nav-item block w-full px-4 py-3 rounded-xl text-center text-sm font-semibold text-green-400 border border-green-500/30 hover:bg-green-500/10 transition-all"
+                      className="mobile-nav-item block w-full px-4 py-3 rounded-xl text-center text-sm font-semibold text-gray-200 border border-gray-600/50 hover:bg-gray-700/50 transition-all"
                       onClick={() => setIsOpen(false)}
                       style={{ animationDelay: `${(navigation.length + 1) * 50}ms`, opacity: isOpen ? 1 : 0 }}
                     >
-                      🛡️ Admin Dashboard
+                      Admin Panel
                     </Link>
                   )}
-                  <button
-                    onClick={() => { setIsOpen(false); handleLogout(); }}
-                    className="mobile-nav-item block w-full px-4 py-3 rounded-xl text-center text-sm font-semibold text-red-400 border border-red-500/30 hover:bg-red-500/10 transition-all"
+                  <Link
+                    href={`/${lang}/profile`}
+                    className="mobile-nav-item flex w-full items-center justify-center gap-3 px-4 py-3 rounded-xl text-center text-sm font-semibold text-gray-200 border border-gray-600/50 hover:bg-gray-700/50 transition-all"
+                    onClick={() => setIsOpen(false)}
                     style={{ animationDelay: `${(navigation.length + (isAdmin ? 2 : 1)) * 50}ms`, opacity: isOpen ? 1 : 0 }}
                   >
-                    🚪 Sign Out ({currentUser.displayName || currentUser.email?.split('@')[0]})
+                    <span className="h-7 w-7 overflow-hidden rounded-full bg-gradient-to-br from-green-500 to-emerald-600">
+                      {renderAvatar('h-full w-full')}
+                    </span>
+                    My Profile
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="mobile-nav-item block w-full px-4 py-3 rounded-xl text-center text-sm font-semibold text-red-400 border border-red-500/30 hover:bg-red-500/10 transition-all"
+                    style={{ animationDelay: `${(navigation.length + 2) * 50}ms`, opacity: isOpen ? 1 : 0 }}
+                  >
+                    Logout
                   </button>
                 </>
               ) : (
                 <Link
-                  href="/login"
+                  href={`/${lang}/login`}
                   className="mobile-nav-item block w-full px-4 py-3 rounded-xl text-center text-sm font-semibold text-green-400 border border-green-500/30 hover:bg-green-500/10 transition-all"
                   onClick={() => setIsOpen(false)}
                   style={{ animationDelay: `${(navigation.length + 1) * 50}ms`, opacity: isOpen ? 1 : 0 }}
                 >
-                  Login / Sign Up
+                  Sign In / Sign Up
                 </Link>
               )}
             </div>
@@ -273,5 +307,5 @@ export function Navbar({ lang }) {
         </div>
       </nav>
     </header>
-  )
+  );
 }

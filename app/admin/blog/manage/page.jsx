@@ -1,25 +1,22 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import AdminProtection from '../../components/AdminProtection';
+import { useAuth } from '../../../../components/AuthProvider';
 import { db } from '../../../../lib/firebaseClient';
 import { collection, getDocs, query, orderBy, doc, deleteDoc } from 'firebase/firestore';
 
 function ManageBlogsPageContent() {
   const router = useRouter();
+  const { loading: authLoading, isAdmin } = useAuth();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(null);
 
-  // Fetch posts on mount
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  const fetchPosts = async () => {
+  const fetchPosts = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -36,7 +33,19 @@ function ManageBlogsPageContent() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (authLoading) return;
+
+    if (!isAdmin) {
+      setLoading(false);
+      setPosts([]);
+      return;
+    }
+
+    fetchPosts();
+  }, [authLoading, fetchPosts, isAdmin]);
 
   const handleDelete = async (postId) => {
     if (!confirm('Are you sure you want to delete this blog post? This action cannot be undone.')) {

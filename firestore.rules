@@ -1,0 +1,52 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 1. SECURE USERS COLLECTION (Prevents Privilege Escalation)
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+
+      // Force new accounts to be 'user' role
+      allow create: if request.auth != null
+        && request.auth.uid == userId
+        && request.resource.data.role == 'user';
+
+      // Allow updating phone/name, but block changing the role field
+      allow update: if request.auth != null
+        && request.auth.uid == userId
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'phone',
+          'age',
+          'healthConditions',
+          'displayName',
+          'name',
+          'photoURL'
+        ]);
+
+      // Allow users to delete only their own profile document
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // 2. BOOKINGS
+    match /bookings/{bookingId} {
+      allow create: if request.auth != null
+        && request.resource.data.userId == request.auth.uid;
+      allow read: if request.auth != null && (resource.data.userId == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+      allow update, delete: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'; 
+    }
+
+    // 3. BLOGS
+    match /blogs/{blogId} {
+      allow read: if true; 
+      allow create: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'; 
+      allow update, delete: if request.auth != null && (resource.data.authorId == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+    
+    // 4. HOMEPAGE MESSAGES
+    match /homepage_messages/{messageId} {
+      allow read: if true;
+      allow write, delete: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+  }
+}

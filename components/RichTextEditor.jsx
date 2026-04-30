@@ -9,8 +9,8 @@ import Placeholder from '@tiptap/extension-placeholder';
 import { useCallback, useRef, useState } from 'react';
 
 // ─── Cloudinary Config ───
-const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dwudrtj1u/image/upload';
-const CLOUDINARY_UPLOAD_PRESET = 'ayurshuddhi_blog';
+const CLOUDINARY_UPLOAD_URL = process.env.NEXT_PUBLIC_CLOUDINARY_URL;
+const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET;
 
 // ─── Bubble Menu Button ───
 function BubbleButton({ onClick, isActive, title, children }) {
@@ -74,6 +74,10 @@ export default function RichTextEditor({ content, onChange }) {
 
   // ─── Cloudinary image upload ───
   const uploadToCloudinary = useCallback(async (file) => {
+    if (!CLOUDINARY_UPLOAD_URL || !CLOUDINARY_UPLOAD_PRESET) {
+      throw new Error('Cloudinary upload config is missing');
+    }
+
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);

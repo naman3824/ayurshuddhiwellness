@@ -82,6 +82,40 @@ const timeSlots = [
   '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM'
 ];
 
+// ── Step Progress Bar ──
+const StepIndicator = ({ currentStep }) => (
+  <div className="flex items-center justify-center mb-8">
+    {['Details', 'Review & Pay', 'Confirmed'].map((label, i) => {
+      const stepNum = i + 1;
+      const isActive = currentStep === stepNum;
+      const isCompleted = currentStep > stepNum;
+      return (
+        <div key={label} className="flex items-center">
+          <div className="flex flex-col items-center">
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-all duration-300 ${
+              isCompleted
+                ? 'bg-green-500 border-green-500 text-white'
+                : isActive
+                  ? 'bg-green-600/20 border-green-500 text-green-400'
+                  : 'bg-gray-700 border-gray-600 text-gray-400'
+            }`}>
+              {isCompleted ? '✓' : stepNum}
+            </div>
+            <span className={`mt-1.5 text-xs font-medium ${
+              isActive || isCompleted ? 'text-green-400' : 'text-gray-500'
+            }`}>{label}</span>
+          </div>
+          {i < 2 && (
+            <div className={`w-12 sm:w-20 h-0.5 mx-2 mb-5 transition-all duration-300 ${
+              isCompleted ? 'bg-green-500' : 'bg-gray-600'
+            }`} />
+          )}
+        </div>
+      );
+    })}
+  </div>
+);
+
 export function UnifiedBookingForm({ preSelectedService }) {
   const { currentUser } = useAuth();
 
@@ -218,6 +252,11 @@ export function UnifiedBookingForm({ preSelectedService }) {
     setIsProcessing(true);
     setBookingError('');
     try {
+      if (!currentUser) {
+        setBookingError('Please sign in before completing your booking.');
+        return;
+      }
+
       // ── Backend re-validation via API to prevent race conditions ──
       const durationMins = parseDuration(selectedService?.duration);
       const newStart = timeToMinutes(formData.time);
@@ -261,8 +300,8 @@ export function UnifiedBookingForm({ preSelectedService }) {
 
       // Save booking to Firestore
       try {
-        const docRef = await addDoc(collection(db, 'bookings'), {
-          userId: currentUser?.uid || '',
+        await addDoc(collection(db, 'bookings'), {
+          userId: currentUser.uid,
           serviceName: formData.service,
           appointmentDate: formData.date,
           appointmentTime: formData.time,
@@ -300,8 +339,13 @@ export function UnifiedBookingForm({ preSelectedService }) {
             .catch(() => { /* Email send failed silently */ });
         }
 
-      } catch {
-        // Continue — show confirmation even if Firestore fails
+      } catch (error) {
+        setBookingError(
+          error?.code === 'permission-denied'
+            ? 'We could not save your booking because your session is not authorized. Please sign in again and retry.'
+            : 'We could not save your booking. Please try again or contact support.'
+        );
+        return;
       }
 
       // Move to confirmation step
@@ -315,45 +359,12 @@ export function UnifiedBookingForm({ preSelectedService }) {
       setCurrentStep(3);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {
-      // Payment processing error handled silently
+      setBookingError('We could not complete your booking. Please try again.');
     } finally {
       setIsProcessing(false);
     }
   };
 
-  // ── Step Progress Bar ──
-  const StepIndicator = () => (
-    <div className="flex items-center justify-center mb-8">
-      {['Details', 'Review & Pay', 'Confirmed'].map((label, i) => {
-        const stepNum = i + 1;
-        const isActive = currentStep === stepNum;
-        const isCompleted = currentStep > stepNum;
-        return (
-          <div key={label} className="flex items-center">
-            <div className="flex flex-col items-center">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-all duration-300 ${
-                isCompleted
-                  ? 'bg-green-500 border-green-500 text-white'
-                  : isActive
-                    ? 'bg-green-600/20 border-green-500 text-green-400'
-                    : 'bg-gray-700 border-gray-600 text-gray-400'
-              }`}>
-                {isCompleted ? '✓' : stepNum}
-              </div>
-              <span className={`mt-1.5 text-xs font-medium ${
-                isActive || isCompleted ? 'text-green-400' : 'text-gray-500'
-              }`}>{label}</span>
-            </div>
-            {i < 2 && (
-              <div className={`w-12 sm:w-20 h-0.5 mx-2 mb-5 transition-all duration-300 ${
-                isCompleted ? 'bg-green-500' : 'bg-gray-600'
-              }`} />
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
 
   // ══════════════════════════════════════════════
   // STEP 1: Booking Form
@@ -589,6 +600,12 @@ export function UnifiedBookingForm({ preSelectedService }) {
               )}
             </button>
 
+            {bookingError && (
+              <p className="mb-4 rounded-xl border border-red-500/30 bg-red-950/50 px-4 py-3 text-sm text-red-200">
+                {bookingError}
+              </p>
+            )}
+
             <p className="text-xs text-gray-400 text-center">
               This is a placeholder payment button. No actual payment will be processed.
             </p>
@@ -682,7 +699,7 @@ export function UnifiedBookingForm({ preSelectedService }) {
         </div>
 
         {/* Step Indicator */}
-        <StepIndicator />
+        <StepIndicator currentStep={currentStep} />
 
         {/* Step Content */}
         {currentStep === 1 && renderStep1()}

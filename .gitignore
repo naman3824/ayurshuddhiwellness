@@ -47,3 +47,6 @@ next-env.d.ts
 # markdown docs (exclude README)
 *.md
 !README.md
+
+# Editor directories and files
+/.vscode
