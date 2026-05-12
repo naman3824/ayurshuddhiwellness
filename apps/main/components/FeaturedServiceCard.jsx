@@ -34,8 +34,7 @@ export default function FeaturedServiceCard({
   iconName, 
   href, 
   learnMoreHref,
-  hideBookNow = false,
-  lang = 'en-IN' 
+  hideBookNow = false
 }) {
   // Get the icon component based on the icon name
   const IconComponent = iconName && icons[iconName] ? icons[iconName] : null;
@@ -92,7 +91,7 @@ export default function FeaturedServiceCard({
             </Link>
           )}
           <Link 
-            href={learnMoreHref || `/${lang}/${href}`}
+            href={learnMoreHref || `/${href}`}
             className={`${hideBookNow ? 'w-full' : 'flex-1'} btn btn-secondary text-center py-2.5 px-4 text-sm font-semibold rounded-xl hover-scale focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 group/link`}
             aria-label={`Learn more about ${title}`}
           >

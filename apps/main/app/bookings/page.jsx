@@ -1,15 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useAuth } from '../../../components/AuthProvider';
+import { useAuth } from '../../components/AuthProvider';
 
 export default function MyBookingsPage() {
   const { currentUser, loading } = useAuth();
-  const params = useParams();
   const router = useRouter();
-  const lang = params?.lang || 'en-IN';
+
 
   const [bookings, setBookings] = useState([]);
   const [fetching, setFetching] = useState(true);
@@ -18,9 +17,9 @@ export default function MyBookingsPage() {
 
   useEffect(() => {
     if (!loading && !currentUser) {
-      router.replace(`/${lang}/login`);
+      router.replace(`/login`);
     }
-  }, [currentUser, loading, router, lang]);
+  }, [currentUser, loading, router]);
 
   useEffect(() => {
     if (!currentUser) return;
@@ -243,7 +242,7 @@ export default function MyBookingsPage() {
         {/* Back to Profile */}
         <div className="mt-8 text-center">
           <Link
-            href={`/${lang}/profile`}
+            href={`/profile`}
             className="inline-flex items-center rounded-xl border border-gray-600/60 px-4 py-2 text-sm font-semibold text-gray-300 transition-colors hover:bg-gray-700/50 hover:text-white"
           >
             ← Back to Profile

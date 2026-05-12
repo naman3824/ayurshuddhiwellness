@@ -81,7 +81,7 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  const loginWithGoogle = async (lang = 'en-IN') => {
+  const loginWithGoogle = async () => {
     if (!auth) {
       throw new Error('Firebase Auth is not configured.');
     }
@@ -98,7 +98,7 @@ export function AuthProvider({ children }) {
     const needsOnboarding = !userDoc.exists() || !hasRequiredProfileFields(existingUser);
 
     await syncUserProfile(result.user, existingUser, userDoc.exists());
-    router.push(`/${lang}/${needsOnboarding ? 'onboarding' : 'profile'}`);
+    router.push(`/${needsOnboarding ? 'onboarding' : 'profile'}`);
 
     return { result, needsOnboarding };
   };

@@ -47,9 +47,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# markdown docs (exclude README)
-*.md
-!README.md
-
+# project-specific markdown
+walkthrough.md
+EMAILJS_PRODUCTION_SETUP.md
+monorepo_migration_summary.md
+RESPONSIVE_BACKGROUND_GUIDE.md
 # Editor directories and files
 /.vscode

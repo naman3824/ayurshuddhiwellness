@@ -3,6 +3,8 @@ import './globals.css'
 import { ThemeProvider } from '../components/ThemeProvider'
 import { AnimationProvider } from '../components/AnimationProvider'
 import { AuthProvider } from '../components/AuthProvider'
+import { Navbar } from '../components/Navbar'
+import { Footer } from '../components/Footer'
 
 const SITE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.ayurshuddhiwellness.com';
 
@@ -72,13 +74,17 @@ export const themeColor = [
 // This is a root layout that wraps all pages
 export default function RootLayout({ children }) {
   return (
-    <html lang="en-IN" suppressHydrationWarning className="scroll-smooth">
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body className={`${notoSans.variable} ${poppins.variable} font-sans bg-gray-900 text-gray-100 antialiased`}>
         <AuthProvider>
           <ThemeProvider>
             <AnimationProvider>
               <div className="flex flex-col min-h-screen">
-                {children}
+                <Navbar />
+                <main className="flex-grow">
+                  {children}
+                </main>
+                <Footer />
               </div>
             </AnimationProvider>
           </ThemeProvider>

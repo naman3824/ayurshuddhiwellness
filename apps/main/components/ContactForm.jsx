@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import emailjs from '@emailjs/browser';
 
-export default function ContactForm({ dict }) {
+export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -134,7 +134,7 @@ export default function ContactForm({ dict }) {
       <div className="space-y-6">
         <div>
           <label htmlFor="name" className="block text-sm font-semibold leading-6 text-white">
-            {dict.contact.name}
+            Full Name
           </label>
           <div className="mt-2.5">
             <input
@@ -153,7 +153,7 @@ export default function ContactForm({ dict }) {
         </div>
         <div>
           <label htmlFor="email" className="block text-sm font-semibold leading-6 text-white">
-            {dict.contact.email}
+            Email Address
           </label>
           <div className="mt-2.5">
             <input
@@ -172,7 +172,7 @@ export default function ContactForm({ dict }) {
         </div>
         <div>
           <label htmlFor="message" className="block text-sm font-semibold leading-6 text-white">
-            {dict.contact.message}
+            Message
           </label>
           <div className="mt-2.5">
             <textarea
@@ -203,7 +203,7 @@ export default function ContactForm({ dict }) {
                 Sending...
               </>
             ) : (
-              dict.contact.submit
+              'Send Message'
             )}
           </button>
         </div>
