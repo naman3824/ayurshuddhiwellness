@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { toUrlSlug } from '../../../../utils/urlUtils';
+import { toUrlSlug } from '../../../utils/urlUtils';
 
 // Function to render markdown-like formatting
 const renderFormattedText = (text) => {
@@ -21,16 +21,14 @@ const renderFormattedText = (text) => {
   ));
 };
 
-export function ServiceDetailClient({ service, params }) {
-  const { lang } = params;
-  
+export function ServiceDetailClient({ service }) {
   if (!service) {
     return (
       <div className="container mx-auto px-4 py-16">
         <div className="text-center">
           <h1 className="text-3xl font-bold mb-6">Service Not Found</h1>
           <p className="mb-8">The service you&apos;re looking for doesn&apos;t exist or has been moved.</p>
-          <Link href={`/${lang}/services`} className="btn-primary py-2 px-4 rounded-md">
+          <Link href={`/services`} className="btn-primary py-2 px-4 rounded-md">
             Back to Services
           </Link>
         </div>
@@ -76,7 +74,7 @@ export function ServiceDetailClient({ service, params }) {
             </div>
             
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link href={`/${lang}/services`} className="btn-secondary py-2 px-4 rounded-md inline-flex items-center gap-2">
+              <Link href={`/services`} className="btn-secondary py-2 px-4 rounded-md inline-flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
                 </svg>

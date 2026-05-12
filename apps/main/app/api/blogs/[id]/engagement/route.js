@@ -6,6 +6,11 @@ import { FieldValue } from 'firebase-admin/firestore';
 export async function GET(request, { params }) {
   try {
     const { id } = await params;
+
+    if (!id || typeof id !== 'string' || id.length > 128 || /[/]/.test(id)) {
+      return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
+    }
+
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId') || '';
 
@@ -36,6 +41,10 @@ export async function GET(request, { params }) {
 export async function POST(request, { params }) {
   try {
     const { id } = await params;
+
+    if (!id || typeof id !== 'string' || id.length > 128 || /[/]/.test(id)) {
+      return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
+    }
 
     // ── Verify Firebase Auth token ──
     const authHeader = request.headers.get('Authorization');

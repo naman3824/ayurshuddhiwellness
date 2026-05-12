@@ -7,7 +7,7 @@ import Image from 'next/image';
  * Component to handle different image formats including HEIC
  * For HEIC images, it will display a fallback message if the browser doesn't support HEIC
  */
-export default function GalleryImage({ src, alt, fill = false, onLoadingComplete, ...props }) {
+export default function GalleryImage({ src, alt, fill = false, onLoadingComplete: onLoadCallback, ...props }) {
   const [imgSrc, setImgSrc] = useState(src);
   const [isHeic, setIsHeic] = useState(false);
   const [error, setError] = useState(false);
@@ -26,18 +26,18 @@ export default function GalleryImage({ src, alt, fill = false, onLoadingComplete
       setError(true);
     }
     
-    // Call onLoadingComplete if provided
-    if (onLoadingComplete) {
-      onLoadingComplete();
+    // Call onLoad callback if provided
+    if (onLoadCallback) {
+      onLoadCallback();
     }
   };
   
   const handleLoad = () => {
     setIsLoaded(true);
     
-    // Call onLoadingComplete if provided
-    if (onLoadingComplete) {
-      onLoadingComplete();
+    // Call onLoad callback if provided
+    if (onLoadCallback) {
+      onLoadCallback();
     }
   };
 
@@ -60,7 +60,7 @@ export default function GalleryImage({ src, alt, fill = false, onLoadingComplete
         alt={alt}
         fill
         onError={handleError}
-        onLoadingComplete={handleLoad}
+        onLoad={handleLoad}
         {...props}
       />
     );
@@ -71,7 +71,7 @@ export default function GalleryImage({ src, alt, fill = false, onLoadingComplete
       src={imgSrc}
       alt={alt}
       onError={handleError}
-      onLoadingComplete={handleLoad}
+      onLoad={handleLoad}
       {...props}
     />
   );

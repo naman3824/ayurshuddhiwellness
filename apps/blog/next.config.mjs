@@ -1,3 +1,13 @@
+import createMDX from '@next/mdx';
+
 /** @type {import('next').NextConfig} */
-const config = {};
-export default config;
+const nextConfig = {
+  pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  experimental: {
+    mdxRs: true,
+  },
+};
+
+const withMDX = createMDX({});
+
+export default withMDX(nextConfig);

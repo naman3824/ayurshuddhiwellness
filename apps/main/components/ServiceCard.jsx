@@ -95,7 +95,7 @@ export default function ServiceCard({ title, description, detailedDescription, i
   };
 
   // Generate the service detail URL
-  const serviceDetailUrl = `/${params?.lang || 'en-IN'}/services/${toUrlSlug(title)}`;
+  const serviceDetailUrl = `/services/${toUrlSlug(title)}`;
 
   return (
     <div 

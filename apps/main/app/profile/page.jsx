@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { deleteUser } from 'firebase/auth';
 import { collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
-import { useAuth } from '../../../components/AuthProvider';
-import { db } from '../../../lib/firebaseClient';
+import { useAuth } from '../../components/AuthProvider';
+import { db } from '../../lib/firebaseClient';
 
 const RECENT_LOGIN_WINDOW_MS = 5 * 60 * 1000;
 const RECENT_LOGIN_REQUIRED_MESSAGE =
@@ -39,8 +39,7 @@ export default function ProfilePage() {
   const [deleteError, setDeleteError] = useState('');
   
   const router = useRouter();
-  const params = useParams();
-  const lang = params?.lang || 'en-IN';
+
 
   useEffect(() => {
     if (!loading && !currentUser) {
@@ -62,7 +61,7 @@ export default function ProfilePage() {
         const userData = userDoc.exists() ? userDoc.data() : null;
 
         if (!hasRequiredProfileFields(userData)) {
-          router.replace(`/${lang}/onboarding`);
+          router.replace(`/onboarding`);
           return;
         }
 
@@ -81,7 +80,7 @@ export default function ProfilePage() {
     }
 
     fetchProfile();
-  }, [currentUser, lang, router]);
+  }, [currentUser, router]);
 
   useEffect(() => {
     async function fetchBookings() {
@@ -316,7 +315,7 @@ export default function ProfilePage() {
                     <div className="rounded-xl border border-gray-700/50 bg-gray-800/30 py-12 text-center">
                       <p className="text-gray-400">You have no upcoming bookings.</p>
                       <Link
-                        href={`/${lang}/services`}
+                        href={`/services`}
                         className="mt-4 inline-block rounded-xl border border-green-500/30 bg-green-500/10 px-6 py-2 text-sm font-semibold text-green-400 transition-all hover:bg-green-500/20"
                       >
                         Explore Services
@@ -342,7 +341,7 @@ export default function ProfilePage() {
                           </div>
                           <div className="flex shrink-0 gap-3 sm:flex-col sm:items-end sm:gap-2">
                             <Link
-                              href={`/${lang}/book?editId=${booking.id}`}
+                              href={`/book?editId=${booking.id}`}
                               className="flex-1 rounded-lg border border-gray-500/40 px-4 py-2 text-center text-sm font-semibold text-gray-300 transition-all hover:bg-gray-700/50 hover:text-white sm:flex-none"
                             >
                               Modify

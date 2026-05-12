@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { toUrlSlug } from '../../../../utils/urlUtils';
+import { toUrlSlug } from '../../../utils/urlUtils';
 import { ServiceDetailClient } from './service-detail-client';
 
 // Import services data from the services page
@@ -76,31 +76,13 @@ const allServices = [
   },
 ];
 
-// Generate static params for all possible service pages
-export async function generateStaticParams() {
-  // Get all supported languages
-  const languages = ['en', 'en-IN', 'hi'];
-  
-  // Generate params for all combinations of language and service
-  const params = [];
-  
-  for (const lang of languages) {
-    for (const service of allServices) {
-      params.push({
-        lang,
-        serviceName: toUrlSlug(service.name),
-      });
-    }
-  }
-  
-  return params;
-}
+// No static params needed for root structure
 
-export default async function ServiceDetailPage(props) {
-  const params = await props.params;
+export default async function ServiceDetailPage({ params }) {
+  const { serviceName } = await params;
   // Find the service that matches the URL slug
-  const service = allServices.find(s => toUrlSlug(s.name) === params.serviceName);
+  const service = allServices.find(s => toUrlSlug(s.name) === serviceName);
 
   // Use the client component to render the service detail
-  return <ServiceDetailClient service={service} params={params} />;
+  return <ServiceDetailClient service={service} />;
 }

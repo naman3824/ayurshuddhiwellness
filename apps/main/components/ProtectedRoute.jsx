@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useRouter, usePathname, useParams } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { doc, getDoc } from 'firebase/firestore';
 import { useAuth } from './AuthProvider';
 import { db } from '../lib/firebaseClient';
@@ -15,9 +15,9 @@ export default function ProtectedRoute({ children }) {
   const { currentUser, loading, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const params = useParams();
-  const lang = params?.lang || 'en-IN';
-  const onboardingPath = `/${lang}/onboarding`;
+
+  
+  const onboardingPath = `/onboarding`;
   const isOnboardingRoute = pathname === onboardingPath;
   const [profileCheckLoading, setProfileCheckLoading] = useState(true);
   const [needsOnboarding, setNeedsOnboarding] = useState(false);
@@ -29,9 +29,9 @@ export default function ProtectedRoute({ children }) {
   useEffect(() => {
     if (!loading && !currentUser) {
       // Redirect to login with the intended destination
-      router.push(`/${lang}/login?redirect=${encodeURIComponent(pathname)}`);
+      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
     }
-  }, [currentUser, lang, loading, router, pathname]);
+  }, [currentUser, loading, router, pathname]);
 
   useEffect(() => {
     if (loading) return;
@@ -104,7 +104,7 @@ export default function ProtectedRoute({ children }) {
 
     const handleSignOut = async () => {
       await logout();
-      router.push(`/${lang}/login`);
+      router.push(`/login`);
     };
 
     return (

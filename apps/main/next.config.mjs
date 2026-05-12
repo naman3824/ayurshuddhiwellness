@@ -19,6 +19,17 @@ const config = {
   },
   trailingSlash: true, // Add trailing slashes for cleaner URLs
   
+  // SEO Redirects to remove /en-IN/ from URLs
+  async redirects() {
+    return [
+      {
+        source: '/en-IN/:path*',
+        destination: '/:path*',
+        permanent: true,
+      },
+    ];
+  },
+  
   // Security headers
   async headers() {
     return [

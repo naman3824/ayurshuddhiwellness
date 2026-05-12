@@ -59,9 +59,8 @@ export function middleware(request) {
 
   // ── Rate-limit only /api/* routes ──────────────────────────────────────
   if (pathname.startsWith('/api')) {
-    // Resolve the caller's IP (works on Vercel, Cloudflare, and locally)
-    const forwarded = request.headers.get('x-forwarded-for');
-    const ip = forwarded?.split(',')[0]?.trim() || request.ip || '127.0.0.1';
+    // Resolve the caller's IP (x-real-ip is set by Vercel and cannot be spoofed)
+    const ip = request.headers.get('x-real-ip') || request.ip || '127.0.0.1';
 
     if (isRateLimited(ip)) {
       return NextResponse.json(

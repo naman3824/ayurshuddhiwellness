@@ -1,39 +1,17 @@
 import { Metadata } from 'next/types'
-import { getDictionary } from '@/utils/dictionaries'
 import Link from 'next/link';
-import ContactForm from '../../../components/ContactForm';
+import ContactForm from '../../components/ContactForm';
 
-export async function generateStaticParams() {
-  return [
-    { lang: 'en' },
-    { lang: 'en-IN' },
-    { lang: 'hi' }
-  ]
-}
 
-export async function generateMetadata(props) {
-  const params = await props.params;
 
-  const {
-    lang
-  } = params;
-
-  const dict = await getDictionary(lang)
+export async function generateMetadata() {
   return {
-    title: dict.contact.title,
-    description: dict.contact.description,
+    title: 'Contact Us',
+    description: 'Get in touch with Ayur Shuddhi Wellness',
   }
 }
 
-export default async function ContactPage(props) {
-  const params = await props.params;
-
-  const {
-    lang
-  } = params;
-
-  const dict = await getDictionary(lang)
-
+export default async function ContactPage() {
   return (
     <div 
       className="tree-bg-optimized"
@@ -148,7 +126,7 @@ export default async function ContactPage(props) {
                 </div>
               </div>
 
-              <ContactForm dict={dict} />
+              <ContactForm />
             </div>
             
             {/* Map or additional contact info could go here */}

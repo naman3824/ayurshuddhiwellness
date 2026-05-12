@@ -1,14 +1,8 @@
 import Image from 'next/image'
-import ServiceCard from '../../../components/ServiceCard'
-import { MandalaPattern } from '../../../components/MandalaDecoration'
+import ServiceCard from '../../components/ServiceCard'
+import { MandalaPattern } from '../../components/MandalaDecoration'
 
-export function generateStaticParams() {
-  return [
-    { lang: 'en' },
-    { lang: 'en-IN' },
-    { lang: 'hi' }
-  ]
-}
+
 
 const services = [
   {
@@ -87,7 +81,7 @@ services.forEach(service => {
 
 export default async function ServicesPage(props) {
   const params = await props.params;
-  const { lang } = params;
+  
 
   return (
     <div 
@@ -123,7 +117,7 @@ export default async function ServicesPage(props) {
                 detailedDescription={service.detailedDescription}
                 image={service.image}
                 iconName={service.iconName}
-                href={`/${lang}/${service.href}`}
+                href={`/${service.href}`}
               />
               </div>
             ))}

@@ -7,16 +7,18 @@ import { useState, useEffect, useRef } from 'react';
 import { staggeredAnimation } from '../utils/animations';
 import { useAuth } from './AuthProvider';
 
+const BLOG_URL = process.env.NEXT_PUBLIC_BLOG_URL || 'http://localhost:3001';
+
 const navigation = [
   { name: 'Home', href: '' },
   { name: 'About', href: 'about' },
   { name: 'Services', href: 'services' },
   { name: 'Gallery', href: 'gallery' },
-  { name: 'Blog', href: 'blog' },
+  { name: 'Blog', href: BLOG_URL, external: true },
   { name: 'Contact', href: 'contact' },
 ];
 
-export function Navbar({ lang }) {
+export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -116,7 +118,7 @@ export function Navbar({ lang }) {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link
-              href={`/${lang}`}
+              href={`/`}
               className="text-2xl font-display font-bold text-gradient-indian hover:scale-105 transition-transform duration-300 flex items-center group"
             >
               <div className="mr-3 h-10 w-10 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-primary-100 to-accent-100 p-1 shadow-soft group-hover:shadow-glow transition-all duration-300">
@@ -134,17 +136,23 @@ export function Navbar({ lang }) {
 
           <div className="hidden md:flex items-center space-x-1" ref={navRef}>
             <div className="flex items-center">
-              {navigation.map((link, index) => (
-                <Link
-                  key={link.name}
-                  href={link.href ? `/${lang}/${link.href}` : `/${lang}`}
-                  className="nav-item relative px-4 py-2 text-base font-semibold text-gray-200 hover:text-primary-400 transition-all duration-300 group animate-fade-in rounded-xl hover:bg-gray-700/50"
-                  style={{ animationDelay: `${index * 100}ms`, opacity: 1 }}
-                >
-                  {link.name}
-                  <span className="absolute bottom-1 left-0 w-0 h-0.5 bg-gradient-saffron group-hover:w-full transition-all duration-500 rounded-full"></span>
-                </Link>
-              ))}
+              {navigation.map((link, index) => {
+                const NavTag = link.external ? 'a' : Link;
+                const navProps = link.external
+                  ? { href: link.href, target: '_blank', rel: 'noopener noreferrer' }
+                  : { href: link.href ? `/${link.href}` : `/` };
+                return (
+                  <NavTag
+                    key={link.name}
+                    {...navProps}
+                    className="nav-item relative px-4 py-2 text-base font-semibold text-gray-200 hover:text-primary-400 transition-all duration-300 group animate-fade-in rounded-xl hover:bg-gray-700/50"
+                    style={{ animationDelay: `${index * 100}ms`, opacity: 1 }}
+                  >
+                    {link.name}
+                    <span className="absolute bottom-1 left-0 w-0 h-0.5 bg-gradient-saffron group-hover:w-full transition-all duration-500 rounded-full"></span>
+                  </NavTag>
+                );
+              })}
               <div className="ml-6 flex items-center gap-3">
                 <Link
                   href="/book"
@@ -181,7 +189,7 @@ export function Navbar({ lang }) {
                           </Link>
                         )}
                         <Link
-                          href={`/${lang}/profile`}
+                          href={`/profile`}
                           onClick={() => setShowUserMenu(false)}
                           className="block w-full text-left px-4 py-2 text-sm text-gray-200 hover:bg-gray-700/50 transition-colors"
                         >
@@ -199,7 +207,7 @@ export function Navbar({ lang }) {
                   </div>
                 ) : (
                   <Link
-                    href={`/${lang}/login`}
+                    href={`/login`}
                     className="px-4 py-2 text-sm font-semibold text-green-400 border border-green-500/30 rounded-xl hover:bg-green-500/10 transition-all duration-300"
                   >
                     Sign In / Sign Up
@@ -239,17 +247,23 @@ export function Navbar({ lang }) {
           ref={mobileMenuRef}
         >
           <div className="px-4 pt-4 pb-6 space-y-2 sm:px-6 border-t border-gray-600 bg-gradient-to-b from-gray-800/70 to-gray-900/70">
-            {navigation.map((link, index) => (
-              <Link
-                key={link.name}
-                href={link.href ? `/${lang}/${link.href}` : `/${lang}`}
-                className="mobile-nav-item block px-4 py-3 rounded-xl text-base font-semibold text-gray-200 hover:bg-gray-700 hover:text-primary-400 transition-all duration-300 hover-lift"
-                onClick={() => setIsOpen(false)}
-                style={{ animationDelay: `${index * 50}ms`, opacity: isOpen ? 1 : 0 }}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navigation.map((link, index) => {
+              const NavTag = link.external ? 'a' : Link;
+              const navProps = link.external
+                ? { href: link.href, target: '_blank', rel: 'noopener noreferrer' }
+                : { href: link.href ? `/${link.href}` : `/` };
+              return (
+                <NavTag
+                  key={link.name}
+                  {...navProps}
+                  className="mobile-nav-item block px-4 py-3 rounded-xl text-base font-semibold text-gray-200 hover:bg-gray-700 hover:text-primary-400 transition-all duration-300 hover-lift"
+                  onClick={() => setIsOpen(false)}
+                  style={{ animationDelay: `${index * 50}ms`, opacity: isOpen ? 1 : 0 }}
+                >
+                  {link.name}
+                </NavTag>
+              );
+            })}
             <div className="mt-4 px-2 space-y-2">
               <Link
                 href="/book"
@@ -273,7 +287,7 @@ export function Navbar({ lang }) {
                     </Link>
                   )}
                   <Link
-                    href={`/${lang}/profile`}
+                    href={`/profile`}
                     className="mobile-nav-item flex w-full items-center justify-center gap-3 px-4 py-3 rounded-xl text-center text-sm font-semibold text-gray-200 border border-gray-600/50 hover:bg-gray-700/50 transition-all"
                     onClick={() => setIsOpen(false)}
                     style={{ animationDelay: `${(navigation.length + (isAdmin ? 2 : 1)) * 50}ms`, opacity: isOpen ? 1 : 0 }}
@@ -294,7 +308,7 @@ export function Navbar({ lang }) {
                 </>
               ) : (
                 <Link
-                  href={`/${lang}/login`}
+                  href={`/login`}
                   className="mobile-nav-item block w-full px-4 py-3 rounded-xl text-center text-sm font-semibold text-green-400 border border-green-500/30 hover:bg-green-500/10 transition-all"
                   onClick={() => setIsOpen(false)}
                   style={{ animationDelay: `${(navigation.length + 1) * 50}ms`, opacity: isOpen ? 1 : 0 }}

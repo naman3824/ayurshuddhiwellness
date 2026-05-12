@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { MandalaDecoration, MandalaPattern } from './MandalaDecoration'
 
-export function Footer({ lang }) {
+export function Footer() {
   return (
     <footer className="bg-gradient-to-b from-gray-800/70 to-gray-900/70 transition-colors border-t border-gray-700/50">
       <div className="relative overflow-hidden">
@@ -50,7 +50,7 @@ export function Footer({ lang }) {
               <h3 className="text-xl font-display font-semibold text-primary-400 mb-6">Quick Links</h3>
               <ul className="space-y-4">
                 <li>
-                  <Link href={`/${lang}/about`} className="text-base text-gray-300 hover:text-primary-400 transition-all duration-300 flex items-center group hover-lift">
+                  <Link href={`/about`} className="text-base text-gray-300 hover:text-primary-400 transition-all duration-300 flex items-center group hover-lift">
                     <span className="mr-3 h-8 w-8 rounded-xl bg-primary-900/30 flex items-center justify-center group-hover:bg-primary-800/50 transition-all duration-300 shadow-soft group-hover:shadow-glow">
                       <svg className="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
@@ -60,7 +60,7 @@ export function Footer({ lang }) {
                   </Link>
                 </li>
                 <li>
-                  <Link href={`/${lang}/services`} className="text-base text-gray-300 hover:text-primary-400 transition-all duration-300 flex items-center group hover-lift">
+                  <Link href={`/services`} className="text-base text-gray-300 hover:text-primary-400 transition-all duration-300 flex items-center group hover-lift">
                     <span className="mr-3 h-8 w-8 rounded-xl bg-accent-900/30 flex items-center justify-center group-hover:bg-accent-800/50 transition-all duration-300 shadow-soft group-hover:shadow-glow-teal">
                       <svg className="w-4 h-4 text-accent-400" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
@@ -70,7 +70,7 @@ export function Footer({ lang }) {
                   </Link>
                 </li>
                 <li>
-                  <Link href={`/${lang}/contact`} className="text-base text-gray-300 hover:text-primary-400 transition-all duration-300 flex items-center group hover-lift">
+                  <Link href={`/contact`} className="text-base text-gray-300 hover:text-primary-400 transition-all duration-300 flex items-center group hover-lift">
                     <span className="mr-3 h-8 w-8 rounded-xl bg-secondary-900/30 flex items-center justify-center group-hover:bg-secondary-800/50 transition-all duration-300 shadow-soft group-hover:shadow-glow-clay">
                       <svg className="w-4 h-4 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />

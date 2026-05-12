@@ -1,17 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Metadata } from 'next/types'
-import EnhancedImageGrid from '../../../components/EnhancedImageGrid'
-import { getGalleryImages } from '../../../utils/galleryUtils'
-import { MandalaPattern } from '../../../components/MandalaDecoration'
+import EnhancedImageGrid from '../../components/EnhancedImageGrid'
+import { getGalleryImages } from '../../utils/galleryUtils'
+import { MandalaPattern } from '../../components/MandalaDecoration'
 
-export function generateStaticParams() {
-  return [
-    { lang: 'en' },
-    { lang: 'en-IN' },
-    { lang: 'hi' }
-  ]
-}
+
 
 export async function generateMetadata({ params }) {
   return {

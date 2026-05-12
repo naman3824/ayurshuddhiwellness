@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { useAuth } from '../../../components/AuthProvider';
-import { db } from '../../../lib/firebaseClient';
+import { useAuth } from '../../components/AuthProvider';
+import { db } from '../../lib/firebaseClient';
 
 function hasRequiredProfileFields(profile) {
   return Boolean(profile?.age) && Boolean(profile?.phone);
@@ -13,8 +13,7 @@ function hasRequiredProfileFields(profile) {
 export default function GoogleOnboardingPage() {
   const { currentUser, loading } = useAuth();
   const router = useRouter();
-  const params = useParams();
-  const lang = params?.lang || 'en-IN';
+
 
   const [profile, setProfile] = useState(null);
   const [profileLoading, setProfileLoading] = useState(true);
@@ -26,9 +25,9 @@ export default function GoogleOnboardingPage() {
 
   useEffect(() => {
     if (!loading && !currentUser) {
-      router.replace(`/${lang}/login?redirect=/${lang}/onboarding`);
+      router.replace(`/login?redirect=/onboarding`);
     }
-  }, [currentUser, lang, loading, router]);
+  }, [currentUser, loading, router]);
 
   useEffect(() => {
     async function fetchProfile() {
@@ -43,7 +42,7 @@ export default function GoogleOnboardingPage() {
         const userData = userDoc.exists() ? userDoc.data() : null;
 
         if (hasRequiredProfileFields(userData)) {
-          router.replace(`/${lang}/profile`);
+          router.replace(`/profile`);
           return;
         }
 
@@ -59,7 +58,7 @@ export default function GoogleOnboardingPage() {
     }
 
     fetchProfile();
-  }, [currentUser, lang, router]);
+  }, [currentUser, router]);
 
   const handleSubmit = async () => {
     if (!currentUser || !db) return;
@@ -101,7 +100,7 @@ export default function GoogleOnboardingPage() {
         { merge: true }
       );
 
-      router.replace(`/${lang}/profile`);
+      router.replace(`/profile`);
     } catch {
       setErrorMessage('Could not save your onboarding details. Please try again.');
     } finally {
