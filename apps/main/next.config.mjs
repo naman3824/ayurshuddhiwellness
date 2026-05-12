@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const config = {
+  transpilePackages: ['@ayurshuddhi/ui'],
   // Removed 'output: export' to enable API routes for contact form functionality
   // This allows the contact form to work with server-side email processing
   // while still generating static pages where possible

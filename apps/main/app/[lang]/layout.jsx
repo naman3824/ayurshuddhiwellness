@@ -1,5 +1,5 @@
-import { Navbar } from '../../components/Navbar';
-import { Footer } from '../../components/Footer';
+import { Navbar } from '@ayurshuddhi/ui/navbar';
+import { Footer } from '@ayurshuddhi/ui/footer';
 
 // Allow non-pre-rendered [lang] values to work at runtime
 export const dynamicParams = true;

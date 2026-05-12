@@ -1,0 +1,28 @@
+{
+  "name": "@ayurshuddhi/blog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack --port 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@ayurshuddhi/ui": "*",
+    "next": "^15.5.14",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@ayurshuddhi/config-eslint": "*",
+    "@ayurshuddhi/config-tailwind": "*",
+    "@tailwindcss/typography": "^0.5.19",
+    "autoprefixer": "10.4.17",
+    "postcss": "8.4.35",
+    "tailwindcss": "3.4.1",
+    "@eslint/eslintrc": "^3.3.1",
+    "eslint": "8.57.0",
+    "eslint-config-next": "15.5.4"
+  }
+}

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   createUserWithEmailAndPassword,
@@ -18,18 +18,9 @@ function hasRequiredProfileFields(profile) {
   return Boolean(profile?.age) && Boolean(profile?.phone);
 }
 
-const AuthContext = createContext({
-  currentUser: null,
-  loading: true,
-  isAdmin: false,
-  registerWithEmail: async () => {},
-  loginWithGoogle: async () => {},
-  logout: async () => {},
-});
+import { AuthContext, useAuth } from '@ayurshuddhi/ui/auth-context';
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
+export { useAuth };
 
 async function syncUserProfile(user, existingUser = {}, userExists = false) {
   if (!db) {
